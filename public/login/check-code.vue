@@ -42,7 +42,9 @@
           <div class="border-t border-t-gray-100 pt-4">
 <!--          <a href="#" class="float-right text-gray-700 font-light  hover:text-green-500-->
 <!--            transition duration-300 px-2 text-lg">Forgot your code?</a>-->
-          <div class="w-full flex justify-center items-center px-5 gap-2 text-green-600 hover:text-green-700" @click="router.push('/pin')">
+          <div class="w-full flex justify-center items-center px-5 gap-2 text-green-600 hover:text-green-700 cursor-pointer"
+               @click="router.push('/pin')"
+          >
             <button
               class="text-2xl
             transition duration-300 capitalize"
@@ -59,7 +61,7 @@
           </div>
           <div class="text-center text-base cursor-pointer font-light pt-5">
           <span>D'ont have an account?
-            <a href="#" class="pl-2 text-green-500  hover:text-green-600 transition duration-300 text-lg">
+            <a href="#" class="pl-2 text-green-500 font-roboto  hover:text-green-600 transition duration-300 text-lg">
               Created Now
             </a>
           </span>

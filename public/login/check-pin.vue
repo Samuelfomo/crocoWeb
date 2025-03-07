@@ -17,7 +17,7 @@
       <p class="text-center text-gray-500 font-light uppercase text-2xl p-4">Let go 😊</p>
       <div class="border-t border-t-gray-100 py-2">
         `
-        <p class="text-center font-roboto text-lg">Enter your PIN Code to sign in.</p>
+        <p class="text-center font-patrick-hand text-xl">Enter your PIN Code to sign in.</p>
         <div class="flex justify-center items-center">
           <div class="p-4">
             <div class="relative border-gray-300 flex justify-center gap-4">
@@ -37,11 +37,11 @@
         </div>
       </div>
       <div class="border-t border-t-gray-100">
-        <a href="#" class="float-right text-gray-700 font-light  hover:text-green-500
+        <a href="#" class="float-right text-gray-700 font-patrick-hand  hover:text-green-500
             transition duration-300 px-2 pt-10 pb-2 text-lg">Forgot your pin?</a>
         <div class="w-full flex justify-center items-center px-5 gap-2">
           <button
-            class=" w-full rounded-lg bg-green-600 text-xl text-white font-bold
+            class=" w-full rounded-lg bg-black hover:bg-green-600 text-xl text-white font-roboto
             transition duration-300 capitalize py-3"
           >
             connexion
