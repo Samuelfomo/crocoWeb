@@ -83,7 +83,7 @@
 </template>
 
 <script setup lang="ts" >
-import croco from "@/assets/images/croco1.png"
+import croco from "@/assets/images/png/croco1.png"
 import { ref } from 'vue'
 
 const isLoading = ref(false);

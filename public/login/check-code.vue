@@ -1,6 +1,6 @@
 <template xmlns="http://www.w3.org/1999/html">
 
-  <div class="bg-neutral-100 min-h-screen content-center">
+  <div class="bg-white min-h-screen content-center">
     <div
       v-if="isLoading"
       class="fixed inset-0 flex flex-col items-center justify-center bg-neutral-50 bg-opacity-70 z-50"
@@ -13,61 +13,60 @@
       </svg>
       <p class="mt-4 font-medium text-gray-700">Loading...</p>
     </div>
-    <div class="bg-white w-full mx-auto max-w-sm overflow-hidden shadow-lg rounded-xl p-3 h-[30rem]">
-      <p class="text-center text-gray-500 font-light uppercase text-2xl p-5">Welcome 😊</p>
-      <div class="border-t border-t-gray-100 py-5">
-
-        <p class="text-center font-roboto text-lg">Enter your account number to sign in.</p>
-      <div class="flex">
-        <div class="p-4">
-          <div class="relative border-gray-300 flex justify-center gap-2">
-            <input
-              v-for="(value, index) in code"
-              :key="index"
-              v-model="code[index]"
-              type="text"
-              maxlength="1"
-              class="w-12 h-16 text-center text-xl border-2 border-gray-300 rounded-lg bg-gray-100
+    <div class="bg-white w-full mx-auto max-w-sm overflow-hidden shadow border rounded-xl pb-3 z-50">
+      <div class="px-3 py-5 w-full bg-black flex justify-center items-center">
+        <img :src="Croco" alt="Logo Croco+">
+      </div>
+        <div class="px-3 w-full">
+          <div class="border-t border-t-gray-100 py-5">
+          `
+          <p class="text-center font-patrick-hand text-xl">Enter your account number to sign in.</p>
+          <div class="flex">
+            <div class="p-4">
+              <div class="relative border-gray-300 flex justify-center gap-2">
+                <input
+                  v-for="(value, index) in code"
+                  :key="index"
+                  v-model="code[index]"
+                  type="text"
+                  maxlength="1"
+                  class="w-12 h-12 text-center text-xl border-2 border-gray-300 rounded-lg bg-gray-100
               focus:outline-none focus:border-green-600 focus:ring-2 focus:ring-green-200 transition
               duration-300 placeholder-gray-600"
-            />
+                />
+              </div>
+              <p v-if="errors.code" class="text-red-600 text-sm mt-1 text-center">{{ errors.code }}</p>
+            </div>
           </div>
-          <p v-if="errors.pin" class="text-red-600 text-sm mt-1 text-center">{{ errors.pin }}</p>
         </div>
-        <div class="p-4 mt-2 hidden">
-          <div class="relative border-gray-300 flex justify-center gap-1">
-            <input
-              v-for="(value, index) in pin"
-              :key="index"
-              v-model="pin[index]"
-              type="text"
-              maxlength="1"
-              class="w-12 h-12 text-center text-xl border-2 border-gray-300 rounded-lg bg-gray-100
-              focus:outline-none focus:border-green-600 focus:ring-2 focus:ring-green-200 transition
-              duration-300 placeholder-gray-600"
-            />
+          <div class="border-t border-t-gray-100 pt-4">
+<!--          <a href="#" class="float-right text-gray-700 font-light  hover:text-green-500-->
+<!--            transition duration-300 px-2 text-lg">Forgot your code?</a>-->
+          <div class="w-full flex justify-center items-center px-5 gap-2 text-green-600 hover:text-green-700" @click="router.push('/pin')">
+            <button
+              class="text-2xl
+            transition duration-300 capitalize"
+            >
+              next
+            </button>
+            <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"
+                  stroke="currentColor"  stroke-width="1"  stroke-linecap="round"  stroke-linejoin="round" >
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 9v-3.586a1 1 0 0 1 1.707 -.707l6.586
+              6.586a1 1 0 0 1 0 1.414l-6.586 6.586a1 1 0 0 1 -1.707 -.707v-3.586h-3v-6h3z" /><path d="M3 9v6" />
+              <path d="M6 9v6" />
+            </svg>
+            <!--          <img :src="Arrow" alt="arrow image">-->
           </div>
-          <p v-if="errors.pin" class="text-red-600 text-sm mt-1 text-center">{{ errors.pin }}</p>
+          <div class="text-center text-base cursor-pointer font-light pt-5">
+          <span>D'ont have an account?
+            <a href="#" class="pl-2 text-green-500  hover:text-green-600 transition duration-300 text-lg">
+              Created Now
+            </a>
+          </span>
+          </div>
         </div>
       </div>
-      </div>
-      <div class="border-t border-t-gray-100">
-        <a href="#" class="float-right text-gray-700 font-light  hover:text-green-500
-            transition duration-300 px-2 pt-10 pb-2 text-lg">Forgot password?</a>
-        <div class="w-full flex justify-center items-center px-5">
-          <button
-            class="rounded-xl text-xl w-full max-w-lg bg-black text-white font-bold  hover:bg-green-500
-            transition duration-300 capitalize py-3"
-          >
-            connexion
-          </button>
-        </div>
 
-        <div class="text-center text-lg cursor-pointer font-light pt-5">
-          <span>D'ont have account? <a href="#" class="pl-2 text-black  hover:text-green-500
-            transition duration-300">Created Now</a></span>
-        </div>
-      </div>
     </div>
 
   </div>
@@ -76,14 +75,16 @@
 
 <script setup>
 import { ref } from 'vue'
+import {useRouter} from "vue-router"
+import Croco from "@/assets/images/svg/croco-white.svg"
+
+const router = useRouter();
 
 const isLoading = ref(false);
 const code = ref(['', '', '', '', '', '']);
-const pin = ref(['', '', '', '']);
 
 const errors = ref({
   code: '',
-  pin: ''
 });
 
 </script>
