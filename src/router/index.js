@@ -1,18 +1,25 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Home from "@public/login/check-code.vue";
+import Code from "@public/login/check-code.vue";
 import Pin from "@public/login/check-pin.vue";
 import Contact from "@public/contact.vue";
+import Home from "@public/home.vue";
+
 const routes = [
 
   {
     path: '/',
-    name: 'home',
-    component: Home
+    name: 'code',
+    component: Code
   },
   {
     path: '/:pin?',
     name: 'pin',
     component: Pin
+  },
+  {
+    path: '/home',
+    name: 'home',
+    component: Home
   },
   {
     path: '/contact',
