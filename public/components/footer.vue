@@ -10,7 +10,7 @@ const openFacebook= () => {
 </script>
 
 <template>
-  <footer class="bg-white border-t border-gray-200 z-40 py-6 lg:pl-64">
+  <footer class="bg-white border-t border-gray-200 z-40 py-6 lg:pl-28">
     <div class="container mx-auto px-4">
       <div class="flex flex-col md:flex-row justify-between items-center">
         <div class="mb-4 md:mb-0">

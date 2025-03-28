@@ -7,11 +7,14 @@
       <Header />
 
       <!-- Main Content Area -->
-      <div class="flex-grow py-6 flex lg:pl-64">
+      <div class="flex-grow py-6 flex lg:pl-32">
+        <main class="flex-grow bg-neutral-100 rounded-lg shadow-md px-4 lg:mt-15 w-full">
+
+        </main>
 
         <!-- Main Content -->
-        <main class="flex-grow bg-white rounded-lg shadow-md px-4 lg:pt-20 w-full">
-          <div class="flex flex-col md:flex-row w-full justify-start items-center gap-6 py-4">
+        <main class="flex-grow bg-white rounded-lg shadow-md px-4 lg:mt-24 w-full hidden">
+          <div class="flex flex-col md:flex-row w-full justify-start items-center gap-6 py-4 ">
             <h1 class="text-2xl font-semibold text-gray-800">Bonjour, {{ user.name }} 👋</h1>
             <form class="w-full max-w-xl">
               <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
@@ -103,7 +106,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import {useRoute} from "vue-router";
 import Header from "@public/components/header.vue";
 import Footer from "@public/components/footer.vue";
 import Dashboard from "@public/components/dashboard.vue";
@@ -141,6 +145,10 @@ const getCategoryClass = (category) => {
   return classes[category] || 'bg-gray-100 text-gray-800';
 };
 
+onMounted( async () =>{
+  const user = this.route.query.user;
+  console.log(user);
+})
 
 
 </script>

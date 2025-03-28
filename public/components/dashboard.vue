@@ -1,13 +1,58 @@
 <script setup>
-
+import { ref } from "vue"
+const open = ref(false);
+const params = ref([
+  {
+    svg: "<svg  xmlns=\"http://www.w3.org/2000/svg\" width=\"34\" height=\"34\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\"\n" +
+      "                    stroke-width=\"1\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/>\n" +
+      "                <path d=\"M5 12l-2 0l9 -9l9 9l-2 0\" /><path d=\"M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7\" />\n" +
+      "                <path d=\"M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6\" />\n" +
+      "              </svg>",
+    description: "Accueil"
+  },
+  {
+    svg: "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"34\" height=\"34\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\">\n" +
+      "                <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1\" d=\"M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z\" />\n" +
+      "              </svg>",
+    description: "Transactions"
+  },
+  {
+    svg: "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"34\" height=\"34\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\">\n" +
+      "                <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1\" d=\"M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z\" />\n" +
+      "              </svg>",
+    description: "Statistiques"
+  },
+  {
+    svg: "<svg  xmlns=\"http://www.w3.org/2000/svg\" width=\"34\" height=\"34\" viewBox=\"0 0 24 24\"  fill=\"none\"  stroke=\"currentColor\"\n" +
+      "                    stroke-width=\"1\"  stroke-linecap=\"round\"  stroke-linejoin=\"round\"><path stroke=\"none\" d=\"M0 0h24v24H0z\" fill=\"none\"/>\n" +
+      "                <path d=\"M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0\" /><path d=\"M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1\" />\n" +
+      "                <path d=\"M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0\" /><path d=\"M17 10h2a2 2 0 0 1 2 2v1\" /><path d=\"M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0\" />\n" +
+      "                <path d=\"M3 13v-1a2 2 0 0 1 2 -2h2\" />\n" +
+      "              </svg>",
+    description: "Partenaires"
+  },
+  {
+    svg: "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"34\" height=\"34\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\">\n" +
+      "                <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1\" d=\"M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z\" />\n" +
+      "              </svg>",
+    description: "Profil"
+  },
+  {
+    svg: "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"34\" height=\"34\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\">\n" +
+      "                <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1\" d=\"M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z\" />\n" +
+      "                <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"1\" d=\"M15 12a3 3 0 11-6 0 3 3 0 016 0z\" />\n" +
+      "              </svg>",
+    description: "Paramètres"
+  }
+])
 </script>
 
 <template>
-  <aside class="w-64 bg-white rounded-lg shadow-md flex-shrink-0 z-50 min-h-screen fixed">
+  <aside class="bg-white rounded-lg shadow-md flex-shrink-0 z-50 min-h-screen fixed lg:flex hidden">
     <div class="px-4">
 <!--      <h2 class="text-2xl font-semibold text-gray-800 my-6">Tableau de bord</h2>-->
-      <div class="flex items-center py-6 border-b-2">
-        <svg width="200px" height="40px" viewBox="0 0 295 56" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <div class="flex items-center py-3 border-b-2 shadow-xs">
+        <svg width="100px" height="40px" viewBox="0 0 295 56" xmlns="http://www.w3.org/2000/svg">
           <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
             <g id="Splash" transform="translate(-47.000000, -586.000000)" fill-rule="nonzero">
               <g id="logo-white" transform="translate(47.000000, 586.000000)">
@@ -21,61 +66,13 @@
             </g>
           </g>
         </svg>
-        <!--          <span class="ml-3 text-xl font-semibold text-green-600">Croco+</span>-->
       </div>
-      <nav class="py-2">
-        <ul class="space-y-2">
-          <li>
-            <a href="#" class="flex items-center px-4 py-2 bg-green-50 rounded-md text-green-600 gap-3">
-<!--              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">-->
-<!--                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7m-7-7v14" />-->
-<!--              </svg>-->
-              <svg  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-home"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l-2 0l9 -9l9 9l-2 0" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
-              Accueil
-            </a>
-          </li>
-          <li>
-            <a href="#" class="flex items-center px-4 py-2 text-gray-600 hover:bg-green-50 hover:text-green-600 rounded-md">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              Transactions
-            </a>
-          </li>
-          <li>
-            <a href="#" class="flex items-center px-4 py-2 text-gray-600 hover:bg-green-50 hover:text-green-600 rounded-md">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-              </svg>
-              Statistiques
-            </a>
-          </li>
-          <li>
-            <a href="#" class="flex items-center px-4 py-2 text-gray-600 hover:bg-green-50 hover:text-green-600 rounded-md gap-3">
-              <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"
-                    stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                <path d="M10 13a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M8 21v-1a2 2 0 0 1 2 -2h4a2 2 0 0 1 2 2v1" />
-                <path d="M15 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" /><path d="M17 10h2a2 2 0 0 1 2 2v1" /><path d="M5 5a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
-                <path d="M3 13v-1a2 2 0 0 1 2 -2h2" />
-              </svg>
-              Partenaires
-            </a>
-          </li>
-          <li>
-            <a href="#" class="flex items-center px-4 py-2 text-gray-600 hover:bg-green-50 hover:text-green-600 rounded-md">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-              </svg>
-              Profil
-            </a>
-          </li>
-          <li>
-            <a href="#" class="flex items-center px-4 py-2 text-gray-600 hover:bg-green-50 hover:text-green-600 rounded-md">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              Paramètres
+      <nav class="py-6 flex flex-col" @mouseenter="open = true" @mouseleave="open = false">
+        <ul v-for="(param, index) in params" :key="index">
+          <li class="py-2 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
+            <a href="#" class="flex flex-col py-2 hover:bg-green-50">
+              <span v-html="param.svg"></span>
+              <span v-if="open" class="">{{ param.description}}</span>
             </a>
           </li>
         </ul>

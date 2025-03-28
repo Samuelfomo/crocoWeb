@@ -1,6 +1,6 @@
 <template>
-  <header class="bg-white shadow-md fixed w-full z-40 lg:flex hidden lg:pl-64">
-    <div class="container px-4 py-5 flex justify-between items-center">
+  <header class="bg-white shadow-md fixed w-full z-40 lg:pl-32">
+    <div class="container px-4 py-6 flex justify-between items-center">
       <div class="flex items-center">
         <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"
               stroke-linecap="round"  stroke-linejoin="round"  class=" hover:text-green-600">
@@ -8,7 +8,15 @@
         </svg>
       </div>
       <div class="flex justify-center items-center space-x-6">
-        <div class="relative">
+        <div class="flex flex-col items-center justify-center space-x-6 cursor-pointer transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
+          <svg class="hover:text-green-600"  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"
+               viewBox="0 0 24 24"  fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round"
+               stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" /><path d="M21 21l-6 -6" />
+          </svg>
+          <span>Rechercher</span>
+        </div>
+        <div class="relative transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
           <button @click="toggleNotifications" class="text-gray-600 hover:text-green-600 focus:outline-none">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
@@ -22,7 +30,7 @@
             </div>
           </div>
         </div>
-        <div class="relative">
+        <div class="relative transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
           <button @click="toggleUserMenu" class="flex items-center space-x-2 focus:outline-none">
             <img :src="userAvatar" alt="Avatar" class="w-8 h-8 rounded-full">
             <span class="text-sm font-medium text-gray-700">{{ user.name }}</span>
@@ -61,8 +69,8 @@ const showUserMenu = ref(false);
 
 // Notifications
 const notifications = ref([
-  { id: 1, message: 'Votre virement a été effectué avec succès.', read: false },
-  { id: 2, message: 'Nouvelle facture disponible pour mars 2025.', read: false }
+  { id: 1, message: 'Vous avez deux (02) opérations de réabonnement de @Samuel en attente.', read: false },
+  { id: 2, message: 'Vous avez deux (02) demande de creation de compte en attente.', read: false }
 ]);
 
 // Image de profil utilisateur (chemin à ajuster en fonction de votre structure)
