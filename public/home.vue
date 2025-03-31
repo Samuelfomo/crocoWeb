@@ -8,95 +8,29 @@
 
       <!-- Main Content Area -->
       <div class="flex-grow py-6 flex lg:pl-32">
-        <main class="flex-grow bg-neutral-100 rounded-lg shadow-md px-4 lg:mt-15 w-full">
+        <main class="flex-grow bg-neutral-100 rounded-lg shadow-md lg:p-16 py-6 mt-16 w-full">
+          <div class="border flex flex-col w-full h-full bg-white" ref="box">
+            <div class="p-5 w-full border-b border-green-600 border-opacity-20 flex justify-between items-center">
+              <span class="text-xl font-bold text-gray-950">Point of sale</span>
+              <span class="text-lg font-medium text-gray-700">Menu</span>
+            </div>
+            <div class="flex w-full lg:justify-end items-center p-5">
+              <input type="search" placeholder="Rechercher" class="w-full bg-gray-50 hover:bg-white lg:max-w-[16rem]
+               p-4 border focus:right-2 rounded-lg placeholder:text-gray-700 placeholder:text-lg">
+<!--              <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"-->
+<!--                    stroke="currentColor"  stroke-width="1"  stroke-linecap="round"  stroke-linejoin="round" >-->
+<!--                <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />-->
+<!--                <path d="M21 21l-6 -6" />-->
+<!--              </svg>-->
+            </div>
+            <div class="flex flex-col w-full h-full bg-gray-50 bg-opacity-30 shadow-sm z-50 cursor-pointer">
+              <Login/>
+
+            </div>
+          </div>
 
         </main>
 
-        <!-- Main Content -->
-        <main class="flex-grow bg-white rounded-lg shadow-md px-4 lg:mt-24 w-full hidden">
-          <div class="flex flex-col md:flex-row w-full justify-start items-center gap-6 py-4 ">
-            <h1 class="text-2xl font-semibold text-gray-800">Bonjour, {{ user.name }} 👋</h1>
-            <form class="w-full max-w-xl">
-              <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only">Search</label>
-              <div class="relative">
-                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                  <svg class="w-4 h-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                  </svg>
-                </div>
-                <input
-                  type="search"
-                  id="default-search"
-                  class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:outline-none focus:border-green-600 focus:ring-1 focus:ring-green-300 transition duration-300"
-                  placeholder="Search for decoder"
-                  required
-                />
-                <button
-                  type="submit"
-                  class="text-white absolute end-2.5 bottom-2.5 bg-green-600 hover:bg-green-700 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm px-4 py-2 transition duration-300"
-                >
-                  Rechercher
-                </button>
-              </div>
-            </form>
-          </div>
-
-          <!-- Financial Summary Cards -->
-          <h2 class="py-2 text-xl font-medium capitalize leading-relaxed">mes abonnements</h2>
-          <!-- Recent Transactions -->
-          <div class="bg-white rounded-lg border border-gray-200 p-5">
-            <div class="flex justify-between items-center mb-4">
-              <h2 class="text-xl font-semibold text-gray-800">Operation waiting your <span class="inline-flex text-lg leading-5 font-semibold rounded-full bg-yellow-100 text-yellow-800">approval</span></h2>
-              <a href="#" class="text-green-600 hover:text-green-800 text-sm font-medium">Voir tout</a>
-            </div>
-            <div class="overflow-x-auto">
-              <table class="min-w-full divide-y divide-gray-200">
-                <thead>
-                <tr>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Partenaire</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Info abonnement</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Duree</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Montant</th>
-                  <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
-                </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                <tr v-for="(transaction, index) in transactions" :key="index">
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="flex items-center">
-                      <div class="flex-shrink-0 h-10 w-10 flex items-center justify-center">
-                        <img :src="profil" alt="profil image" class="object-cover w-full h-full rounded-full">
-                      </div>
-                      <div class="ml-4">
-                        <div class="text-sm font-medium text-gray-900">{{ transaction.description }}</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap">
-                    <div class="text-sm text-gray-500">{{ transaction.date }}</div>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap flex flex-col gap-2">
-                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
-                      Formule:
-                      {{ transaction.formala }}
-                    </span> <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
-                    Option:
-                      {{ transaction.option }}
-                    </span>
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap text-green-600">
-                    {{ transaction.month }} mois
-                  </td>
-                  <td class="px-6 py-4 whitespace-nowrap font-bold text-gray-500">
-                    {{ formatCurrency(transaction.amount) }}
-                  </td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </main>
       </div>
 
       <!-- Footer -->
@@ -107,48 +41,54 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
-import {useRoute} from "vue-router";
 import Header from "@public/components/header.vue";
 import Footer from "@public/components/footer.vue";
 import Dashboard from "@public/components/dashboard.vue";
 
-import profil from "@/assets/images/png/img.png"
+import gsap from "gsap";
+import {useRoute} from "vue-router";
+import User from "@/repository/Login";
+import Login from "@public/login.vue";
+const route = useRoute();
+const box = ref(null);
 
-// État pour l'utilisateur
-const user = ref({
-  name: 'Samuel Fomo',
-  balance: 30,
-  expenses: 3420.50,
-  savings: 5600.25
+// onMounted( async () =>{
+  // const user = this.route.query.user;
+  // console.log(user);
+// })
+// const menu = ref(''||null);
+
+onMounted(async () => {
+  gsap.fromTo(box.value, {y: 500, opacity: 0}, {y: 1, opacity: 9, duration: 1});
+   const user = route.query.user;
+   const result = await User.getByGuid(user);
+  if (!result) {
+    console.error("Userdata not found!");
+  }
+  // setTimeout(async () => {
+  //   const result = await User.getByGuid(user);
+  // }, 1000);
+
+
 });
-// Function to format currency
-const formatCurrency = (value) => {
-  return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'XAF' }).format(value);
-};
-
-// Transactions récentes
-const transactions = ref([
-  { description: 'Joel Bétayene', date: '08 Mars 2025', month: '1', formala: 'ACCESS+', option: 'DSTV ENGLISH PLUS', amount: 25000.00, type: 'credit' },
-  { description: 'Youssouffa Jordan', date: '05 Mars 2025', month: '3', formala: 'TOUS CANAL', option: 'DSTV ENGLISH PLUS - EVASION', amount: 9500.00, type: 'debit' },
-  { description: 'Samuel Fomo', date: '03 Mars 2025', month: '4', formala: 'EVASION', option: 'CHARME', amount: 12700.35, type: 'debit' },
-  { description: 'Mahama Ethienne ', date: '01 Mars 2025', month: '6', formala: 'ACCESS', option: 'DSTV ENGLISH PLUS', amount: 32000.00, type: 'credit' }
-]);
-// Function to get class for transaction category
-const getCategoryClass = (category) => {
-  const classes = {
-    'Virement': 'bg-purple-100 text-purple-800',
-    'Logement': 'bg-red-100 text-red-800',
-    'Alimentation': 'bg-yellow-100 text-yellow-800',
-    'Revenus': 'bg-green-100 text-green-800'
-  };
-
-  return classes[category] || 'bg-gray-100 text-gray-800';
-};
-
-onMounted( async () =>{
-  const user = this.route.query.user;
-  console.log(user);
-})
-
 
 </script>
+
+<!--<template>-->
+<!--  <div ref="box" class="w-40 h-40 bg-blue-500 text-white flex items-center justify-center">-->
+<!--    Animé avec GSAP-->
+<!--  </div>-->
+<!--</template>-->
+
+<!--<script setup>-->
+<!--import gsap from "gsap";-->
+<!--import { onMounted, ref } from "vue";-->
+
+<!--const box = ref(null);-->
+
+<!--onMounted(() => {-->
+<!--  gsap.fromTo(box.value, { x: 1000, opacity: 0 }, { x: 500, opacity: 1, duration: 2 });-->
+<!--});-->
+<!--</script>-->
+
+

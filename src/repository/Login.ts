@@ -32,11 +32,21 @@ class Login {
       if (response.data.status !== true){
         return null;
       }
-      console.log(User.fromJson(response.data.response));
       return User.fromJson(response.data.response);
 
     } catch (error){
       return null;
+    }
+  };
+  static async getByGuid(guid: number){
+    try {
+      if (!guid){
+        return null;
+      }
+      return guid;
+
+    } catch (error){
+      throw error;
     }
   }
 }

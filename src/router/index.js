@@ -3,6 +3,7 @@ import Code from "@public/login/check-code.vue";
 import Pin from "@public/login/check-pin.vue";
 import Contact from "@public/contact.vue";
 import Home from "@public/home.vue";
+import Login from "@public/login.vue";
 
 const routes = [
 
@@ -25,6 +26,11 @@ const routes = [
     path: '/contact',
     name: 'contact',
     component: Contact
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: Login
   }
 ];
 

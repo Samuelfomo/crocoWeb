@@ -1,133 +1,211 @@
 <template>
+    <main class="w-full h-full">
 
-  <div class="bg-gray-100 flex items-center justify-center min-h-screen ">
-    <div
-      v-if="isLoading"
-      class="fixed inset-0 flex items-center justify-center bg-gray-50 bg-opacity-50 backdrop-blur-sm">
-      <div class="animate-spin rounded-full h-12 w-12 border-t-4 border-orange-500"></div>
-      <p class="ml-4 font-medium" style="color: #FF4200">Chargement...</p>
-    </div>
+      <div class="bg-white p-6">
 
-    <div class="bg-gray-100 w-full max-w-md p-3 ">
-      <div class="flex flex-wrap h-14 shadow-lg shadow-gray-600">
-        <!-- Carte -->
-        <div class="bg-gray-800 p-1 flex-1 w-full">
-          <div class="text-lg mb-2">
-            <p class=" text-center text-white font-roboto pt-2 capitalize"> Creer mon compte croco+ </p>
+        <table id="contact-table" class="w-full bg-white rounded table-class">
+          <thead>
+          <tr class="bg-white border-2 shadow-sm">
+            <th class="py-2 px-4 border-2 border-white text-left text-lg font-bold text-gray-400 w-[0.25rem]">
+              <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"
+                    stroke="currentColor"  stroke-width="3"  stroke-linecap="round"  stroke-linejoin="round" >
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M20.925 13.163a8.998 8.998 0 0 0 -8.925 -10.163a9 9 0 0 0 0 18" /><path d="M9 10h.01" /><path d="M15 10h.01" />
+                <path d="M9.5 15c.658 .64 1.56 1 2.5 1s1.842 -.36 2.5 -1" /><path d="M15 19l2 2l4 -4" />
+              </svg>
+            </th>
+            <th class="py-2 px-4 border-2 border-white text-left text-lg font-bold text-gray-400">
+              Point de vente
+            </th>
+            <th class="px-4 border-2 border-white text-left text-lg font-bold text-gray-400">
+              Agent
+            </th>
+            <th class="px-4 border-2 border-white text-left text-lg font-bold text-gray-400">
+              Mobile
+            </th>
+            <th class="px-4 border-2 border-white text-left text-lg font-bold text-gray-400">
+              Email
+            </th>
+            <th class="px-4 border-2 border-white text-left text-lg font-bold text-gray-400">
+              Ville-Pays
+            </th>
+            <th class="px-4 border-2 border-white text-left text-lg font-bold text-gray-400">
+              Residence
+            </th>
+            <th class="px-4 border-2 border-white text-left text-lg font-bold text-gray-400">
+              <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"
+                    stroke="currentColor"  stroke-width="3"  stroke-linecap="round"  stroke-linejoin="round" ><path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M19.364 4.636a2 2 0 0 1 0 2.828a7 7 0 0 1 -1.414 7.072l-2.122 2.12a4 4 0 0 0 -.707 3.536l-11.313 -11.312a4 4 0 0 0 3.535 -.707l2.121 -2.123a7 7 0 0 1 7.072 -1.414a2 2 0 0 1 2.828 0z" />
+                <path d="M7.343 12.414l-.707 .707a3 3 0 0 0 4.243 4.243l.707 -.707" />
+              </svg>
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr
+            class="hover:bg-gray-50 text-left border-b border-gray-300 italic">
+            <td class="py-2 px-4 text-green-300 font-bold">
+              <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"
+                    stroke-width="3"  stroke-linecap="round"  stroke-linejoin="round" ><path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+              </svg>
+            </td>
+            <td class="py-2 px-4 uppercase">imediatis sarl</td>
+            <td class="py-2 px-4">FRED JOHNSO</td>
+            <td class="py-2 px-4">699773399</td>
+            <td class="py-2 px-4">hello@imediatis.net</td>
+            <td class="py-2 px-4 uppercase">Douala-cm</td>
+            <td class="py-2 px-4">BLOC M MAKEPE</td>
+            <td class="py-2 px-4 text-green-300 font-bold">02</td>
+            <td class="py-2 px-4 hidden">
+              <div class="relative">
+                <button class="p-1 hover:bg-gray-100">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path
+                      d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"
+                    />
+                  </svg>
+                </button>
+                <div  class="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black
+              ring-opacity-5 z-50">
+                  <div class="py-1">
+                    <button  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left">
+                      Modifier
+                    </button>
+                    <button class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 w-full text-left">
+                      Supprimer
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+        <!-- Skeleton Loader -->
+        <div v-if="isLoading" class="animate-pulse">
+          <table class="min-w-full">
+            <thead>
+            <tr>
+              <th
+                v-for="n in 5"
+                :key="n"
+                class="py-2 px-4 bg-gray-200 border-b"
+              >
+                <div class="h-4 bg-gray-300 w-3/4 rounded"></div>
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="n in 5" :key="n">
+              <td v-for="m in 5" :key="m" class="py-2 px-4 border-b">
+                <div class="h-4 bg-gray-200 w-full rounded"></div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination Controls -->
+        <div class="flex justify-between items-center mt-4">
+          <div class="text-sm text-gray-700">
+            Page {{ currentPage }} sur {{ totalPages }}
+            (Total: {{ filteredContacts.length }} partners)
+          </div>
+          <div class="flex space-x-2">
+            <button
+              @click="prevPage"
+              :disabled="currentPage === 1"
+              class="px-4 py-2 border rounded bg-white hover:bg-black hover:text-white disabled:opacity-30 disabled:cursor-not-allowed"
+            >
+              Précédent
+            </button>
+            <button
+              @click="nextPage"
+              :disabled="currentPage === totalPages"
+              class="px-4 py-2 border rounded bg-white hover:bg-black hover:text-white disabled:opacity-30 disabled:cursor-not-allowed"
+            >
+              Suivant
+            </button>
           </div>
         </div>
       </div>
-        <div class="bg-white shadow-lg shadow-gray-600 w-full max-w-md p-3">
-          <header class="py-2 px-4 rounded-t-lg text-center">
-            <img :src="croco" alt="Croco" class="max-w-40 mx-auto mt-4"/>
-          </header>
-          <div class="p-4">
-            <p class="text-right"><span class="text-red-600 text-2xl" >⋆</span>champs obligatoires</p>
-            <p class="text-gray-600 mb-4"><span class="text-red-600 text-2xl" >⋆</span>Entrez votre email</p>
-            <div class="relative">
-              <input
-                v-model="email"
-                type="email"
-                placeholder="Votre adresse mail"
-                class="w-full px-6 py-2 text-lg border-2 border-gray-300 rounded-xl
-                 focus:outline-none focus:border-green-500 focus:ring-2
-                 focus:ring-green-200 transition duration-300
-                 placeholder-gray-400"
-              />
-              <p v-if="errors.email" class="text-red-600 text-sm mt-1">{{ errors.email }}</p>
-            </div>
-            <p class="text-gray-600 mb-4"><span class="text-red-600 text-2xl" >⋆</span>Entrez votre mot de passe</p>
-            <div class="relative">
-              <input
-                v-model="password"
-                type="password"
-                placeholder="Votre mot de passe"
-                class="w-full px-6 py-2 text-lg border-2 border-gray-300 rounded-xl
-                 focus:outline-none focus:border-green-500 focus:ring-2
-                 focus:ring-green-200 transition duration-300
-                 placeholder-gray-400"
-              />
-              <p v-if="errors.password" class="text-red-600 text-sm mt-1">{{ errors.password }}</p>
-            </div>
-            <p class="text-gray-600 mb-4"><span class="text-red-600 text-2xl" >⋆</span>Entrez à nouveau votre mot de passe</p>
-            <div class="relative">
-              <input
-                v-model="confirmed"
-                type="password"
-                placeholder="Confirmer votre mot de passe"
-                class="w-full px-6 py-2 text-lg border-2 border-gray-300 rounded-xl
-                 focus:outline-none focus:border-green-500 focus:ring-2
-                 focus:ring-green-200 transition duration-300
-                 placeholder-gray-400"
-              />
-                          <p v-if="errors.confirmed" class="text-red-600 text-sm mt-1">{{ errors.confirmed }}</p>
-            </div>
 
-            <button
-              @click="handleSubmit"
-              class="w-full bg-green-800 text-white font-bold py-3 mt-8 rounded-xl hover:bg-green-900
-            transition duration-300 lowercase"
-            >
-              Créer un compte
-            </button>
-
-            <div class="text-center text-sm text-gray-500 mt-4 mb-2">
-              Besoin d'aide ? <a href="#" class="text-green-700 hover:underline">Contactez-nous</a>
-            </div>
-          </div>
-        </div>
-
-    </div>
-  </div>
+    </main>
 
 </template>
 
-<script setup lang="ts" >
-import croco from "@/assets/images/png/croco1.png"
-import { ref } from 'vue'
+<script setup>
+import {ref, computed, watch, onMounted, onUnmounted} from 'vue'
+const isLoading = ref(false)
 
-const isLoading = ref(false);
-const email = ref('');
-const password = ref('')
-const confirmed = ref('')
+const contacts = ref([])
+const doogleview = ref();
 
-const errors = ref({
-  email: '',
-  password: '',
-  confirmed: ''
-});
+const isDropdownOpen = ref(false)
 
-const handleSubmit = () => {
-  // Reset errors
-  errors.value = {
-    email: '',
-    password: '',
-    confirmed: ''
-  };
+const filters = ref({
+  country: '',
+  gender: '',
+  hasWhatsApp: null
+})
 
-  // Validate fields
-  if (!email.value) {
-    errors.value.email = 'Veuillez entrer votre adresse email';
+const filteredContacts = computed(() => {
+  return contacts.value.filter(contact => {
+    const countryMatch = !filters.value.country || contact.country === filters.value.country
+    const genderMatch = !filters.value.gender || contact.gender === filters.value.gender
+    const whatsAppMatch = filters.value.hasWhatsApp === null || contact.hasWhatsApp === filters.value.hasWhatsApp
+
+    return countryMatch && genderMatch && whatsAppMatch
+  })
+})
+
+
+const entriesPerPage = ref(10)
+const currentPage = ref(1)
+
+const totalPages = computed(() => {
+  return Math.ceil(filteredContacts.value.length / entriesPerPage.value)
+})
+
+function nextPage() {
+  if (currentPage.value < totalPages.value) {
+    currentPage.value++
   }
-  if (!password.value) {
-    errors.value.password = 'Veuillez entrer votre mot de passe';
+}
+
+function prevPage() {
+  if (currentPage.value > 1) {
+    currentPage.value--
   }
-  if (!confirmed.value) {
-    errors.value.confirmed = 'Veuillez confirmer votre mot de passe';
+}
+
+function resetPagination() {
+  currentPage.value = 1
+}
+
+watch(filteredContacts, () => {
+  resetPagination()
+})
+
+const closeDropdown = (e) => {
+  if (!e.target.closest('.relative')) {
+    isDropdownOpen.value = false
+    doogleview.value = false
   }
+}
 
-  // If no errors, proceed with form submission
-  if (!errors.value.email && !errors.value.password && !errors.value.confirmed) {
-    // Add form submission logic here
-    const submit = confirmed.value
-    console.log('Form submitted',submit);
-  }
-};
+onMounted(() => {
+  document.addEventListener('click', closeDropdown)
+})
 
-
-
+// Nettoyer l'écouteur d'événement lors de la destruction du composant
+onUnmounted(() => {
+  document.removeEventListener('click', closeDropdown)
+})
 </script>
 
 <style scoped>
-/* Styles personnalisés supplémentaires si nécessaire */
+
 </style>

@@ -1,30 +1,5 @@
-<!--<script setup>-->
-
-<!--import Header from "@public/components/header.vue";-->
-<!--import Footer from "@public/components/footer.vue";-->
-<!--</script>-->
-
-<!--<template>-->
-<!--  <div class="bg-neutral-100 flex flex-col">-->
-<!--    <Header />-->
-<!--    <main class="flex min-h-screen flex-col px-16">-->
-<!--        <div class="border bg-white lg:mt-[10rem] min-h-96">-->
-<!--          <div class="w-full border-b p-4 justify-between items-center">-->
-<!--            <h1 class="text-lg font-roboto text-gray-600 uppercase">contact</h1>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--    </main>-->
-<!--    <Footer />-->
-<!--  </div>-->
-
-<!--</template>-->
-
-<!--<style scoped>-->
-
-<!--</style>-->
-
 <template>
-  <div class="bg-white min-h-screen content-center">
+  <div class="bg-neutral-300 min-h-screen content-center">
     <!-- Loader (identique aux autres composants) -->
     <div v-if="isLoading" class="croco-spinner">
       <svg aria-hidden="true" role="status" class="w-32 h-32 text-gray-200 animate-spin dark:text-gray-600" viewBox="0 0 100 101"
@@ -35,148 +10,149 @@
       <p class="mt-4 font-medium text-gray-700">Loading...</p>
     </div>
 
-    <!-- Container principal -->
-    <div class="bg-white w-full mx-auto max-w-md overflow-hidden shadow border rounded-xl p-4 z-50">
-      <!-- En-tête -->
-      <div class="px-3 py-5 w-full bg-black flex justify-center items-center rounded-lg">
-        <img :src="Croco" alt="Logo Croco+" class="h-10">
-      </div>
+      <!-- Container principal -->
+      <div class="bg-white mx-auto w-full max-w-lg overflow-hidden shadow p-4 z-50">
+        <!-- En-tête -->
+        <div class="px-3 py-5 w-full bg-black flex justify-center items-center rounded-lg">
+          <img :src="Croco" alt="Logo Croco+" class="h-10">
+        </div>
 
-      <div class="w-full mt-4">
-        <h2 class="text-center font-patrick-hand text-2xl mb-4">Créez votre compte</h2>
+        <div class="w-full mt-4">
+          <h2 class="text-center font-patrick-hand text-2xl mb-4">Créez votre compte</h2>
 
-        <!-- Formulaire d'inscription -->
-        <form @submit.prevent="submitForm" class="space-y-4">
-          <!-- Nom et Prénom -->
-          <div class="grid grid-cols-2 gap-4">
-            <div>
-              <label for="lastname" class="block text-sm font-medium text-gray-700 mb-1">Nom</label>
-              <input
-                type="text"
-                id="lastname"
-                v-model="form.lastname"
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
-                :class="{'border-red-500': errors.lastname}"
-              />
-              <p v-if="errors.lastname" class="text-red-600 text-xs mt-1">{{ errors.lastname }}</p>
+          <!-- Formulaire d'inscription -->
+          <form @submit.prevent="submitForm" class="space-y-4">
+            <!-- Nom et Prénom -->
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label for="lastname" class="block text-sm font-medium text-gray-700 mb-1">Nom</label>
+                <input
+                  type="text"
+                  id="lastname"
+                  v-model="form.lastname"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
+                  :class="{'border-red-500': errors.lastname}"
+                />
+                <p v-if="errors.lastname" class="text-red-600 text-xs mt-1">{{ errors.lastname }}</p>
+              </div>
+              <div>
+                <label for="firstname" class="block text-sm font-medium text-gray-700 mb-1">Prénom</label>
+                <input
+                  type="text"
+                  id="firstname"
+                  v-model="form.firstname"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
+                  :class="{'border-red-500': errors.firstname}"
+                />
+                <p v-if="errors.firstname" class="text-red-600 text-xs mt-1">{{ errors.firstname }}</p>
+              </div>
             </div>
-            <div>
-              <label for="firstname" class="block text-sm font-medium text-gray-700 mb-1">Prénom</label>
-              <input
-                type="text"
-                id="firstname"
-                v-model="form.firstname"
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
-                :class="{'border-red-500': errors.firstname}"
-              />
-              <p v-if="errors.firstname" class="text-red-600 text-xs mt-1">{{ errors.firstname }}</p>
-            </div>
-          </div>
 
-          <!-- Pays et Ville -->
-          <div class="grid grid-cols-2 gap-4">
-            <div>
-              <label for="country" class="block text-sm font-medium text-gray-700 mb-1">Pays</label>
-              <select
-                id="country"
-                v-model="form.country"
-                @change="loadCities"
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
-                :class="{'border-red-500': errors.country}"
-              >
-                <option value="" disabled selected>Sélectionnez un pays</option>
-                <option v-for="country in countries" :key="country.code" :value="country.code">
-                  {{ country.name }}
-                </option>
-              </select>
-              <p v-if="errors.country" class="text-red-600 text-xs mt-1">{{ errors.country }}</p>
+            <!-- Pays et Ville -->
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <label for="country" class="block text-sm font-medium text-gray-700 mb-1">Pays</label>
+                <select
+                  id="country"
+                  v-model="form.country"
+                  @change="loadCities"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
+                  :class="{'border-red-500': errors.country}"
+                >
+                  <option value="" disabled selected>Sélectionnez un pays</option>
+                  <option v-for="country in countries" :key="country.code" :value="country.code">
+                    {{ country.name }}
+                  </option>
+                </select>
+                <p v-if="errors.country" class="text-red-600 text-xs mt-1">{{ errors.country }}</p>
+              </div>
+              <div>
+                <label for="city" class="block text-sm font-medium text-gray-700 mb-1">Ville</label>
+                <select
+                  id="city"
+                  v-model="form.city"
+                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
+                  :class="{'border-red-500': errors.city}"
+                  :disabled="!form.country"
+                >
+                  <option value="" disabled selected>Sélectionnez une ville</option>
+                  <option v-for="city in cities" :key="city.id" :value="city.id">
+                    {{ city.name }}
+                  </option>
+                </select>
+                <p v-if="errors.city" class="text-red-600 text-xs mt-1">{{ errors.city }}</p>
+              </div>
             </div>
-            <div>
-              <label for="city" class="block text-sm font-medium text-gray-700 mb-1">Ville</label>
-              <select
-                id="city"
-                v-model="form.city"
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
-                :class="{'border-red-500': errors.city}"
-                :disabled="!form.country"
-              >
-                <option value="" disabled selected>Sélectionnez une ville</option>
-                <option v-for="city in cities" :key="city.id" :value="city.id">
-                  {{ city.name }}
-                </option>
-              </select>
-              <p v-if="errors.city" class="text-red-600 text-xs mt-1">{{ errors.city }}</p>
-            </div>
-          </div>
 
-          <!-- Téléphone -->
-          <div>
-            <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Numéro de téléphone</label>
-            <div class="flex">
+            <!-- Téléphone -->
+            <div>
+              <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Numéro de téléphone</label>
+              <div class="flex">
               <span class="inline-flex items-center px-3 text-gray-500 bg-gray-100 border border-r-0 border-gray-300 rounded-l-lg">
                 +{{ selectedCountryCode }}
               </span>
-              <input
-                type="tel"
-                id="phone"
-                v-model="form.phone"
-                class="flex-1 px-3 py-2 border border-gray-300 rounded-r-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
-                :class="{'border-red-500': errors.phone}"
-              />
+                <input
+                  type="tel"
+                  id="phone"
+                  v-model="form.phone"
+                  class="flex-1 px-3 py-2 border border-gray-300 rounded-r-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
+                  :class="{'border-red-500': errors.phone}"
+                />
+              </div>
+              <p v-if="errors.phone" class="text-red-600 text-xs mt-1">{{ errors.phone }}</p>
             </div>
-            <p v-if="errors.phone" class="text-red-600 text-xs mt-1">{{ errors.phone }}</p>
-          </div>
 
-          <!-- Email -->
-          <div>
-            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-            <input
-              type="email"
-              id="email"
-              v-model="form.email"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
-              :class="{'border-red-500': errors.email}"
-            />
-            <p v-if="errors.email" class="text-red-600 text-xs mt-1">{{ errors.email }}</p>
-          </div>
+            <!-- Email -->
+            <div>
+              <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+              <input
+                type="email"
+                id="email"
+                v-model="form.email"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
+                :class="{'border-red-500': errors.email}"
+              />
+              <p v-if="errors.email" class="text-red-600 text-xs mt-1">{{ errors.email }}</p>
+            </div>
 
-          <!-- Code de parrainage -->
-          <div>
-            <label for="referralCode" class="block text-sm font-medium text-gray-700 mb-1">Code de parrainage (optionnel)</label>
-            <input
-              type="text"
-              id="referralCode"
-              v-model="form.referralCode"
-              placeholder="Si vous avez été parrainé(e)"
-              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
-              :class="{'border-red-500': errors.referralCode}"
-            />
-            <p v-if="errors.referralCode" class="text-red-600 text-xs mt-1">{{ errors.referralCode }}</p>
-          </div>
+            <!-- Code de parrainage -->
+            <div>
+              <label for="referralCode" class="block text-sm font-medium text-gray-700 mb-1">Code de parrainage (optionnel)</label>
+              <input
+                type="text"
+                id="referralCode"
+                v-model="form.referralCode"
+                placeholder="Si vous avez été parrainé(e)"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
+                :class="{'border-red-500': errors.referralCode}"
+              />
+              <p v-if="errors.referralCode" class="text-red-600 text-xs mt-1">{{ errors.referralCode }}</p>
+            </div>
 
-          <!-- Bouton de soumission -->
-          <div class="mt-6">
-            <button
-              type="submit"
-              class="w-full rounded-lg bg-green-500 hover:bg-green-600 text-xl text-white font-roboto transition duration-300 capitalize py-3"
-              :disabled="isSubmitting"
-            >
-              <span v-if="isSubmitting">Création en cours...</span>
-              <span v-else>Créer mon compte</span>
-            </button>
-          </div>
-        </form>
+            <!-- Bouton de soumission -->
+            <div class="mt-6">
+              <button
+                type="submit"
+                class="w-full rounded-lg bg-green-500 hover:bg-green-600 text-xl text-white font-roboto transition duration-300 capitalize py-3"
+                :disabled="isSubmitting"
+              >
+                <span v-if="isSubmitting">Création en cours...</span>
+                <span v-else>Créer mon compte</span>
+              </button>
+            </div>
+          </form>
 
-        <!-- Lien pour se connecter -->
-        <div class="text-center text-base cursor-pointer font-light mt-4">
+          <!-- Lien pour se connecter -->
+          <div class="text-center text-base cursor-pointer font-light mt-4">
           <span>Vous avez déjà un compte?
             <a @click="router.push('/')" class="pl-2 text-green-500 hover:text-green-600 transition duration-300 cursor-pointer">
               Se connecter
             </a>
           </span>
+          </div>
         </div>
       </div>
-    </div>
+
   </div>
 </template>
 

@@ -11,7 +11,7 @@
     </div>
 
     <!-- Container principal avec style harmonisé -->
-    <div class="croco-container">
+    <div class="croco-container" ref="box">
       <!-- En-tête logo -->
       <div class="croco-header">
         <img :src="Croco" alt="Logo Croco+">
@@ -44,7 +44,7 @@
                     <p v-if="errors.code" class="text-red-600 text-xs mt-1">{{ errors.code }}</p>
                   </div>
                   <div class="croco-section-divider">
-                    <p class="font-medium text-xl pb-1 uppercase flex justify-end items-center gap-1">
+                    <p class="font-medium text-xl pb-1 uppercase flex lg:justify-end items-center gap-1">
                       Pin
                       <svg  xmlns="http://www.w3.org/2000/svg"  width="8"  height="8"  viewBox="0 0 24 24"  fill="none"  stroke="#e60f0f"  stroke-width="4"
                             stroke-linecap="round"  stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12l8 -4.5" />
@@ -96,17 +96,20 @@
 </template>
 
 <script setup>
-import {ref} from 'vue'
+import {ref, onMounted} from 'vue'
 import {useRouter} from "vue-router"
 import Croco from "@/assets/images/svg/croco-white.svg"
 import '@/assets/style.css';
 import Login from '@/repository/Login'
 import Input from './input.vue'
 
+import gsap from "gsap";
+
 
 const router = useRouter();
 const isLoading = ref(false);
 const isSubmitting = ref(false);
+const box = ref(null);
 
 const entry = ref({
   email: '',
@@ -159,13 +162,12 @@ const handleSubmit = async () =>{
       errors.value.auth = 'authentication failed, try again.';
       return false;
     }
-    console.log(submit.name);
     await router.push('/home');
     if(submit){
       await router.push({
         name: 'home',
-        // query: { user: submit}
-        query: { user: JSON.stringify(submit)   }
+        query: { user: submit.guid}
+        // query: { user: JSON.stringify(submit.value) }
       });
     }
   }
@@ -178,5 +180,9 @@ finally {
     isLoading.value = false;
   }
 }
+
+onMounted( ()=>{
+  gsap.fromTo(box.value, {y: -150, opacity: 100}, {y: 1, opacity: 100, duration: 1.5});
+})
 
 </script>
