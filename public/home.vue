@@ -24,7 +24,7 @@
 <!--              </svg>-->
             </div>
             <div class="flex flex-col w-full h-full bg-gray-50 bg-opacity-30 shadow-sm z-50 cursor-pointer">
-              <Login/>
+              <Table/>
 
             </div>
           </div>
@@ -48,7 +48,7 @@ import Dashboard from "@public/components/dashboard.vue";
 import gsap from "gsap";
 import {useRoute} from "vue-router";
 import User from "@/repository/Login";
-import Login from "@public/login.vue";
+import Table from "@public/table.vue";
 const route = useRoute();
 const box = ref(null);
 

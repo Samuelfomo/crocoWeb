@@ -51,7 +51,7 @@ const params = ref([
   <aside class="bg-white rounded-lg shadow-md flex-shrink-0 z-50 min-h-screen fixed lg:flex hidden">
     <div class="px-4">
 <!--      <h2 class="text-2xl font-semibold text-gray-800 my-6">Tableau de bord</h2>-->
-      <div class="flex items-center py-3 border-b-2 shadow-xs">
+      <div class="flex items-center py-3 border-b-2 shadow-xs cursor-pointer">
         <svg width="100px" height="40px" viewBox="0 0 295 56" xmlns="http://www.w3.org/2000/svg">
           <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
             <g id="Splash" transform="translate(-47.000000, -586.000000)" fill-rule="nonzero">
@@ -70,9 +70,9 @@ const params = ref([
       <nav class="py-6 flex flex-col" @mouseenter="open = true" @mouseleave="open = false">
         <ul v-for="(param, index) in params" :key="index">
           <li class="py-2 transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
-            <a href="#" class="flex flex-col py-2 hover:bg-green-50">
+            <a href="#" class="flex flex-col py-2 hover:bg-green-50 justify-center items-center">
               <span v-html="param.svg"></span>
-              <span v-if="open" class="">{{ param.description}}</span>
+              <span class="font-roboto text-sm">{{ param.description}}</span>
             </a>
           </li>
         </ul>

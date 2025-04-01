@@ -18,14 +18,14 @@
         </div>
 
         <div class="w-full mt-4">
-          <h2 class="text-center font-patrick-hand text-2xl mb-4">Créez votre compte</h2>
+          <h2 class="text-center font-roboto text-2xl mb-4">Créez votre compte</h2>
 
           <!-- Formulaire d'inscription -->
           <form @submit.prevent="submitForm" class="space-y-4">
             <!-- Nom et Prénom -->
             <div class="grid grid-cols-2 gap-4">
               <div>
-                <label for="lastname" class="block text-sm font-medium text-gray-700 mb-1">Nom</label>
+                <label for="lastname" class="block text-lg font-patrick-hand text-gray-700 mb-1">Nom</label>
                 <input
                   type="text"
                   id="lastname"
@@ -36,7 +36,7 @@
                 <p v-if="errors.lastname" class="text-red-600 text-xs mt-1">{{ errors.lastname }}</p>
               </div>
               <div>
-                <label for="firstname" class="block text-sm font-medium text-gray-700 mb-1">Prénom</label>
+                <label for="firstname" class="block text-lg font-patrick-hand text-gray-700 mb-1">Prénom</label>
                 <input
                   type="text"
                   id="firstname"
@@ -51,7 +51,7 @@
             <!-- Pays et Ville -->
             <div class="grid grid-cols-2 gap-4">
               <div>
-                <label for="country" class="block text-sm font-medium text-gray-700 mb-1">Pays</label>
+                <label for="country" class="block text-lg font-patrick-hand text-gray-700 mb-1">Pays</label>
                 <select
                   id="country"
                   v-model="form.country"
@@ -67,7 +67,7 @@
                 <p v-if="errors.country" class="text-red-600 text-xs mt-1">{{ errors.country }}</p>
               </div>
               <div>
-                <label for="city" class="block text-sm font-medium text-gray-700 mb-1">Ville</label>
+                <label for="city" class="block text-lg font-patrick-hand text-gray-700 mb-1">Ville</label>
                 <select
                   id="city"
                   v-model="form.city"
@@ -86,7 +86,7 @@
 
             <!-- Téléphone -->
             <div>
-              <label for="phone" class="block text-sm font-medium text-gray-700 mb-1">Numéro de téléphone</label>
+              <label for="phone" class="block text-lg font-patrick-hand text-gray-700 mb-1">Numéro de téléphone</label>
               <div class="flex">
               <span class="inline-flex items-center px-3 text-gray-500 bg-gray-100 border border-r-0 border-gray-300 rounded-l-lg">
                 +{{ selectedCountryCode }}
@@ -104,7 +104,7 @@
 
             <!-- Email -->
             <div>
-              <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+              <label for="email" class="block text-lg font-patrick-hand text-gray-700 mb-1">Email</label>
               <input
                 type="email"
                 id="email"
@@ -117,7 +117,7 @@
 
             <!-- Code de parrainage -->
             <div>
-              <label for="referralCode" class="block text-sm font-medium text-gray-700 mb-1">Code de parrainage (optionnel)</label>
+              <label for="referralCode" class="block text-lg font-patrick-hand text-gray-700 mb-1">Code de parrainage (optionnel)</label>
               <input
                 type="text"
                 id="referralCode"

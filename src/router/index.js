@@ -1,21 +1,21 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import Code from "@public/login/check-code.vue";
-import Pin from "@public/login/check-pin.vue";
+import Auth from "@public/login/authentication.vue";
+import Modal from "@public/login/login.vue";
 import Contact from "@public/contact.vue";
 import Home from "@public/home.vue";
-import Login from "@public/login.vue";
+import Table from "@public/table.vue";
 
 const routes = [
 
   {
     path: '/',
-    name: 'code',
-    component: Code
+    name: 'auth',
+    component: Auth
   },
   {
-    path: '/:pin?',
-    name: 'pin',
-    component: Pin
+    path: '/modal',
+    name: 'modal',
+    component: Modal
   },
   {
     path: '/home',
@@ -28,9 +28,9 @@ const routes = [
     component: Contact
   },
   {
-    path: '/login',
-    name: 'login',
-    component: Login
+    path: '/table',
+    name: 'table',
+    component: Table
   }
 ];
 

@@ -8,7 +8,7 @@
         </svg>
       </div>
       <div class="flex justify-center items-center space-x-6">
-        <div class="flex flex-col items-center justify-center space-x-6 cursor-pointer transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
+        <div @click="onToggle" class="flex flex-col items-center justify-center space-x-6 cursor-pointer transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
           <svg class="hover:text-green-600"  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"
                viewBox="0 0 24 24"  fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round"
                stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -16,6 +16,40 @@
           </svg>
           <span>Rechercher</span>
         </div>
+        <transition name="fade">
+          <div v-if="isModalVisible" class="min-h-screen absolute top-full lg:left-0 -left-5 bottom-0 w-full z-50 lg:p-0 p-8">
+            <div class="absolute bg-black opacity-50 inset-0 z-0"
+            >
+            </div>
+            <div
+              class="w-full max-w-lg relative m-auto rounded-md shadow-lg bg-white top-20 lg:pl-0 pl-4"
+            >
+              <div>
+                <div class="text-center flex-auto justify-center leading-6">
+                  <div class="flex w-full justify-between items-center p-4">
+                    <h2 class="lg:text-2xl text-xl font-semibold">Rechercher un décodeur</h2>
+                    <svg class="cursor-pointer hover:border rounded-md" @click="onToggle" xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"
+                         fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" />
+                    </svg>
+                  </div>
+
+                  <div class="w-full bg-neutral-50 py-8 lg:px-0 px-5 border-y-2">
+                    <input type="search" v-model="decoderNumber" placeholder="Entrer le numéro du décodeur" class="w-full max-w-xs p-4 border rounded-lg lg:placeholder:text-xl placeholder:text-lg placeholder:font-roboto placeholder:text-gray-700 text-right" maxlength="14" />
+                  </div>
+                </div>
+                <div class="p-4 text-right space-x-4 md:block">
+                  <button
+                    class="mb-2 md:mb-0 bg-green-500 border border-green-500 px-5 py-2 text-base shadow-sm font-medium tracking-wider text-white rounded-md hover:shadow-lg hover:bg-green-600"
+                    @click="searchDecoder"
+                  >
+                    Rechercher
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </transition>
         <div class="relative transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
           <button @click="toggleNotifications" class="text-gray-600 hover:text-green-600 focus:outline-none">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -54,6 +88,13 @@ import { ref } from 'vue';
 import { useRouter } from "vue-router";
 
 const router = useRouter();
+
+const isModalVisible = ref(false);
+const decoderNumber = ref('');
+
+const onToggle = () => {
+  isModalVisible.value = !isModalVisible.value;
+}
 
 // État pour l'utilisateur
 const user = ref({
@@ -94,6 +135,19 @@ const logout = () => {
   // Implement logout logic here
   router.push('/');
 };
+
+const searchDecoder = () => {
+  try {
+    if (decoderNumber.value.length !== 14) {
+      alert('valid_decoder_number_is_required');
+      return;
+    }
+    alert(decoderNumber.value);
+  } catch (error) {
+    throw error;
+  }
+};
+
 
 
 </script>
