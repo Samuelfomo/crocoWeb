@@ -35,7 +35,13 @@
                   </div>
 
                   <div class="w-full bg-neutral-50 py-8 lg:px-0 px-5 border-y-2">
-                    <input type="search" v-model="decoderNumber" placeholder="Entrer le numéro du décodeur" class="w-full max-w-xs p-4 border rounded-lg lg:placeholder:text-xl placeholder:text-lg placeholder:font-roboto placeholder:text-gray-700 text-right" maxlength="14" />
+                    <input
+                      type="search"
+                      v-model="decoderNumber"
+                      placeholder="Entrer le numéro du décodeur"
+                      class="text-2xl font-semibold text-green-500 w-full max-w-xs p-4 border focus:outline-none focus:ring-2 focus:ring-green-300 focus:border-green-500 rounded-lg lg:placeholder:text-xl placeholder:text-lg placeholder:font-roboto placeholder:font-normal placeholder:text-gray-700 text-right placeholder:focus:text-green-500"
+                      maxlength="14"
+                    />
                   </div>
                 </div>
                 <div class="p-4 text-right space-x-4 md:block">
@@ -46,6 +52,17 @@
                     Rechercher
                   </button>
                 </div>
+              </div>
+              <div class="w-full bg-neutral-50 py-8 lg:px-0 px-5 border-y-2 hidden">
+                <input
+                  type="search"
+                  v-model="decoderNumber"
+                  placeholder="Entrer le numéro du décodeur"
+                  class="text-2xl font-semibold text-green-600 w-full max-w-xs p-4 border border-gray-300 rounded-lg
+                      focus:border-green-500 focus:ring-2 focus:ring-green-300 hover:border-green-500
+                      lg:placeholder:text-xl placeholder:text-lg placeholder:font-roboto placeholder:text-gray-700 text-right"
+                  maxlength="14"
+                />
               </div>
             </div>
           </div>
