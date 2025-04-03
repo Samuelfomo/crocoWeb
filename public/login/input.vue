@@ -4,6 +4,7 @@
       :id="id"
       :type="type"
       :value="modelValue"
+      :maxlength="maxlength"
       @input="$emit('update:modelValue', $event.target.value)"
       :placeholder="placeholder"
       class="floating-label-input"
@@ -22,7 +23,8 @@ defineProps({
   },
   label: String,
   placeholder: String,
-  modelValue: [String, Number]
+  modelValue: [String, Number],
+  maxlength: [String, Number]
 })
 
 defineEmits(['update:modelValue'])

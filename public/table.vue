@@ -17,19 +17,19 @@
             <th class="py-2 px-4 border-2 border-white text-left text-lg font-bold text-gray-400">
               Point de vente
             </th>
-            <th class="px-4 border-2 border-white text-left text-lg font-bold text-gray-400">
+            <th class="hidden lg:table-cell px-4 border-2 border-white text-left text-lg font-bold text-gray-400">
               Agent
             </th>
-            <th class="px-4 border-2 border-white text-left text-lg font-bold text-gray-400">
+            <th class="hidden lg:table-cell px-4 border-2 border-white text-left text-lg font-bold text-gray-400">
               Mobile
             </th>
-            <th class="px-4 border-2 border-white text-left text-lg font-bold text-gray-400">
+            <th class="hidden lg:table-cell px-4 border-2 border-white text-left text-lg font-bold text-gray-400">
               Email
             </th>
-            <th class="px-4 border-2 border-white text-left text-lg font-bold text-gray-400">
+            <th class="hidden lg:table-cell px-4 border-2 border-white text-left text-lg font-bold text-gray-400">
               Ville-Pays
             </th>
-            <th class="px-4 border-2 border-white text-left text-lg font-bold text-gray-400">
+            <th class="hidden lg:table-cell px-4 border-2 border-white text-left text-lg font-bold text-gray-400">
               Residence
             </th>
             <th class="px-4 border-2 border-white text-left text-lg font-bold text-gray-400">
@@ -43,43 +43,85 @@
           </thead>
           <tbody>
           <tr
-            class="hover:bg-gray-50 text-left border-b border-gray-300 italic">
-            <td class="py-2 px-4 text-green-300 font-bold">
-              <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"
-                    stroke-width="3"  stroke-linecap="round"  stroke-linejoin="round" ><path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-              </svg>
-            </td>
-            <td class="py-2 px-4 uppercase">imediatis sarl</td>
-            <td class="py-2 px-4">FRED JOHNSO</td>
-            <td class="py-2 px-4">699773399</td>
-            <td class="py-2 px-4">hello@imediatis.net</td>
-            <td class="py-2 px-4 uppercase">Douala-cm</td>
-            <td class="py-2 px-4">BLOC M MAKEPE</td>
-            <td class="py-2 px-4 text-green-300 font-bold">02</td>
-            <td class="py-2 px-4 hidden">
-              <div class="relative">
-                <button class="p-1 hover:bg-gray-100">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                    <path
-                      d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"
-                    />
-                  </svg>
-                </button>
-                <div  class="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black
-              ring-opacity-5 z-50">
-                  <div class="py-1">
-                    <button  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left">
-                      Modifier
-                    </button>
-                    <button class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 w-full text-left">
-                      Supprimer
-                    </button>
+              class="hover:bg-gray-50 text-left border-b border-gray-300 italic">
+              <td class="py-2 px-4 text-green-300 font-bold">
+                <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"
+                      stroke-width="3"  stroke-linecap="round"  stroke-linejoin="round" ><path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                  <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                </svg>
+              </td>
+              <td class="py-2 px-4 uppercase">imediatis sarl</td>
+              <td class="py-2 px-4 hidden lg:table-cell">FRED JOHNSO</td>
+              <td class="py-2 px-4 hidden lg:table-cell">699773399</td>
+              <td class="py-2 px-4 hidden lg:table-cell">hello@imediatis.net</td>
+              <td class="py-2 px-4 uppercase hidden lg:table-cell">Douala-cm</td>
+              <td class="py-2 px-4 hidden lg:table-cell">BLOC M MAKEPE</td>
+              <td class="py-2 px-4 text-green-300 font-bold">02</td>
+              <td class="py-2 px-4 hidden">
+                <div class="relative">
+                  <button class="p-1 hover:bg-gray-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path
+                        d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"
+                      />
+                    </svg>
+                  </button>
+                  <div  class="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black
+                ring-opacity-5 z-50">
+                    <div class="py-1">
+                      <button  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left">
+                        Modifier
+                      </button>
+                      <button class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 w-full text-left">
+                        Supprimer
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </td>
-          </tr>
+              </td>
+            </tr>
+          <tr
+              class="hover:bg-gray-50 text-left border-b border-gray-300 text-gray-300 italic">
+              <td class="flex justify-start items-center py-2 pl-1 pr-4 font-bold">
+                <svg class="text-red-600" xmlns="http://www.w3.org/2000/svg"  width="10"  height="10"  viewBox="0 0 24 24"  fill="currentColor">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 3.34a10 10 0 1 1
+                  -4.995 8.984l-.005 -.324l.005 -.324a10 10 0 0 1 4.995 -8.336z" />
+                </svg>
+                <svg class="text-green-300"  xmlns="http://www.w3.org/2000/svg"  width="26"  height="26"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"
+                      stroke-width="3"  stroke-linecap="round"  stroke-linejoin="round" ><path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                  <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                </svg>
+              </td>
+              <td class="py-2 px-4 uppercase">FredCode</td>
+              <td class="py-2 px-4 hidden lg:table-cell">FRED</td>
+              <td class="py-2 px-4 hidden lg:table-cell">699888709</td>
+              <td class="py-2 px-4 hidden lg:table-cell">fred@gmail.com</td>
+              <td class="py-2 px-4 uppercase hidden lg:table-cell">Maroua-cm</td>
+              <td class="py-2 px-4 hidden lg:table-cell">DEIDO</td>
+              <td class="py-2 px-4 text-green-300 font-bold">10</td>
+              <td class="py-2 px-4 hidden">
+                <div class="relative">
+                  <button class="p-1 hover:bg-gray-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path
+                        d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"
+                      />
+                    </svg>
+                  </button>
+                  <div  class="absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black
+                ring-opacity-5 z-50">
+                    <div class="py-1">
+                      <button  class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left">
+                        Modifier
+                      </button>
+                      <button class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 w-full text-left">
+                        Supprimer
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </td>
+            </tr>
           </tbody>
         </table>
 

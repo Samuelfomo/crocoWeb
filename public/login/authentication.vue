@@ -38,6 +38,7 @@
                         :placeholder="'Entrez votre code'"
                         :type="'text'"
                         class="text-green-600 text-lg font-bold"
+                        maxlength="6"
                       />
                     </div>
 
@@ -63,6 +64,7 @@
                         :placeholder="'Entrez votre code'"
                         :type="'text'"
                         class="text-green-700 text-lg font-bold"
+                        maxlength="4"
                       />
                     </div>
                     <p v-if="errors.pin" class="text-red-600 text-xs mt-1">{{ errors.pin }}</p>

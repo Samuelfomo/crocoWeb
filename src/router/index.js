@@ -4,6 +4,7 @@ import Modal from "@public/login/login.vue";
 import Contact from "@public/contact.vue";
 import Home from "@public/home.vue";
 import Table from "@public/table.vue";
+import Transaction from "@public/transaction.vue";
 
 const routes = [
 
@@ -31,6 +32,11 @@ const routes = [
     path: '/table',
     name: 'table',
     component: Table
+  },
+  {
+    path: '/transaction',
+    name: 'transaction',
+    component: Transaction
   }
 ];
 

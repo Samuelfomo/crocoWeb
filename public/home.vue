@@ -11,8 +11,26 @@
         <main class="flex-grow bg-neutral-100 rounded-lg shadow-md lg:p-16 py-6 mt-16 w-full">
           <div class="border flex flex-col w-full h-full bg-white" ref="box">
             <div class="p-5 w-full border-b border-green-600 border-opacity-20 flex justify-between items-center">
-              <span class="text-xl font-bold text-gray-950">Point of sale</span>
-              <span class="text-lg font-medium text-gray-700">Menu</span>
+              <span class="text-xl font-bold text-gray-950">Point de vente</span>
+              <div class="relative">
+                <div class="flex items-center justify-between cursor-pointer" @click="toggleMenu">
+                  <span class="text-lg font-medium text-gray-700">Menu</span>
+                  <svg  xmlns="http://www.w3.org/2000/svg"  width="20"  height="20"  viewBox="0 0 24 24"  fill="currentColor">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 9c.852 0 1.297 .986 .783 1.623l-.076 .084l-6 6a1 1 0 0 1 -1.32
+                  .083l-.094 -.083l-6 -6l-.083 -.094l-.054 -.077l-.054 -.096l-.017 -.036l-.027 -.067l-.032 -.108l-.01 -.053l-.01 -.06l-.004
+                   -.057v-.118l.005 -.058l.009 -.06l.01 -.052l.032 -.108l.027 -.067l.07 -.132l.065 -.09l.073 -.081l.094 -.083l.077 -.054l.096
+                    -.054l.036 -.017l.067 -.027l.108 -.032l.053 -.01l.06 -.01l.057 -.004l12.059 -.002z" />
+                  </svg>
+                </div>
+
+
+                  <div ref="menuBox" class="absolute top-full right-2 bg-white shadow-md rounded-lg p-5 w-[10rem] border hidden">
+                    <p class="text-gray-700">Bonjour Samuel</p>
+                    <p class="text-gray-700">Nous sommes là</p>
+                  </div>
+
+              </div>
+
             </div>
             <div class="flex w-full lg:justify-end items-center p-5">
               <input type="search" placeholder="Rechercher" class="w-full bg-gray-50 hover:bg-white lg:max-w-[16rem]
@@ -39,7 +57,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import Header from "@public/components/header.vue";
 import Footer from "@public/components/footer.vue";
@@ -49,8 +67,20 @@ import gsap from "gsap";
 import {useRoute} from "vue-router";
 import User from "@/repository/Login";
 import Table from "@public/table.vue";
+
 const route = useRoute();
 const box = ref(null);
+const isMenuOpen = ref(false);
+const menuBox = ref(null);
+
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value;
+  if (isMenuOpen.value) {
+    gsap.to(menuBox.value, { opacity: 1, y: 0, duration: 0.3, display: 'block' });
+  } else {
+    gsap.to(menuBox.value, { opacity: 0, y: -10, duration: 0.2, onComplete: () => menuBox.value.style.display = 'none' });
+  }
+};
 
 // onMounted( async () =>{
   // const user = this.route.query.user;
@@ -73,22 +103,5 @@ onMounted(async () => {
 });
 
 </script>
-
-<!--<template>-->
-<!--  <div ref="box" class="w-40 h-40 bg-blue-500 text-white flex items-center justify-center">-->
-<!--    Animé avec GSAP-->
-<!--  </div>-->
-<!--</template>-->
-
-<!--<script setup>-->
-<!--import gsap from "gsap";-->
-<!--import { onMounted, ref } from "vue";-->
-
-<!--const box = ref(null);-->
-
-<!--onMounted(() => {-->
-<!--  gsap.fromTo(box.value, { x: 1000, opacity: 0 }, { x: 500, opacity: 1, duration: 2 });-->
-<!--});-->
-<!--</script>-->
 
 
