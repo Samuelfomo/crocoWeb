@@ -63,7 +63,7 @@
                   id="country"
                   v-model="form.country"
                   @change="loadCities"
-                  class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
+                  class="w-full p-3 bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
                   :class="{'border-red-500': errors.country}"
                 >
                   <option value="" disabled selected>Sélectionnez un pays</option>
