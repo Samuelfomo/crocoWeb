@@ -1,5 +1,7 @@
 <template>
-  <div class="bg-neutral-300 min-h-screen content-center">
+  <div class="bg-neutral-50 min-h-screen content-center">
+    <Dashboard />
+    <Header />
     <!-- Loader (identique aux autres composants) -->
     <div v-if="isLoading" class="croco-spinner">
       <svg aria-hidden="true" role="status" class="w-32 h-32 text-gray-200 animate-spin dark:text-gray-600" viewBox="0 0 100 101"
@@ -10,38 +12,43 @@
       <p class="mt-4 font-medium text-gray-700">Loading...</p>
     </div>
 
+    <div class="flex flex-col py-24 mt-20">
       <!-- Container principal -->
-      <div class="bg-white mx-auto w-full max-w-lg overflow-hidden shadow p-4 z-50">
-        <!-- En-tête -->
-        <div class="px-3 py-5 w-full bg-black flex justify-center items-center rounded-lg">
-          <img :src="Croco" alt="Logo Croco+" class="h-10">
-        </div>
+      <div class="bg-white mx-auto w-full max-w-4xl overflow-hidden shadow p-8 z-30">
 
-        <div class="w-full mt-4">
-          <h2 class="text-center font-roboto text-2xl mb-4">Créez votre compte</h2>
+        <!-- En-tête -->
+        <div class="w-full pb-5 justify-center items-center">
+          <h2 class="text-2xl font-medium text-gray-700">Créez votre compte</h2>
+        </div>
+<!--        <div class="px-3 py-5 w-full flex bg-black justify-center items-center rounded-lg">-->
+<!--          <img :src="Croco" alt="Logo Croco+" class="h-10">-->
+<!--        </div>-->
+
+        <div class="w-full">
+<!--          <h2 class="text-center font-roboto text-2xl mb-4">Créez votre compte</h2>-->
 
           <!-- Formulaire d'inscription -->
           <form @submit.prevent="submitForm" class="space-y-4">
             <!-- Nom et Prénom -->
             <div class="grid grid-cols-2 gap-4">
               <div>
-                <label for="lastname" class="block text-lg font-patrick-hand text-gray-700 mb-1">Nom</label>
+                <label for="lastname" class="block text-lg font-medium text-gray-700">Nom</label>
                 <input
                   type="text"
                   id="lastname"
                   v-model="form.lastname"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
+                  class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
                   :class="{'border-red-500': errors.lastname}"
                 />
                 <p v-if="errors.lastname" class="text-red-600 text-xs mt-1">{{ errors.lastname }}</p>
               </div>
               <div>
-                <label for="firstname" class="block text-lg font-patrick-hand text-gray-700 mb-1">Prénom</label>
+                <label for="firstname" class="block text-lg font-medium text-gray-700">Prénom</label>
                 <input
                   type="text"
                   id="firstname"
                   v-model="form.firstname"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
+                  class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
                   :class="{'border-red-500': errors.firstname}"
                 />
                 <p v-if="errors.firstname" class="text-red-600 text-xs mt-1">{{ errors.firstname }}</p>
@@ -51,12 +58,12 @@
             <!-- Pays et Ville -->
             <div class="grid grid-cols-2 gap-4">
               <div>
-                <label for="country" class="block text-lg font-patrick-hand text-gray-700 mb-1">Pays</label>
+                <label for="country" class="block text-lg font-medium text-gray-700">Pays</label>
                 <select
                   id="country"
                   v-model="form.country"
                   @change="loadCities"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
+                  class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
                   :class="{'border-red-500': errors.country}"
                 >
                   <option value="" disabled selected>Sélectionnez un pays</option>
@@ -67,11 +74,11 @@
                 <p v-if="errors.country" class="text-red-600 text-xs mt-1">{{ errors.country }}</p>
               </div>
               <div>
-                <label for="city" class="block text-lg font-patrick-hand text-gray-700 mb-1">Ville</label>
+                <label for="city" class="block text-lg font-medium text-gray-700">Ville</label>
                 <select
                   id="city"
                   v-model="form.city"
-                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
+                  class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
                   :class="{'border-red-500': errors.city}"
                   :disabled="!form.country"
                 >
@@ -84,9 +91,10 @@
               </div>
             </div>
 
+            <div class="grid grid-cols-2 gap-4">
             <!-- Téléphone -->
             <div>
-              <label for="phone" class="block text-lg font-patrick-hand text-gray-700 mb-1">Numéro de téléphone</label>
+              <label for="phone" class="block text-lg font-medium text-gray-700">Numéro de téléphone</label>
               <div class="flex">
               <span class="inline-flex items-center px-3 text-gray-500 bg-gray-100 border border-r-0 border-gray-300 rounded-l-lg">
                 +{{ selectedCountryCode }}
@@ -104,7 +112,7 @@
 
             <!-- Email -->
             <div>
-              <label for="email" class="block text-lg font-patrick-hand text-gray-700 mb-1">Email</label>
+              <label for="email" class="block text-lg font-medium text-gray-700">Email</label>
               <input
                 type="email"
                 id="email"
@@ -114,26 +122,27 @@
               />
               <p v-if="errors.email" class="text-red-600 text-xs mt-1">{{ errors.email }}</p>
             </div>
-
-            <!-- Code de parrainage -->
-            <div>
-              <label for="referralCode" class="block text-lg font-patrick-hand text-gray-700 mb-1">Code de parrainage (optionnel)</label>
-              <input
-                type="text"
-                id="referralCode"
-                v-model="form.referralCode"
-                placeholder="Si vous avez été parrainé(e)"
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
-                :class="{'border-red-500': errors.referralCode}"
-              />
-              <p v-if="errors.referralCode" class="text-red-600 text-xs mt-1">{{ errors.referralCode }}</p>
             </div>
 
+            <!-- Code de parrainage -->
+<!--            <div>-->
+<!--              <label for="referralCode" class="block text-xl font-medium text-gray-600">Code de parrainage (optionnel)</label>-->
+<!--              <input-->
+<!--                type="text"-->
+<!--                id="referralCode"-->
+<!--                v-model="form.referralCode"-->
+<!--                placeholder="Si vous avez été parrainé(e)"-->
+<!--                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"-->
+<!--                :class="{'border-red-500': errors.referralCode}"-->
+<!--              />-->
+<!--              <p v-if="errors.referralCode" class="text-red-600 text-xs mt-1">{{ errors.referralCode }}</p>-->
+<!--            </div>-->
+
             <!-- Bouton de soumission -->
-            <div class="mt-6">
+            <div class="pt-6">
               <button
                 type="submit"
-                class="w-full rounded-lg bg-green-500 hover:bg-green-600 text-xl text-white font-roboto transition duration-300 capitalize py-3"
+                class="w-full rounded-lg bg-green-600 hover:bg-green-700 text-xl text-white font-roboto transition duration-300 capitalize py-3"
                 :disabled="isSubmitting"
               >
                 <span v-if="isSubmitting">Création en cours...</span>
@@ -143,7 +152,7 @@
           </form>
 
           <!-- Lien pour se connecter -->
-          <div class="text-center text-base cursor-pointer font-light mt-4">
+          <div class="text-center text-base cursor-pointer font-light pt-5">
           <span>Vous avez déjà un compte?
             <a @click="router.push('/')" class="pl-2 text-green-500 hover:text-green-600 transition duration-300 cursor-pointer">
               Se connecter
@@ -153,13 +162,18 @@
         </div>
       </div>
 
+    </div>
+<Footer />
   </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import Croco from '@/assets/images/svg/croco-white.svg';
+import Footer from "@public/components/footer.vue";
+// import Croco from '@/assets/images/svg/croco-white.svg';
+import Header from "@public/components/header.vue";
+import Dashboard from "@public/components/dashboard.vue";
 
 const router = useRouter();
 const isLoading = ref(false);
