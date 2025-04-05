@@ -84,7 +84,7 @@
           <p v-if="errors.auth" class="text-red-600 text-xs mt-1 w-full text-center">{{ errors.pin }}</p>
 
           <!-- Inscription -->
-          <div class="text-center text-base cursor-pointer font-light pt-5">
+          <div class="text-center text-base cursor-pointer font-light pt-5 hidden">
             <span>Don't have an account?
               <a href="#" class="pl-2 croco-link text-lg" @click="router.push('/contact')">
                 Create Now

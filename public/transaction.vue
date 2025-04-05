@@ -7,8 +7,8 @@
       <Header />
 
       <!-- Main Content Area -->
-      <div class="flex-grow py-6 flex lg:pl-32">
-        <main class="min-h-screen flex-grow flex-col bg-neutral-100 rounded-lg shadow-md lg:p-16 p-6 mt-16 w-full">
+      <div class="flex-grow py-6 flex">
+        <main class="min-h-screen flex-grow flex-col bg-neutral-100 rounded-lg shadow-md lg:p-16 p-6 w-full">
           <div class="grid lg:grid-cols-2 md:grid-cols-2 grid-cols-1 pb-5 gap-2">
             <div class="grid grid-cols-2 gap-2" ref="left">
               <div

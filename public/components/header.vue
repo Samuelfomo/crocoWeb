@@ -1,13 +1,13 @@
 <template>
-  <header class="bg-white shadow-md fixed w-full z-40 lg:pl-32">
-    <div class="container px-4 py-6 flex justify-between items-center">
-      <div class="flex items-center">
-        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"
-              stroke-linecap="round"  stroke-linejoin="round"  class=" hover:text-green-600">
-          <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 6l16 0" /><path d="M4 12l10 0" /><path d="M4 18l14 0" />
-        </svg>
-      </div>
-      <div class="flex justify-center items-center space-x-6">
+  <header class="bg-white shadow-md w-full z-40">
+    <div class=" px-4 py-6 flex lg:justify-end items-center justify-between">
+<!--      <div class="flex items-center">-->
+<!--        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"-->
+<!--              stroke-linecap="round"  stroke-linejoin="round"  class=" hover:text-green-600">-->
+<!--          <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 6l16 0" /><path d="M4 12l10 0" /><path d="M4 18l14 0" />-->
+<!--        </svg>-->
+<!--      </div>-->
+      <div class="flex justify-center items-center space-x-6 ">
         <div @click="onToggle" class="flex flex-col items-center justify-center space-x-6 cursor-pointer transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
           <svg class="hover:text-green-600"  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"
                viewBox="0 0 24 24"  fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round"
@@ -17,12 +17,12 @@
           <span>Rechercher</span>
         </div>
         <transition name="fade">
-          <div v-if="isModalVisible" class="min-h-screen absolute top-full lg:left-0 -left-5 bottom-0 w-full z-50 lg:p-0 p-8">
+          <div v-if="isModalVisible" class="absolute top-24 lg:left-0 -left-5 bottom-0 w-full lg:px-0 lg:py-0 py-8 px-4">
             <div class="absolute bg-black opacity-50 inset-0 z-0"
             >
             </div>
             <div
-              class="w-full max-w-lg relative m-auto rounded-md shadow-lg bg-white top-20 lg:pl-0 pl-4"
+              class="w-full max-w-lg relative m-auto rounded-md shadow-lg bg-white lg:top-40 top-20 lg:pl-0 pl-4"
             >
               <div>
                 <div class="text-center flex-auto justify-center leading-6">

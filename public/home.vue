@@ -1,15 +1,24 @@
 <template>
   <div class="flex min-h-screen">
     <!-- Sidebar / Dashboard Navigation -->
-    <Dashboard />
+<!--    <Dashboard />-->
+    <Contact />
     <div class=" flex flex-col w-full">
       <!-- Header -->
       <Header />
 
       <!-- Main Content Area -->
-      <div class="flex-grow py-6 flex lg:pl-32">
-        <main class="flex-grow bg-neutral-100 rounded-lg shadow-md lg:p-16 py-6 mt-16 w-full">
-          <div class="border flex flex-col w-full h-full bg-white" ref="box">
+      <div class="flex-grow py-6 flex">
+        <main class="flex-grow bg-neutral-100 rounded-lg shadow-md lg:pl-32 lg:p-16 py-6 w-full">
+          <div class="flex flex-col w-full p-2 mb-5   bg-white hidden">
+            <span class="text-xl font-bold text-gray-700 px-3 border-green-600 border-opacity-20 border-b">Account</span>
+            <div class="p-3 grid grid-cols-5 gap-6">
+              <div class="flex flex-col w-full h-[12rem] bg-green-600 shadow-lg border rounded-lg cursor-pointer">
+                <
+              </div>
+            </div>
+          </div>
+          <div class="border flex flex-col w-full bg-white" ref="box">
             <div class="p-5 w-full border-b border-green-600 border-opacity-20 flex justify-between items-center">
               <span class="text-xl font-bold text-gray-950">Point de vente</span>
               <div class="relative">
@@ -24,9 +33,22 @@
                 </div>
 
 
-                  <div ref="menuBox" class="absolute top-full right-2 bg-white shadow-md rounded-lg p-5 w-[10rem] border hidden">
-                    <p class="text-gray-700">Bonjour Samuel</p>
-                    <p class="text-gray-700">Nous sommes là</p>
+                  <div ref="menuBox" class="absolute top-full right-2 bg-white shadow-md rounded-lg px-5 py-2 w-[12rem] border hidden">
+                    <div class="flex justify-start items-center text-gray-500 font-serif text-lg py-2 cursor-pointer hover:bg-green-50">
+                      <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"
+                            stroke="currentColor" stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round" >
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" />
+                      </svg>
+                      Partenaire
+                    </div>
+                    <div class="flex justify-start items-center text-gray-500 font-light text-lg py-2 cursor-pointer hover:bg-green-50">
+                      <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"
+                            stroke="currentColor" stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round" >
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" />
+                      </svg>
+                      Point de vente
+                    </div>
+<!--                    <div class="text-gray-700 py-2">Nous sommes là</div>-->
                   </div>
 
               </div>
@@ -57,7 +79,7 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, onMounted } from 'vue';
 import Header from "@public/components/header.vue";
 import Footer from "@public/components/footer.vue";
@@ -67,6 +89,7 @@ import gsap from "gsap";
 import {useRoute} from "vue-router";
 import User from "@/repository/Login";
 import Table from "@public/table.vue";
+import Contact from "@public/contact.vue";
 
 const route = useRoute();
 const box = ref(null);

@@ -57,7 +57,7 @@ const params = ref([
 </script>
 
 <template>
-  <aside class="bg-white rounded-lg shadow-md flex-shrink-0 z-50 min-h-screen fixed lg:flex hidden">
+  <aside class="bg-white rounded-lg shadow-md flex-shrink-0 z-50 min-h-screen lg:flex hidden">
     <div class="px-4">
 <!--      <h2 class="text-2xl font-semibold text-gray-800 my-6">Tableau de bord</h2>-->
       <div class="flex items-center py-3 border-b-2 shadow-xs cursor-pointer">
