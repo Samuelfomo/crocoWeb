@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Auth from "@public/login/authentication.vue";
 import Modal from "@public/login/login.vue";
-import Contact from "@public/contact.vue";
+import Point_sale from "@public/point_sale.vue";
 import Home from "@public/home.vue";
 import Table from "@public/table.vue";
 import Transaction from "@public/transaction.vue";
@@ -24,9 +24,9 @@ const routes = [
     component: Home
   },
   {
-    path: '/contact',
-    name: 'contact',
-    component: Contact
+    path: '/point_sale',
+    name: 'point_sale',
+    component: Point_sale
   },
   {
     path: '/table',

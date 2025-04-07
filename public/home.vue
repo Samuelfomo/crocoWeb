@@ -1,8 +1,7 @@
 <template>
   <div class="flex min-h-screen">
     <!-- Sidebar / Dashboard Navigation -->
-<!--    <Dashboard />-->
-    <Contact />
+    <Dashboard />
     <div class=" flex flex-col w-full">
       <!-- Header -->
       <Header />
@@ -10,13 +9,9 @@
       <!-- Main Content Area -->
       <div class="flex-grow py-6 flex">
         <main class="flex-grow bg-neutral-100 rounded-lg shadow-md lg:pl-32 lg:p-16 py-6 w-full">
-          <div class="flex flex-col w-full p-2 mb-5   bg-white hidden">
-            <span class="text-xl font-bold text-gray-700 px-3 border-green-600 border-opacity-20 border-b">Account</span>
-            <div class="p-3 grid grid-cols-5 gap-6">
-              <div class="flex flex-col w-full h-[12rem] bg-green-600 shadow-lg border rounded-lg cursor-pointer">
-                <
-              </div>
-            </div>
+          <div class="grid grid-cols-1 max-w-xs flex-col w-full justify-between items-start border p-5 shadow-sm" ref="boxed">
+            <p class="text-2xl font-bold text-gray-900">100.000 XAF</p>
+            <p class="text-sm font-medium text-gray-400">Solde du compte</p>
           </div>
           <div class="border flex flex-col w-full bg-white" ref="box">
             <div class="p-5 w-full border-b border-green-600 border-opacity-20 flex justify-between items-center">
@@ -36,14 +31,17 @@
                   <div ref="menuBox" class="absolute top-full right-2 bg-white shadow-md rounded-lg px-5 py-2 w-[12rem] border hidden">
                     <div class="flex justify-start items-center text-gray-500 font-serif text-lg py-2 cursor-pointer hover:bg-green-50">
                       <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"
-                            stroke="currentColor" stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round" >
+                            stroke="#87D04C" stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round" >
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" />
                       </svg>
                       Partenaire
                     </div>
-                    <div class="flex justify-start items-center text-gray-500 font-light text-lg py-2 cursor-pointer hover:bg-green-50">
+                    <div
+                      @click="router.push('/point_sale')"
+                      class="flex justify-start items-center text-gray-500 font-light text-lg py-2 cursor-pointer hover:bg-green-50"
+                    >
                       <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"
-                            stroke="currentColor" stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round" >
+                            stroke="#87D04C" stroke-width="1"  stroke-linecap="round"  stroke-linejoin="round" >
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" />
                       </svg>
                       Point de vente
@@ -55,14 +53,12 @@
 
             </div>
             <div class="flex w-full lg:justify-end items-center p-5">
-              <input type="search" placeholder="Rechercher" class="w-full bg-gray-50 hover:bg-white lg:max-w-[16rem]
-               p-4 border focus:right-2 rounded-lg placeholder:text-gray-700 placeholder:text-lg">
-<!--              <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"-->
-<!--                    stroke="currentColor"  stroke-width="1"  stroke-linecap="round"  stroke-linejoin="round" >-->
-<!--                <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />-->
-<!--                <path d="M21 21l-6 -6" />-->
-<!--              </svg>-->
+              <input type="text" v-model="Search" placeholder="Rechercher" class="w-full bg-gray-50 hover:bg-white lg:max-w-[16rem]
+               p-4 border focus:right-2 rounded-lg placeholder:text-gray-700 placeholder:text-lg focus:outline-none
+               focus:ring-0 focus:ring-green-300 focus:border-green-500 focus:text-green-500 focus:font-font-medium focus:text-lg lg:placeholder:text-xl
+               placeholder:font-roboto placeholder:font-normal text-right placeholder:focus:text-green-500">
             </div>
+
             <div class="flex flex-col w-full h-full bg-gray-50 bg-opacity-30 shadow-sm z-50 cursor-pointer">
               <Table/>
 
@@ -81,6 +77,9 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import {useRouter} from "vue-router";
+const router = useRouter();
+
 import Header from "@public/components/header.vue";
 import Footer from "@public/components/footer.vue";
 import Dashboard from "@public/components/dashboard.vue";
@@ -89,10 +88,10 @@ import gsap from "gsap";
 import {useRoute} from "vue-router";
 import User from "@/repository/Login";
 import Table from "@public/table.vue";
-import Contact from "@public/contact.vue";
 
 const route = useRoute();
 const box = ref(null);
+const boxed = ref(null);
 const isMenuOpen = ref(false);
 const menuBox = ref(null);
 
@@ -113,6 +112,7 @@ const toggleMenu = () => {
 
 onMounted(async () => {
   gsap.fromTo(box.value, {y: 500, opacity: 0}, {y: 1, opacity: 9, duration: 1});
+  gsap.fromTo(boxed.value, {y: -120, opacity: 0}, {y: 1, opacity: 1, duration: 1});
    const user = route.query.user;
    const result = await User.getByGuid(user);
   if (!result) {
