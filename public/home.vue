@@ -7,11 +7,11 @@
       <Header />
 
       <!-- Main Content Area -->
-      <div class="flex-grow py-6 flex">
+      <div class="flex-grow flex">
         <main class="flex-grow bg-neutral-100 rounded-lg shadow-md lg:pl-32 lg:p-16 py-6 w-full">
           <div class="grid grid-cols-1 max-w-xs flex-col w-full justify-between items-start border p-5 shadow-sm" ref="boxed">
-            <p class="text-2xl font-bold text-gray-900">100.000 XAF</p>
-            <p class="text-sm font-medium text-gray-400">Solde du compte</p>
+            <p class="text-2xl font-bold text-gray-700">{{ formatMontant(amount)}}</p>
+            <p class="text-base font-semibold text-gray-400">Solde du compte</p>
           </div>
           <div class="border flex flex-col w-full bg-white" ref="box">
             <div class="p-5 w-full border-b border-green-600 border-opacity-20 flex justify-between items-center">
@@ -89,6 +89,14 @@ import {useRoute} from "vue-router";
 import User from "@/repository/Login";
 import Table from "@public/table.vue";
 
+import userLoginStore from '@/stores/userStore'
+import { storeToRefs } from 'pinia'
+
+const store = userLoginStore()
+// Utiliser storeToRefs pour préserver la réactivité
+const { amount } = storeToRefs(store);
+
+
 const route = useRoute();
 const box = ref(null);
 const boxed = ref(null);
@@ -104,20 +112,19 @@ const toggleMenu = () => {
   }
 };
 
-// onMounted( async () =>{
-  // const user = this.route.query.user;
-  // console.log(user);
-// })
-// const menu = ref(''||null);
+const formatMontant = (value) => {
+  if (!value) return '0 XAF'
+  return new Intl.NumberFormat('fr-FR').format(value) + ' XAF'
+}
 
 onMounted(async () => {
   gsap.fromTo(box.value, {y: 500, opacity: 0}, {y: 1, opacity: 9, duration: 1});
   gsap.fromTo(boxed.value, {y: -120, opacity: 0}, {y: 1, opacity: 1, duration: 1});
-   const user = route.query.user;
-   const result = await User.getByGuid(user);
-  if (!result) {
-    console.error("Userdata not found!");
-  }
+  //  const user = route.query.user;
+  //  const result = await User.getByGuid(user);
+  // if (!result) {
+  //   console.error("Userdata not found!");
+  // }
   // setTimeout(async () => {
   //   const result = await User.getByGuid(user);
   // }, 1000);

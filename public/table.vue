@@ -80,7 +80,7 @@
                 </div>
               </td>
             </tr>
-          <tr
+          <tr v-for="(partner, index) in partners" :key="index">
               class="hover:bg-gray-50 text-left border-b border-gray-300 text-gray-300 italic">
               <td class="flex justify-start items-center py-2 pl-1 pr-4 font-bold">
                 <svg class="text-red-600" xmlns="http://www.w3.org/2000/svg"  width="10"  height="10"  viewBox="0 0 24 24"  fill="currentColor">
@@ -180,10 +180,21 @@
 
 <script setup>
 import {ref, computed, watch, onMounted, onUnmounted} from 'vue'
+import Login from "@/repository/Login";
+
+import userLoginStore from '@/stores/userStore'
+import { storeToRefs } from 'pinia'
+
+const store = userLoginStore()
+// Utiliser storeToRefs pour préserver la réactivité
+const { guid } = storeToRefs(store);
+
+console.log('guid is : ', guid.value);
+
 const isLoading = ref(false)
 
 const contacts = ref([])
-const doogleview = ref();
+const doogleView = ref();
 
 const isDropdownOpen = ref(false)
 
@@ -234,11 +245,20 @@ watch(filteredContacts, () => {
 const closeDropdown = (e) => {
   if (!e.target.closest('.relative')) {
     isDropdownOpen.value = false
-    doogleview.value = false
+    doogleView.value = false
   }
 }
+const partners = ref([
 
-onMounted(() => {
+]);
+
+onMounted(async () => {
+  const partner = await Login.myPartner(guid.value);
+  if(!partner){
+    console.log('not_found_partner');
+    return;
+  }
+  partners.value = partner;
   document.addEventListener('click', closeDropdown)
 })
 

@@ -14,7 +14,7 @@
     </div>
 
       <!-- Main Content Area -->
-      <div class="flex-grow py-6 flex">
+      <div class="flex-grow flex">
         <main class="flex-grow bg-neutral-100 rounded-lg shadow-md lg:pl-44 lg:py-16 lg:pr-28 py-6 w-full">
           <div class="border rounded-lg flex flex-col w-full bg-white" ref="box">
             <div class="p-5 w-full border-b border-green-600 border-opacity-20 flex justify-between items-center">
@@ -26,42 +26,59 @@
 
                   <!-- Formulaire d'inscription -->
                   <form @submit.prevent="submitForm" class="space-y-4">
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid lg:grid-cols-2 grid-cols-1 gap-4">
                       <div class="flex flex-col items-start justify-between">
-                        <label class="block text-sm font-medium text-gray-700">Choisir la civilité
+                        <label class="block text-base font-medium leading-loose text-gray-700">Choisir la civilité
                           <span class="text-red-600 text-xs">✱</span>
                         </label>
-                        <div class="flex w-full justify-start items-center gap-4">
-                          <div class="">
+                        <p v-if="errors.gender" class="text-red-600 text-xs mb-1">{{ errors.gender }}</p>
+                        <div class="flex items-center space-x-4">
+                          <label class="inline-flex items-center cursor-pointer">
                             <input
                               type="radio"
-                              id="gender"
-                              v-model="form.gender"
+                              class="peer hidden"
+                              name="gender"
                               value="m"
-                              class=""
-                            /> Mme
-                          </div>
-                          <div class=" ">
+                              v-model="form.gender"
+                            />
+                            <div
+                              class="w-3.5 h-3.5 rounded-full border border-gray-500 peer-checked:border-green-600
+                          peer-checked:bg-green-500 transition-all duration-200"
+                            >
+                            </div>
+                            <span class="ml-2 text-gray-700 font-bold">Mr</span>
+                          </label>
+
+                          <label class="inline-flex items-center cursor-pointer">
                             <input
                               type="radio"
-                              id="gender"
-                              v-model="form.gender"
+                              class="peer hidden"
+                              name="gender"
                               value="f"
-                              class=""
-                            /> M.
-                          </div>
+                              v-model="form.gender"
+                            />
+                            <div
+                              class="w-3.5 h-3.5 rounded-full border border-gray-400 peer-checked:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600
+                          peer-checked:bg-green-500 transition-all duration-200"
+                            >
+
+                            </div>
+                            <span class="ml-2 font-bold text-gray-700">Mme</span>
+                          </label>
                         </div>
                       </div>
                     </div>
+
                     <!-- Nom et Prénom -->
-                    <div class="grid grid-cols-2 gap-10">
+                    <div class="grid lg:grid-cols-2 grid-cols-1 gap-10">
                       <div>
-                        <label for="lastname" class="text-lg font-medium text-gray-700 flex justify-start items-center">
+                        <label for="lastname" class="text-base font-medium leading-loose text-gray-700 flex justify-start items-center">
                           Nom
                           <span class="text-red-600 text-xs">✱</span></label>
                         <input
                           type="text"
                           id="lastname"
+                          placeholder="Entrer le nom"
                           v-model="form.lastname"
                           class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
                           :class="{'border-red-500': errors.lastname}"
@@ -69,10 +86,11 @@
                         <p v-if="errors.lastname" class="text-red-600 text-xs mt-1">{{ errors.lastname }}</p>
                       </div>
                       <div>
-                        <label for="firstname" class="block text-lg font-medium text-gray-700">Prénom</label>
+                        <label for="firstname" class="block text-base font-medium leading-loose text-gray-700">Prénom</label>
                         <input
                           type="text"
                           id="firstname"
+                          placeholder="Entrer le prénom"
                           v-model="form.firstname"
                           class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
                           :class="{'border-red-500': errors.firstname}"
@@ -81,11 +99,12 @@
                       </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-10">
+                    <div class="grid lg:grid-cols-2 grid-cols-1 gap-10">
                       <!-- Téléphone -->
                       <div>
-                        <label for="phone" class="flex justify-start items-center gap-1 text-lg font-medium text-gray-700">
-                          Numéro de téléphone
+                        <label for="phone" class="flex justify-start items-center gap-1
+                        text-base leading-loose font-medium text-gray-700">
+                          Mobile
                           <span class="text-red-600 text-xs">✱</span>
                         </label>
                         <div class="flex">
@@ -96,7 +115,8 @@
                             type="tel"
                             id="phone"
                             v-model="form.phone"
-                            class="flex-1 px-3 py-2 border border-gray-300 rounded-r-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
+                            placeholder="Numéro de téléphone"
+                            class="flex-1 p-3 border border-gray-300 rounded-r-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
                             :class="{'border-red-500': errors.phone}"
                           />
                         </div>
@@ -105,22 +125,23 @@
 
                       <!-- Email -->
                       <div>
-                        <label for="email" class="block text-lg font-medium text-gray-700">Email</label>
+                        <label for="email" class="block text-base leading-loose font-medium text-gray-700">Email</label>
                         <input
                           type="email"
                           id="email"
                           v-model="form.email"
-                          class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
+                          placeholder="Entrer l'adresse e-mail"
+                          class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
                           :class="{'border-red-500': errors.email}"
                         />
                         <p v-if="errors.email" class="text-red-600 text-xs mt-1">{{ errors.email }}</p>
                       </div>
                     </div>
                     <!-- Pays et Ville -->
-                    <div class="grid grid-cols-2 gap-10">
+                    <div class="grid lg:grid-cols-2 grid-cols-1 gap-10">
                       <div class="grid grid-cols-2 gap-10">
                         <div>
-                        <label for="country" class="text-lg font-medium text-gray-700 flex justify-start items-center gap-1">
+                        <label for="country" class="text-base leading-loose font-medium text-gray-700 flex justify-start items-center gap-1">
                           Pays
                           <span class="text-red-600 text-xs">✱</span>
                         </label>
@@ -139,7 +160,7 @@
                         <p v-if="errors.country" class="text-red-600 text-xs mt-1">{{ errors.country }}</p>
                       </div>
                         <div >
-                          <label for="city" class="text-lg font-medium text-gray-700 flex justify-start items-center gap-1">
+                          <label for="city" class="text-base leading-loose font-medium text-gray-700 flex justify-start items-center gap-1">
                             Ville
                             <span class="text-red-600 text-xs">✱</span>
                           </label>
@@ -159,57 +180,57 @@
                         </div>
                       </div>
                       <div >
-                        <label class="block text-lg font-medium text-gray-700">Quartier</label>
+                        <label class="block text-base leading-loose font-medium text-gray-700">Quartier</label>
                         <input
                           id="city"
                           v-model="location"
-                          placeholder="Entrer le Quartier"
+                          placeholder="Entrer le lieu de résidence"
                           class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
                           :class="{'border-red-500': errors.location}"
                         />
                         <p v-if="errors.city" class="text-red-600 text-xs mt-1">{{ errors.location }}</p>
                       </div>
                     </div>
-                    <div class="grid grid-cols-2 gap-10">
-                        <div class="flex flex-col gap-1 justify-start items-start">
-                        <label for="country" class="text-base font-medium text-gray-700">
-                          choisir la langue d'expression
-                          <span class="text-red-600 text-xs">✱</span>
-                        </label>
-                          <div class="flex items-center gap-2">
-                            <label  class="cursor-pointer ml-3">
-                              <div class="relative">
-                                <input
-                                  type="radio"
-                                  :id="`wifi-toggle-${language}`"
-                                  class="sr-only peer"
-                                  v-model="language"
-                                  :value="language"
-                                />
-                                <div class="block w-6 h-4 bg-gray-300 rounded-full peer-checked:bg-orange-100"></div>
-                                <div class="dot absolute left-0 top-0 w-4 h-4 bg-white peer-checked:bg-orange-500 rounded-full transition-all peer-checked:translate-x-3"></div>
-                              </div>
-                            </label> Anglais
-                          </div>
-                        <div class="flex items-center gap-2">
-                          <label  class="cursor-pointer ml-3">
-                            <div class="relative">
-                              <input
-                                type="radio"
-                                :id="`wifi-toggle-${language}`"
-                                class="sr-only peer"
-                                v-model="language"
-                                :value="language"
-                              />
-                              <div class="block w-6 h-4 bg-gray-300 rounded-full peer-checked:bg-orange-100"></div>
-                              <div class="dot absolute left-0 top-0 w-4 h-4 bg-white peer-checked:bg-orange-500 rounded-full transition-all peer-checked:translate-x-3"></div>
-                            </div>
-                          </label>
-                          Francais
-                        </div>
-                        <p v-if="errors.language" class="text-red-600 text-xs mt-1">{{ errors.language }}</p>
-                      </div>
-                    </div>
+<!--                    <div class="grid grid-cols-1 gap-10">-->
+<!--                        <div class="flex flex-col gap-1 justify-start items-start">-->
+<!--                        <label for="country" class="text-base leading-loose font-medium text-gray-700">-->
+<!--                          Choisir la langue d'expression-->
+<!--&lt;!&ndash;                          <span class="text-red-600 text-xs">✱</span>&ndash;&gt;-->
+<!--                        </label>-->
+<!--                          <div class="flex items-center gap-2">-->
+<!--                            <label  class="cursor-pointer ml-3">-->
+<!--                              <div class="relative">-->
+<!--                                <input-->
+<!--                                  type="radio"-->
+<!--                                  :id="`wifi-toggle-${language}`"-->
+<!--                                  class="sr-only peer"-->
+<!--                                  v-model="language"-->
+<!--                                  :value="language"-->
+<!--                                />-->
+<!--                                <div class="block w-6 h-4 bg-gray-300 rounded-full peer-checked:bg-orange-100"></div>-->
+<!--                                <div class="dot absolute left-0 top-0 w-4 h-4 bg-white peer-checked:bg-orange-500 rounded-full transition-all peer-checked:translate-x-3"></div>-->
+<!--                              </div>-->
+<!--                            </label> Anglais-->
+<!--                          </div>-->
+<!--                        <div class="flex items-center gap-2">-->
+<!--                          <label  class="cursor-pointer ml-3">-->
+<!--                            <div class="relative">-->
+<!--                              <input-->
+<!--                                type="radio"-->
+<!--                                :id="`wifi-toggle-${language}`"-->
+<!--                                class="sr-only peer"-->
+<!--                                v-model="language"-->
+<!--                                :value="language"-->
+<!--                              />-->
+<!--                              <div class="block w-6 h-4 bg-gray-300 rounded-full peer-checked:bg-orange-100"></div>-->
+<!--                              <div class="dot absolute left-0 top-0 w-4 h-4 bg-white peer-checked:bg-orange-500 rounded-full transition-all peer-checked:translate-x-3"></div>-->
+<!--                            </div>-->
+<!--                          </label>-->
+<!--                          Francais-->
+<!--                        </div>-->
+<!--                        <p v-if="errors.language" class="text-red-600 text-xs mt-1">{{ errors.language }}</p>-->
+<!--                      </div>-->
+<!--                    </div>-->
 
                     <!-- Bouton de soumission -->
                     <div class="pt-6 w-full flex justify-center items-center">
@@ -256,6 +277,7 @@ const form = ref({
   city: '',
   phone: '',
   email: '',
+  gender: '',
   referralCode: ''
 });
 
@@ -265,6 +287,7 @@ const errors = ref({
   lastname: '',
   country: '',
   city: '',
+  gender: '',
   phone: '',
   email: '',
   referralCode: ''
@@ -322,15 +345,16 @@ const validateForm = () => {
     lastname: '',
     country: '',
     city: '',
+    gender: '',
     phone: '',
     email: '',
     referralCode: ''
   };
 
-  if (!form.value.firstname.trim()) {
-    errors.value.firstname = 'Le prénom est requis';
-    isValid = false;
-  }
+  // if (!form.value.firstname.trim()) {
+  //   errors.value.firstname = 'Le prénom est requis';
+  //   isValid = false;
+  // }
 
   if (!form.value.lastname.trim()) {
     errors.value.lastname = 'Le nom est requis';
@@ -342,6 +366,13 @@ const validateForm = () => {
     isValid = false;
   }
 
+  if (form.value.country) {
+    if (!form.value.city) {
+      errors.value.city = 'Veuillez selectionner une ville';
+      isValid = false;
+    }
+  }
+
   if (!form.value.phone.trim()) {
     errors.value.phone = 'Le numéro de téléphone est requis';
     isValid = false;
@@ -350,11 +381,25 @@ const validateForm = () => {
     isValid = false;
   }
 
-  if (!form.value.email.trim()) {
-    errors.value.email = 'L\'email est requis';
-    isValid = false;
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.value.email.trim())) {
-    errors.value.email = 'Veuillez entrer une adresse email valide';
+  // if (!form.value.email.trim()) {
+  //   errors.value.email = 'L\'email est requis';
+  //   isValid = false;
+  // } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.value.email.trim())) {
+  //   errors.value.email = 'Veuillez entrer une adresse email valide';
+  //   isValid = false;
+  // }
+
+  if (form.value.email) {
+    const emailValue = form.value.email;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+   if (!emailRegex.test(emailValue)) {
+     errors.value.email = 'Veuillez entrer une adresse email valide';
+     isValid = false;
+   }
+  }
+
+  if (!form.value.gender) {
+    errors.value.gender = "Veuillez choisir la civilité";
     isValid = false;
   }
 

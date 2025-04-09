@@ -59,7 +59,7 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import Input from './input.vue'
-import Login from '@/class/Login'
+import Login from '@/class/User'
 
 const router = useRouter()
 const isSubmitting = ref(false)

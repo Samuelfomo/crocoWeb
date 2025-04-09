@@ -1,8 +1,8 @@
 import Profil from "./Profil";
 import Contact from "./Contact";
+import Account from "./Account";
 
 class User{
-  public id: number;
   public guid: number;
   public name: string;
   public code: number;
@@ -15,8 +15,8 @@ class User{
   public deleted: boolean;
   public isSecured: boolean;
   public lastLogin: Date;
+  public account: Account;
   constructor(
-    id : number | null,
     guid : number | null,
     name: string,
     code: number,
@@ -28,9 +28,9 @@ class User{
     createdBy: User | null,
     deleted: boolean,
     isSecured: boolean,
-  lastLogin : Date| null
+  lastLogin : Date| null,
+    account: Account
   ) {
-    this.id = id;
     this.guid = guid;
     this.name = name;
     this.code = code;
@@ -43,10 +43,11 @@ class User{
     this.deleted = deleted;
     this.isSecured = isSecured;
     this.lastLogin = lastLogin;
+    this.account = account;
   }
 
   public static fromJson(json: any): User {
-    return new User(json.id, json.guid, json.name, json.code, json.pin, json.profil, json.contact, json.blocked, json.activated, json.createdBy? json.createdBy : null, json.deleted, json.isSecured, new Date(json.lastLogin))
+    return new User(json.guid, json.name, json.code, json.pin, json.profil, json.contact, json.blocked, json.activated, json.createdBy? json.createdBy : null, json.deleted, json.isSecured, new Date(json.lastLogin), json.account)
   }
 }
 export default User;

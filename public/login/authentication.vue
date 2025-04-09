@@ -106,6 +106,7 @@ import Login from '@/repository/Login'
 import Input from './input.vue'
 
 import gsap from "gsap";
+import useLoginStore from "@/stores/userStore";
 
 
 const router = useRouter();
@@ -158,20 +159,37 @@ const handleSubmit = async () =>{
   try {
     isLoading.value = true
     await new Promise(resolve => setTimeout(resolve, 1500));
-    // console.log(entry.value.pin, entry.value.email )
+    console.log(entry.value)
     const submit = await Login.auth(entry.value.code, entry.value.pin);
     if (!submit) {
       errors.value.auth = 'authentication failed, try again.';
       return false;
     }
-    await router.push('/home');
-    if(submit){
-      await router.push({
-        name: 'home',
-        query: { user: submit.guid}
-        // query: { user: JSON.stringify(submit.value) }
-      });
+    // await router.push('/home');
+    // if(submit){
+    //   await router.push({
+    //     name: 'home',
+    //     query: { user: submit.guid}
+    //     // query: { user: JSON.stringify(submit.value) }
+    //   });
+    // }
+    if (submit) {
+      const loginStore = useLoginStore();
+      loginStore.setUserData({
+        mobile: submit.contact.mobile,
+        guid: submit.guid,
+        amount: submit.account.balance,
+        structure : submit.name,
+        firstname: submit.contact.firstname,
+        lastname: submit.contact.lastname,
+        email: submit.contact.email,
+        country: submit.contact.city.country.alpha2,
+        city: submit.contact.city.name,
+        profil: submit.profil.name
+      })
     }
+    await router.push({name: 'home'});
+
   }
   catch (error){
     console.error('Erreur lors de la connexion:', error);

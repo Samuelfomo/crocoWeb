@@ -1,10 +1,10 @@
 import axios from "axios";
-import User from "@/class/Login";
+import User from "../class/User";
 
 class Login {
 
   static async auth(code: number, pin: number) {
-    const SiteUrl = "http://13.39.158.20"
+    const SiteUrl = "http://13.38.59.232/"
     const uuid = await axios.get(`${SiteUrl}/token/uuid`);
 
     const version = '1.0.0';
@@ -49,5 +49,47 @@ class Login {
       throw error;
     }
   }
+
+  static async myPartner(guid: number) {
+    if (!guid) return null;
+    console.log("guid sender is ", guid);
+
+    const SiteUrl = "http://13.38.59.232/";
+    const version = '1.0.0';
+    const name = 'CROCO';
+    const appCode = '154269875632';
+
+    try {
+      const { data: uuidData } = await axios.get(`${SiteUrl}/token/uuid`);
+      const identified = uuidData.response;
+
+      const { data: tokenData } = await axios.post(`${SiteUrl}/token/auth`, {
+        version,
+        name,
+        appCode,
+        identified,
+      });
+
+      const bearerToken = tokenData.response.token;
+
+      const { data: response } = await axios.put(`${SiteUrl}/user/myPartner`, {
+        manager: guid,
+      }, {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${bearerToken}`
+        }
+      });
+
+      if (!response.status) return null;
+      console.log(response.response);
+
+      return User.fromJson(response.response);
+    } catch (error) {
+      console.error('Erreur dans myPartner:', error);
+      throw error;
+    }
+  }
+
 }
 export default Login;
