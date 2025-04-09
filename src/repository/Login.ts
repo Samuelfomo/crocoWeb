@@ -82,9 +82,11 @@ class Login {
       });
 
       if (!response.status) return null;
-      console.log(response.response);
 
-      return User.fromJson(response.response);
+      const data = response.response;
+      console.log(data.map(entry => User.fromJson(entry)));
+      return data.map(entry => User.fromJson(entry));
+      // return User.fromJson(response.response);
     } catch (error) {
       console.error('Erreur dans myPartner:', error);
       throw error;
