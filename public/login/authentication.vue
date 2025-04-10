@@ -185,7 +185,8 @@ const handleSubmit = async () =>{
         email: submit.contact.email,
         country: submit.contact.city.country.alpha2,
         city: submit.contact.city.name,
-        profil: submit.profil.name
+        profil: submit.profil.name,
+        code: submit.code,
       })
     }
     await router.push({name: 'home'});

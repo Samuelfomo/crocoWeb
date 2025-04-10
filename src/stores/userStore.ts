@@ -16,6 +16,8 @@ import { defineStore } from 'pinia'
   },
 
   getters: {
+    token: (state) => state.userData?.token || null,
+
     mobile: (state) => state.userData?.mobile || null,
     guid: (state) => state.userData?.guid || null,
     amount: (state) => state.userData?.amount|| null,
@@ -26,6 +28,7 @@ import { defineStore } from 'pinia'
     country: (state) => state.userData?.country || null,
     city: (state) => state.userData?.city || null,
     profil: (state) => state.userData?.profil || null,
+    code: (state) => state.userData?.code || null,
 
     // isLoggedIn: (state) => !!state.userData,
     // Ajout d'un getter pour obtenir toutes les données utilisateur
@@ -34,21 +37,36 @@ import { defineStore } from 'pinia'
 
   actions: {
 
-    setUserData(data: any) {
+    setUserData(data: Partial<any>) {
       try {
-        // Ajouter une date d'expiration (par exemple, 24h)
-        const expiresAt = new Date().getTime() + (24 * 60 * 60 * 1000);
-        const dataWithExpiration = {
-          ...data,
-          expiresAt
-        };
+        // Fusionne l'ancien userData avec les nouvelles données
+        this.userData = { ...this.userData, ...data };
 
-        this.userData = data;
+        // Crée ou met à jour la date d’expiration
+        const expirationTime = Date.now() + 24 * 60 * 60 * 1000; // 24h
+
+        const dataWithExpiration = { ...this.userData, expiresAt: expirationTime };
         localStorage.setItem('userData', JSON.stringify(dataWithExpiration));
       } catch (error) {
         console.error('Error saving userData to localStorage:', error);
       }
     },
+
+    // setUserData(data: any) {
+    //   try {
+    //     // Ajouter une date d'expiration (par exemple, 24h)
+    //     const expiresAt = new Date().getTime() + (24 * 60 * 60 * 1000);
+    //     const dataWithExpiration = {
+    //       ...data,
+    //       expiresAt
+    //     };
+    //
+    //     this.userData = data;
+    //     localStorage.setItem('userData', JSON.stringify(dataWithExpiration));
+    //   } catch (error) {
+    //     console.error('Error saving userData to localStorage:', error);
+    //   }
+    // },
 
     checkSession() {
       try {

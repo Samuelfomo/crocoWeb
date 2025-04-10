@@ -1,4 +1,5 @@
 import City from "./City";
+import axios from "axios";
 
 class Contact{
   public id: number;
@@ -42,6 +43,36 @@ class Contact{
       json.email,
       json.created,
     )
+  }
+
+  async saved(token: string){
+    try {
+      const response = await axios.post(`http://13.38.59.232/contact/add`, {
+        guid: this.guid,
+        firstname: this.firstname,
+        lastname: this.lastname,
+        city: this.city,
+        location: this.location,
+        language: this.language,
+        gender: this.gender,
+        mobile: this.mobile,
+        email: this.email,
+        created: this.created,
+      },{
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      });
+      if (response.status !== 200) {
+        console.log("response.data", response.data.message);
+        return null
+      }
+      console.log("response.data", response.data)
+      return Contact.fromJson(response.data);
+    } catch (error){
+      throw error;
+    }
   }
 
   toJson(){

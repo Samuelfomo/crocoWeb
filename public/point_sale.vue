@@ -42,8 +42,8 @@
                               v-model="form.gender"
                             />
                             <div
-                              class="w-3.5 h-3.5 rounded-full border border-gray-500 peer-checked:border-green-600
-                          peer-checked:bg-green-500 transition-all duration-200"
+                              class="w-3.5 h-3.5 rounded-full border border-gray-500 peer-checked:border-green-700
+                          peer-checked:bg-green-600 transition-all duration-200"
                             >
                             </div>
                             <span class="ml-2 text-gray-700 font-bold">Mr</span>
@@ -58,8 +58,8 @@
                               v-model="form.gender"
                             />
                             <div
-                              class="w-3.5 h-3.5 rounded-full border border-gray-400 peer-checked:border-green-600 focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600
-                          peer-checked:bg-green-500 transition-all duration-200"
+                              class="w-3.5 h-3.5 rounded-full border border-gray-500 peer-checked:border-green-700 focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600
+                          peer-checked:bg-green-600 transition-all duration-200"
                             >
 
                             </div>
@@ -98,7 +98,7 @@
                         <p v-if="errors.firstname" class="text-red-600 text-xs mt-1">{{ errors.firstname }}</p>
                       </div>
                     </div>
-
+                    <!-- Téléphone et Email -->
                     <div class="grid lg:grid-cols-2 grid-cols-1 gap-10">
                       <!-- Téléphone -->
                       <div>
@@ -108,9 +108,9 @@
                           <span class="text-red-600 text-xs">✱</span>
                         </label>
                         <div class="flex">
-              <span class="inline-flex items-center px-3 text-gray-500 bg-gray-100 border border-r-0 border-gray-300 rounded-l-lg">
-                +{{ selectedCountryCode }}
-              </span>
+                            <span class="inline-flex items-center px-3 text-gray-500 bg-gray-100 border border-r-0 border-gray-300 rounded-l-lg">
+                              +{{ selectedCountryCode }}
+                            </span>
                           <input
                             type="tel"
                             id="phone"
@@ -125,7 +125,10 @@
 
                       <!-- Email -->
                       <div>
-                        <label for="email" class="block text-base leading-loose font-medium text-gray-700">Email</label>
+                        <label for="email" class="flex justify-start items-center gap-1 text-base leading-loose font-medium text-gray-700">
+                          Email
+                          <span class="text-red-600 text-xs">✱</span>
+                        </label>
                         <input
                           type="email"
                           id="email"
@@ -137,7 +140,7 @@
                         <p v-if="errors.email" class="text-red-600 text-xs mt-1">{{ errors.email }}</p>
                       </div>
                     </div>
-                    <!-- Pays et Ville -->
+                    <!-- Pays , Ville et location -->
                     <div class="grid lg:grid-cols-2 grid-cols-1 gap-10">
                       <div class="grid grid-cols-2 gap-10">
                         <div>
@@ -171,7 +174,8 @@
                             :class="{'border-red-500': errors.city}"
                             :disabled="!form.country"
                           >
-                            <option value="" disabled selected>Sélectionnez une ville</option>
+<!--                            <option value="" disabled selected>Sélectionnez une ville</option>-->
+                            <option value="" disabled>Sélectionnez une ville</option>
                             <option v-for="city in cities" :key="city.id" :value="city.id">
                               {{ city.name }}
                             </option>
@@ -179,58 +183,61 @@
                           <p v-if="errors.city" class="text-red-600 text-xs mt-1">{{ errors.city }}</p>
                         </div>
                       </div>
+                      <!-- location -->
                       <div >
                         <label class="block text-base leading-loose font-medium text-gray-700">Quartier</label>
                         <input
                           id="city"
-                          v-model="location"
+                          v-model="form.location"
                           placeholder="Entrer le lieu de résidence"
                           class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200 focus:border-green-600"
                           :class="{'border-red-500': errors.location}"
                         />
-                        <p v-if="errors.city" class="text-red-600 text-xs mt-1">{{ errors.location }}</p>
+                        <p v-if="errors.location" class="text-red-600 text-xs mt-1">{{ errors.location }}</p>
                       </div>
                     </div>
-<!--                    <div class="grid grid-cols-1 gap-10">-->
-<!--                        <div class="flex flex-col gap-1 justify-start items-start">-->
-<!--                        <label for="country" class="text-base leading-loose font-medium text-gray-700">-->
-<!--                          Choisir la langue d'expression-->
-<!--&lt;!&ndash;                          <span class="text-red-600 text-xs">✱</span>&ndash;&gt;-->
-<!--                        </label>-->
-<!--                          <div class="flex items-center gap-2">-->
-<!--                            <label  class="cursor-pointer ml-3">-->
-<!--                              <div class="relative">-->
-<!--                                <input-->
-<!--                                  type="radio"-->
-<!--                                  :id="`wifi-toggle-${language}`"-->
-<!--                                  class="sr-only peer"-->
-<!--                                  v-model="language"-->
-<!--                                  :value="language"-->
-<!--                                />-->
-<!--                                <div class="block w-6 h-4 bg-gray-300 rounded-full peer-checked:bg-orange-100"></div>-->
-<!--                                <div class="dot absolute left-0 top-0 w-4 h-4 bg-white peer-checked:bg-orange-500 rounded-full transition-all peer-checked:translate-x-3"></div>-->
-<!--                              </div>-->
-<!--                            </label> Anglais-->
-<!--                          </div>-->
-<!--                        <div class="flex items-center gap-2">-->
-<!--                          <label  class="cursor-pointer ml-3">-->
-<!--                            <div class="relative">-->
-<!--                              <input-->
-<!--                                type="radio"-->
-<!--                                :id="`wifi-toggle-${language}`"-->
-<!--                                class="sr-only peer"-->
-<!--                                v-model="language"-->
-<!--                                :value="language"-->
-<!--                              />-->
-<!--                              <div class="block w-6 h-4 bg-gray-300 rounded-full peer-checked:bg-orange-100"></div>-->
-<!--                              <div class="dot absolute left-0 top-0 w-4 h-4 bg-white peer-checked:bg-orange-500 rounded-full transition-all peer-checked:translate-x-3"></div>-->
-<!--                            </div>-->
-<!--                          </label>-->
-<!--                          Francais-->
-<!--                        </div>-->
-<!--                        <p v-if="errors.language" class="text-red-600 text-xs mt-1">{{ errors.language }}</p>-->
-<!--                      </div>-->
-<!--                    </div>-->
+
+                    <!--language -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label for="country" class="text-base leading-loose font-medium text-gray-700">
+                          Choisir la langue d'expression
+                          <!--                          <span class="text-red-600 text-xs">✱</span>-->
+                        </label>
+                        <div class="space-y-2">
+                          <div class="flex items-center gap-2">
+                            <label class="relative inline-flex items-center cursor-pointer">
+                              <input
+                                type="radio"
+                                class="sr-only peer"
+                                v-model="form.language"
+                                value="en"
+                              />
+                              <div class="block w-7 h-4 bg-gray-300 rounded-full peer-checked:bg-green-400"></div>
+                              <div class="dot absolute left-0 top-1 w-4 h-4 bg-gray-500 peer-checked:bg-green-600 rounded-full transition-all peer-checked:translate-x-3"></div>
+<!--                              <div class="w-6 h-4 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-3 rtl:peer-checked:after:-translate-x-3 peer-checked:after:border-green-700 after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-green-200"></div>-->
+                              <span class="ml-3 text-base font-medium text-gray-700">Anglais</span>
+                            </label>
+                          </div>
+                          <div class="flex items-center gap-2">
+                            <label class="relative inline-flex items-center cursor-pointer">
+                              <input
+                                type="radio"
+                                class="sr-only peer"
+                                v-model="form.language"
+                                value="fr"
+                              />
+                              <div class="block w-7 h-4 bg-gray-300 rounded-full peer-checked:bg-green-400"></div>
+                              <div class="dot absolute left-0 top-1 w-4 h-4 bg-gray-500 peer-checked:bg-green-600 rounded-full transition-all peer-checked:translate-x-3"></div>
+<!--                              <div class="w-10 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-green-300 rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-green-600"></div>-->
+                              <span class="ml-3 text-base font-medium text-gray-700">Français</span>
+                            </label>
+                          </div>
+                        </div>
+                        <p v-if="errors.language" class="text-red-600 text-xs mt-1">{{ errors.language }}</p>
+                      </div>
+                    </div>
+                    <p v-if="errors.referralCode" class="text-red-600 w-full flex justify-center items-center text-xs mt-auto">{{ errors.referralCode }}</p>
 
                     <!-- Bouton de soumission -->
                     <div class="pt-6 w-full flex justify-center items-center">
@@ -240,7 +247,7 @@
                         :disabled="isSubmitting"
                       >
                         <span v-if="isSubmitting">Création en cours...</span>
-                        <span v-else>Ajouter</span>
+                        <span v-else>Ajouter le point de vente</span>
                       </button>
                     </div>
                   </form>
@@ -264,6 +271,15 @@ import { useRouter } from 'vue-router';
 import Footer from "@public/components/footer.vue";
 import Header from "@public/components/header.vue";
 import Dashboard from "@public/components/dashboard.vue";
+import userLoginStore from '@/stores/userStore'
+import { storeToRefs } from 'pinia'
+import Contact from "@/class/Contact";
+import Country from "@/class/Country";
+
+const store = userLoginStore()
+// Utiliser storeToRefs pour préserver la réactivité
+const { code, token } = storeToRefs(store);
+
 
 const router = useRouter();
 const isLoading = ref(false);
@@ -271,37 +287,42 @@ const isSubmitting = ref(false);
 
 // Formulaire
 const form = ref({
-  firstname: '',
+  gender: '',
   lastname: '',
-  country: '',
-  city: '',
+  firstname: '',
   phone: '',
   email: '',
-  gender: '',
+  country: '',
+  city: '',
+  location: '',
+  language: 'fr',
   referralCode: ''
 });
 
 // Gestion des erreurs
 const errors = ref({
-  firstname: '',
-  lastname: '',
-  country: '',
-  city: '',
   gender: '',
+  lastname: '',
+  firstname: '',
   phone: '',
   email: '',
+  country: '',
+  city: '',
+  location: '',
+  language: '',
   referralCode: ''
 });
 
 // Exemple de pays et villes (à remplacer par vos données réelles)
 const countries = ref([
+  { code: 'CM', name: 'Cameroun', phoneCode: '237' },
   { code: 'CI', name: 'Côte d\'Ivoire', phoneCode: '225' },
   { code: 'SN', name: 'Sénégal', phoneCode: '221' },
-  { code: 'CM', name: 'Cameroun', phoneCode: '237' },
   { code: 'BJ', name: 'Bénin', phoneCode: '229' },
   { code: 'TG', name: 'Togo', phoneCode: '228' },
   { code: 'ML', name: 'Mali', phoneCode: '223' }
 ]);
+
 
 const cities = ref([]);
 
@@ -341,13 +362,15 @@ const loadCities = () => {
 const validateForm = () => {
   let isValid = true;
   errors.value = {
-    firstname: '',
-    lastname: '',
-    country: '',
-    city: '',
     gender: '',
+    lastname: '',
+    firstname: '',
     phone: '',
     email: '',
+    country: '',
+    city: '',
+    location: '',
+    language: '',
     referralCode: ''
   };
 
@@ -381,13 +404,13 @@ const validateForm = () => {
     isValid = false;
   }
 
-  // if (!form.value.email.trim()) {
-  //   errors.value.email = 'L\'email est requis';
-  //   isValid = false;
-  // } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.value.email.trim())) {
-  //   errors.value.email = 'Veuillez entrer une adresse email valide';
-  //   isValid = false;
-  // }
+  if (!form.value.email.trim()) {
+    errors.value.email = 'L\'email est requis';
+    isValid = false;
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.value.email.trim())) {
+    errors.value.email = 'Veuillez entrer une adresse email valide';
+    isValid = false;
+  }
 
   if (form.value.email) {
     const emailValue = form.value.email;
@@ -403,6 +426,12 @@ const validateForm = () => {
     isValid = false;
   }
 
+  form.value.referralCode = code.value || null;
+  if(form.value.referralCode.toString().length !== 6) {
+    errors.value.referralCode = `votre code de parrainage ${form.value.referralCode} est invalide`;
+    isValid = false;
+  }
+
   return isValid;
 };
 
@@ -415,9 +444,12 @@ const submitForm = async () => {
   try {
     // Simuler un appel API (à remplacer par votre API réelle)
     await new Promise(resolve => setTimeout(resolve, 1500));
-
+    console.log(form.value);
+    const contactData = new Contact(null, null, form.value.firstname, form.value.lastname, form.value.city, form.value.location, form.value.language, form.value.gender, form.value.phone, form.value.email, null);
+    const contactResult = await contactData.saved(token.value);
+    console.log(contactResult);
     // Rediriger vers la page suivante après l'inscription réussie
-    await router.push('/pin');
+    await router.push({name: 'home'});
   } catch (error) {
     console.error('Erreur lors de l\'inscription:', error);
     // Gérer l'erreur (afficher un message, etc.)
@@ -425,9 +457,31 @@ const submitForm = async () => {
     isSubmitting.value = false;
   }
 };
+const countryTable = ref([]);
 
 // Initialisation
-onMounted(() => {
+onMounted(async () => {
+  const valueCountry = await Country.getAll(token.value);
+  if (valueCountry === null) console.log("error");
+  // Vérifiez si les données sont un tableau ou un objet unique
+  if (Array.isArray(valueCountry)) {
+    countryTable.value = valueCountry.map(country => ({
+      alpha2: country.alpha2 ||  null,
+      alpha3: country.alpha3,
+      dialcode: country.dialcode,
+      fr: country.fr,
+      en: country.en,
+    }));
+  } else {
+    // Si c'est un objet unique, créez un tableau avec cet objet
+    countryTable.value = [{
+      alpha2: valueCountry.alpha2 ||  null,
+      alpha3: valueCountry.alpha3,
+      dialcode: valueCountry.dialcode,
+      fr: valueCountry.fr,
+      en: valueCountry.en,
+    }];
+  }
   // Vous pouvez charger des données initiales ici si nécessaire
 });
 </script>

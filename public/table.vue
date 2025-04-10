@@ -187,7 +187,7 @@ import { storeToRefs } from 'pinia'
 
 const store = userLoginStore()
 // Utiliser storeToRefs pour préserver la réactivité
-const { guid } = storeToRefs(store);
+const { guid, token } = storeToRefs(store);
 
 console.log('guid is : ', guid.value);
 
@@ -262,13 +262,11 @@ let partner;
 onMounted(async () => {
   isLoading.value = true;  // Activez le skeleton loader pendant le chargement
   try {
-    const partnerData = await Login.myPartner(guid.value);
+    const partnerData = await Login.myPartner(guid.value, token.value);
     if (!partnerData) {
       console.log('not_found_partner');
       return;
     }
-
-    console.log("partnerData", partnerData);
 
     // Vérifiez si les données sont un tableau ou un objet unique
     if (Array.isArray(partnerData)) {
