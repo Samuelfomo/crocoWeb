@@ -16,7 +16,7 @@
       <!-- Main Content Area -->
       <div class="flex-grow flex">
         <main class="flex-grow bg-neutral-100 rounded-lg shadow-md lg:pl-44 lg:py-16 lg:pr-28 py-6 w-full">
-          <div class="border rounded-lg flex flex-col w-full bg-white" ref="box">
+          <div class="border rounded-lg flex flex-col w-full bg-white" ref="formal">
             <div class="p-5 w-full border-b border-green-600 border-opacity-20 flex justify-between items-center">
               <span class="text-2xl font-bold text-gray-400 italic">Ajouter un point de vente</span>
             </div>
@@ -294,6 +294,7 @@ import Contact from "@/class/Contact";
 import Country from "@/class/Country";
 import City from "@/class/City";
 import User from "@/class/User";
+import gsap from "gsap";
 
 const store = userLoginStore()
 // Utiliser storeToRefs pour préserver la réactivité
@@ -454,6 +455,8 @@ const submitForm = async () => {
 };
 const countryTable = ref([]);
 const cityTable = ref([]);
+const formal = ref(null);
+// const title = ref(null);
 
 watch(() => form.value.country, (newCountry) => {
   isLoading.value = true;
@@ -472,6 +475,10 @@ watch(() => form.value.country, (newCountry) => {
 
 // Initialisation
 onMounted(async () => {
+  setTimeout(() => {
+    gsap.fromTo(formal.value, {y: -500, opacity: 0}, {y: 1, opacity: 100, duration: 1});
+    // gsap.fromTo(formal.value, {y: 500, opacity: 0}, {y: 1, opacity: 9, duration: 1});
+  }, 500);
   const valueCountry = await Country.getAll(token.value);
   if (valueCountry === null) console.log("error");
   // Vérifiez si les données sont un tableau ou un objet unique
@@ -493,6 +500,7 @@ onMounted(async () => {
       en: valueCountry.en,
     }];
   }
+  // gsap.fromTo(title.value, {x: -500, opacity: 0}, {x: 1, opacity: 9, duration: 1});
 
   const valueCity = await City.getAll(token.value);
   if (valueCity === null) console.log("error");
