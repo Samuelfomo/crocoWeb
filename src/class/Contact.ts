@@ -68,8 +68,8 @@ class Contact{
         console.log("response.data", response.data.message);
         return null
       }
-      console.log("response.data", response.data)
-      return Contact.fromJson(response.data);
+      // console.log("response.data", response.data.response)
+      return Contact.fromJson(response.data.response);
     } catch (error){
       throw error;
     }

@@ -1,13 +1,13 @@
 <template>
   <header class="bg-white shadow-md w-full z-40">
-    <div class=" px-4 py-6 flex lg:justify-end items-center justify-between">
+    <div class=" px-4 py-6 flex lg:justify-end md:justify-between items-center justify-between">
 <!--      <div class="flex items-center">-->
 <!--        <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"-->
 <!--              stroke-linecap="round"  stroke-linejoin="round"  class=" hover:text-green-600">-->
 <!--          <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 6l16 0" /><path d="M4 12l10 0" /><path d="M4 18l14 0" />-->
 <!--        </svg>-->
 <!--      </div>-->
-      <div class="flex justify-center items-center space-x-6 ">
+      <div class="flex lg:justify-end justify-between w-full items-center space-x-6 ">
         <div @click="onToggle" class="flex flex-col items-center justify-center space-x-6 cursor-pointer transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-110">
           <svg class="hover:text-green-600"  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"
                viewBox="0 0 24 24"  fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round"
