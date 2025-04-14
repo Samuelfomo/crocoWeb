@@ -16,9 +16,9 @@
       <!-- Main Content Area -->
       <div class="flex-grow flex">
         <main class="flex-grow bg-neutral-100 rounded-lg shadow-md lg:pl-44 lg:py-16 lg:pr-28 py-6 w-full">
-          <div class="border rounded-lg flex flex-col w-full bg-white" ref="formal">
-            <div class="p-5 w-full border-b border-green-600 border-opacity-20 flex justify-between items-center">
-              <span class="text-2xl font-bold text-gray-400 italic">Ajouter un point de vente</span>
+          <div class="border shadow-lg shadow-green-100 rounded-lg flex flex-col w-full bg-white" ref="formal">
+            <div class="p-5 w-full bg-black bg-opacity-15 border border-green-600 border-opacity-20 flex justify-between items-center">
+              <span class="text-4xl font-serif text-green-600 italic">Ajouter un point de vente</span>
             </div>
             <div class="flex flex-col w-full h-full bg-gray-50 bg-opacity-30 shadow-sm  cursor-pointer">
               <div class="bg-white mx-auto w-full overflow-hidden shadow p-8">

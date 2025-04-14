@@ -104,6 +104,13 @@
 import { ref } from 'vue';
 import { useRouter } from "vue-router";
 
+import userLoginStore from '@/stores/userStore'
+import { storeToRefs } from 'pinia'
+
+const store = userLoginStore()
+// Utiliser storeToRefs pour préserver la réactivité
+const { structure } = storeToRefs(store);
+
 const router = useRouter();
 
 const isModalVisible = ref(false);
@@ -115,7 +122,7 @@ const onToggle = () => {
 
 // État pour l'utilisateur
 const user = ref({
-  name: 'Samuel fomo',
+  name: structure.value || "null(structure_name)",
   balance: 12850.75,
   expenses: 3420.50,
   savings: 5600.25
@@ -148,9 +155,12 @@ const toggleUserMenu = () => {
   if (showNotifications.value) showNotifications.value = false;
 };
 
-const logout = () => {
+const logout = async () => {
   // Implement logout logic here
-  router.push('/');
+  const success = await store.logout()
+  if (success) {
+   await router.push('/') // redirige vers la page de connexion
+  }
 };
 
 const searchDecoder = () => {

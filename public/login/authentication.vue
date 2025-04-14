@@ -84,12 +84,12 @@
           <p v-if="errors.auth" class="text-red-600 text-xs mt-1 w-full text-center">{{ errors.pin }}</p>
 
           <!-- Inscription -->
-          <div class="text-center text-base cursor-pointer font-light pt-5 hidden">
-            <span>Don't have an account?
-              <a href="#" class="pl-2 croco-link text-lg" @click="router.push('/contact')">
-                Create Now
-              </a>
-            </span>
+          <div class="flex-col text-center text-base cursor-pointer font-light pt-5 space-x-2 space-y-2 hidden">
+            <span>vous n'avez pas de compte?
+            </span><a href="https://imediatis.cm/" class="pl-2 croco-link text-base">
+            Demande d'ouverture de compte ici
+          </a>
+
           </div>
         </div>
       </div>

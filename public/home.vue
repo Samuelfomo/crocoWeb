@@ -12,6 +12,7 @@
           <div class="w-full flex justify-start items-center">
             <div class="grid grid-cols-1 max-w-xs flex-col w-full justify-between items-start border p-5  shadow-sm" ref="boxed">
               <p class="text-2xl font-bold text-gray-700">{{ formatMontant(amount)}}</p>
+<!--              <p class="text-2xl font-bold text-gray-700">{{token}}</p>-->
               <div class="flex justify-between items-center hidden">
                 <p class="text-2xl font-bold text-gray-700">{{ formatMontant(amount)}}</p>
 
@@ -30,7 +31,6 @@
               <p class="text-base font-semibold text-gray-400">Solde du compte</p>
             </div>
           </div>
-
 
           <div class="border flex flex-col w-full bg-white" ref="box">
             <div class="p-5 w-full border-b border-green-600 border-opacity-20 flex justify-between items-center">
