@@ -14,7 +14,8 @@ const routes = [
   },
   {
     path: '/',
-    meta: { requiresAuth: true },
+    meta: { requiresAuth: true},
+    // meta: { requiresAuth: false},
     children: [
       {
         path: 'home',

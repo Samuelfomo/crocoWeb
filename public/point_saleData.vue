@@ -8,13 +8,13 @@
 
       <!-- Main Content Area -->
       <div class="flex-grow flex">
-        <main class="flex-grow bg-neutral-100  lg:py-16 py-6 w-full justify-center">
-          <div class="flex flex-col w-full max-w-4xl h-full bg-white mx-auto border space-y-4 border-green-600 border-opacity-40">
+        <main class="flex-grow bg-neutral-100 lg:pl-32 pr-16  lg:py-16 py-6 w-full justify-center">
+          <div class="flex flex-col w-full h-full bg-white mx-auto border border-green-600 border-opacity-40">
             <header class="flex flex-wrap items-center justify-between p-4 ">
-              <span class="font-serif text-2xl text-gray-500 leading-6">
-                Activité du point de vente
+              <span class="font-semibold text-2xl text-gray-500 leading-6 uppercase">
+                point de vente
               </span>
-              <span class="font-semibold text-xl text-gray-600 leading-6">
+              <span class="font-semibold text-xl text-gray-950 leading-6">
                 Imediatis sarl
               </span>
             </header>
@@ -48,37 +48,198 @@
                 </button>
                 </div>
               </div>
-              <div class="w-full flex flex-col justify-between items-center bg-black p-1">
-                <div class="flex w-full justify-between items-center border-b border-green-300 p-4">
-                  <span class="font-bold text-white leading-6 text-lg flex items-start flex-col">
-                    24100151083952
-                    <span class="font-extrabold text-gray-300 leading-2 text-sm">
-                    Sami Fomo
-                  </span>
-                  </span>
-                  <span class="font-bold text-yellow-400 leading-6 text-lg flex items-end flex-col">
-                    ...En Attente
-                    <span class="font-bold text-gray-400 leading-2 text-sm">
-                    24-05-2025
-                  </span>
-                  </span>
 
-                </div>
-                <div class="flex w-full justify-between items-center p-4">
-                  <div class="bg-white bg-opacity-50 w-full h-2 rounded-lg text-white"> </div>
-                </div>
-                <div class="flex justify-between items-center w-full px-4">
-                  <span class="font-bold text-white leading-6 text-sm flex  items-start flex-col">
-                                      Date d'expiration : 19 Février 2024
-                  </span>
-                  <span class="font-bold text-white leading-6 text-base flex  items-end flex-col">
-                                      Access+
-                    <div class="leading-2  flex items-start space-x-2">
-                      <span class="font-bold text-gray-400 text-sm">CHARME</span>
-                      <span class="font-bold text-gray-400 text-sm">ENGLISH PLUS ACCESS</span>
-                      <span class="font-bold text-gray-400 text-sm">ENGLISH PLUS EVASION</span>
+
+              <div class="flex flex-col py-10">
+                <p class="text-lg font-serif text-gray-600 uppercase py-1"> Réabonnement(s)</p>
+                <div class="grid grid-cols-2 gap-3">
+                  <div class="w-full flex flex-col justify-between items-center bg-black p-1">
+                    <div class="flex w-full justify-between items-center py-2 px-4">
+                    <span class="font-bold text-white leading-6 text-base flex items-start flex-col">
+                      24100151083952
+                      <span class="font-bold text-gray-300 leading-2 text-xs">
+                      Sami Fomo
+                    </span>
+                    </span>
+                      <span class="font-bold text-yellow-400 leading-6 text-base flex items-end flex-col animate-pulse">
+                      ...En Attente
+                      <span class="font-bold text-gray-400 leading-2 text-xs">
+                      24-05-2025
+                    </span>
+                    </span>
+
                     </div>
-                  </span>
+                    <div class="grid grid-cols-2 justify-center items-center w-full border-y border-white pb-2 px-2">
+                    <span class="font-bold text-white leading-6 gap-1 text-base flex  items-start flex-col px-2">
+                                                         Access+
+                      <div class="leading-4  flex flex-wrap justify-start gap-x-4 text-xs text-gray-200">
+                        <span class="">CHARME</span>
+                        <span class="">ENGLISH PLUS ACCESS</span>
+                        <span class=" ">ENGLISH PLUS EVASION</span>
+                      </div>
+                    </span>
+                      <span class="font-bold text-white leading-6 text-base flex items-end flex-col px-2">
+                                        25.000XAF
+                    </span>
+                    </div>
+                    <div class="w-full grid grid-cols-2 p-1">
+                      <div>
+                        <span class="font-bold text-white leading-6 text-base flex  items-start flex-col px-2">
+                                        Date d'expiration : 19 Février 2024
+                    </span>
+                      </div>
+                      <div class="flex justify-end">
+                        <div class="grid flex-col px-4 cursor-pointer">
+                        <span class="font-bold text-white leading-6 flex  items-center flex-col  group">
+                          <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"
+                                stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round" >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 12l5 5l10 -10" /><path d="M2 12l5 5m5 -5l5 -5" />
+                          </svg>
+                        </span>
+                          <span class="font-semibold text-white text-opacity-80 leading-6 text-xs flex  items-end flex-col">Confirmer</span>
+                        </div>
+                        <div class="grid flex-col px-4 cursor-pointer">
+                        <span class="font-bold text-white leading-6 flex  items-center flex-col  group">
+                          <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"
+                                stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 13v-8a1 1 0 0 0 -1 -1h-2a1 1 0 0
+                             0 -1 1v7a1 1 0 0 0 1 1h3a4 4 0 0 1 4 4v1a2 2 0 0 0 4 0v-5h3a2 2 0 0 0 2 -2l-1 -5a2 3 0 0 0 -2
+                              -2h-7a3 3 0 0 0 -3 3" />
+                          </svg>
+                        </span>
+                          <span class="font-semibold text-white text-opacity-80 leading-6 text-xs flex  items-end flex-col">Annulé</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w-full flex flex-col justify-between items-center bg-green-600 p-1">
+                    <div class="flex w-full justify-between items-center py-2 px-4">
+                    <span class="font-bold text-white leading-6 text-base flex items-start flex-col">
+                      24100151083952
+                      <span class="font-bold text-gray-300 leading-2 text-xs">
+                      Sami Fomo
+                    </span>
+                    </span>
+                      <span class="font-bold text-white leading-6 text-base flex items-end flex-col">
+                      Activé
+                      <span class="font-bold text-gray-300 leading-2 text-xs">
+                      24-05-2025
+                    </span>
+                    </span>
+
+                    </div>
+                    <div class="grid grid-cols-2 justify-center items-center w-full border-y border-white pb-2 px-2">
+                    <span class="font-bold text-white leading-6 gap-1 text-base flex  items-start flex-col px-2">
+                                                         Access+
+                      <div class="leading-4  flex flex-wrap justify-start gap-x-4 text-xs text-gray-200">
+                        <span class="">CHARME</span>
+                        <span class="">ENGLISH PLUS ACCESS</span>
+                        <span class=" ">ENGLISH PLUS EVASION</span>
+                      </div>
+                    </span>
+                      <span class="font-bold text-white leading-6 text-base flex items-end flex-col px-2">
+                                        25.000XAF
+                    </span>
+                    </div>
+                    <div class="w-full grid grid-cols-2 p-1">
+                      <div>
+                        <span class="font-bold text-white leading-6 text-base flex  items-start flex-col px-2">
+                                        Date d'expiration : 19 Février 2024
+                        </span>
+                      </div>
+                      <div class="flex justify-end hidden">
+                        <div class="grid flex-col px-4 cursor-pointer">
+                        <span class="font-bold text-white leading-6 flex  items-center flex-col  group">
+                          <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"
+                                stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round" >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 12l5 5l10 -10" /><path d="M2 12l5 5m5 -5l5 -5" />
+                          </svg>
+                        </span>
+                          <span class="font-semibold text-white text-opacity-80 leading-6 text-xs flex  items-end flex-col">Confirmer</span>
+                        </div>
+                        <div class="grid flex-col px-4 cursor-pointer">
+                        <span class="font-bold text-white leading-6 flex  items-center flex-col  group">
+                          <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"
+                                stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 13v-8a1 1 0 0 0 -1 -1h-2a1 1 0 0
+                             0 -1 1v7a1 1 0 0 0 1 1h3a4 4 0 0 1 4 4v1a2 2 0 0 0 4 0v-5h3a2 2 0 0 0 2 -2l-1 -5a2 3 0 0 0 -2
+                              -2h-7a3 3 0 0 0 -3 3" />
+                          </svg>
+                        </span>
+                          <span class="font-semibold text-white text-opacity-80 leading-6 text-xs flex  items-end flex-col">Annulé</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="w-full flex flex-col justify-between items-center bg-red-600 p-1">
+                    <div class="flex w-full justify-between items-center py-2 px-4">
+                    <span class="font-bold text-white leading-6 text-base flex items-start flex-col">
+                      24100151083952
+                      <span class="font-bold text-gray-300 leading-2 text-xs">
+                      Sami Fomo
+                    </span>
+                    </span>
+                      <span class="font-bold text-white leading-6 text-base flex items-end flex-col">
+                      Échouée
+                      <span class="font-bold text-gray-400 leading-2 text-xs">
+                      24-05-2025
+                    </span>
+                    </span>
+
+                    </div>
+                    <div class="grid grid-cols-2 justify-center items-center w-full border-y border-white pb-2 px-2">
+                    <span class="font-bold text-white leading-6 gap-1 text-base flex  items-start flex-col px-2">
+                                                         Access+
+                      <div class="leading-4  flex flex-wrap justify-start gap-x-4 text-xs text-gray-200">
+                        <span class="">CHARME</span>
+                        <span class="">ENGLISH PLUS ACCESS</span>
+                        <span class=" ">ENGLISH PLUS EVASION</span>
+                      </div>
+                    </span>
+                      <span class="font-bold text-white leading-6 text-base flex items-end flex-col px-2">
+                                        25.000XAF
+                    </span>
+                    </div>
+                    <div class="w-full grid grid-cols-2 p-1">
+                      <div>
+                        <span class="font-bold text-white leading-6 text-base flex  items-start flex-col px-2">
+                                        Date d'expiration : 19 Février 2024
+                    </span>
+                      </div>
+                      <div class="flex justify-end">
+                        <div class="grid flex-col px-4 cursor-pointer hidden">
+                        <span class="font-bold text-white leading-6 flex  items-center flex-col  group">
+                          <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"
+                                stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round" >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 12l5 5l10 -10" /><path d="M2 12l5 5m5 -5l5 -5" />
+                          </svg>
+                        </span>
+                          <span class="font-semibold text-white text-opacity-80 leading-6 text-xs flex  items-end flex-col">Confirmer</span>
+                        </div>
+                        <div class="grid flex-col px-4 cursor-pointer hidden">
+                        <span class="font-bold text-white leading-6 flex  items-center flex-col  group">
+                          <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"
+                                stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  >
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 13v-8a1 1 0 0 0 -1 -1h-2a1 1 0 0
+                             0 -1 1v7a1 1 0 0 0 1 1h3a4 4 0 0 1 4 4v1a2 2 0 0 0 4 0v-5h3a2 2 0 0 0 2 -2l-1 -5a2 3 0 0 0 -2
+                              -2h-7a3 3 0 0 0 -3 3" />
+                          </svg>
+                        </span>
+                          <span class="font-semibold text-white text-opacity-80 leading-6 text-xs flex  items-end flex-col">Annulé</span>
+                        </div>
+                        <div class="grid flex-col px-4 cursor-pointer">
+                        <span class="font-bold text-white leading-6 flex  items-center flex-col hover:animate-spin">
+                          <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"
+                                stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 12v-3a3 3 0 0 1 3 -3h13m-3 -3l3 3l-3 3" />
+                            <path d="M20 12v3a3 3 0 0 1 -3 3h-13m3 3l-3 -3l3 -3" /><path d="M11 11l1 -1v4" />
+                          </svg>
+                        </span>
+                          <span class="font-semibold text-white text-opacity-80 leading-6 text-xs flex  items-end flex-col">Relancer</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </main>
