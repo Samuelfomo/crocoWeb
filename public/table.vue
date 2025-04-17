@@ -202,8 +202,6 @@ const router = useRouter();
 // Utiliser storeToRefs pour préserver la réactivité
 const { guid, token } = storeToRefs(store);
 
-console.log('guid is : ', guid.value);
-
 const isLoading = ref(false)
 
 const contacts = ref([])

@@ -13,5 +13,9 @@ class Account{
     this.updatedAt = updatedAt;
     this.time = time;
   }
+
+  public static fromJson(json: any): Account{
+    return new Account(json.id, json.code, json.balance, json.updatedAt, json.time);
+  }
 }
 export default Account;
