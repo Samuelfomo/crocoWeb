@@ -76,7 +76,7 @@
             </div>
 
             <!-- Grille de cartes pour points de vente -->
-            <div class="grid grid-cols-2 gap-6 p-5">
+            <div class="grid lg:grid-cols-2 grid-cols-1 gap-6 p-5">
               <!-- Carte pour chaque point de vente -->
               <div v-for="(point, index) in pointsDeVente" :key="index" class="flex flex-col bg-white shadow-lg rounded-lg border hover:shadow-xl transition-shadow duration-300">
                 <div class="border bg-gray-800 rounded-t-lg">
@@ -133,7 +133,7 @@
 
                 <!-- Boutons d'action -->
                 <div class="grid grid-cols-5 border-t gap-1 p-2 bg-gray-50" >
-                  <div class="flex flex-col justify-start items-center cursor-pointer" v-for="(action, index) in actions" :key="index" @click="() => { console.log('clicked', action.description); action.value() }">
+                  <div class="flex flex-col justify-start items-center cursor-pointer" v-for="(action, index) in actions" :key="index" @click="() => { console.log('clicked', action.description); action.value(point.nom, point.code) }">
                     <span v-html="action.svg">
                     </span>
                     <span class="font-bold text-gray-400 text-sm">{{action.description}}</span>
@@ -145,51 +145,99 @@
 
 <!--          Modal de recharge-->
           <transition name="fade">
-            <div v-if="isModalVisible" class="fixed inset-0 z-50 flex items-start justify-center pt-24 px-4">
+            <div v-if="isModalVisible" class="fixed inset-0 z-50 flex items-start justify-center px-4">
 <!--            <div v-if="isModalVisible" class="absolute top-24 lg:left-0 -left-5 bottom-0 w-full lg:px-0 lg:py-0 py-8 px-4">-->
-              <div class="fixed inset-0 bg-black opacity-50 z-40"
+              <div class="fixed inset-0 bg-black opacity-60 z-40"
               >
               </div>
               <div
-                class="relative w-full max-w-lg m-auto bg-white rounded-lg shadow-lg z-50"
+                class="relative w-full max-w-lg m-auto bg-white rounded-xl z-50"
               >
                 <div>
                   <div class="text-center flex-auto justify-center leading-6">
-                    <div class="flex w-full justify-between items-center p-4">
-                      <h2 class="lg:text-2xl text-xl font-serif">Transfert compte à compte</h2>
-                      <svg class="cursor-pointer hover:border hover:border-red-600 hover:text-red-600 rounded-md" @click="onToggle" xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"
+                    <div class="flex w-full justify-between items-center p-5 border-b shadow-sm">
+                      <h2 class="lg:text-2xl text-2xl font-semibold">Transfert compte à compte</h2>
+                      <svg class="cursor-pointer hover:border hover:border-red-600 hover:text-red-600 rounded-md"
+                           @click="onToggle" xmlns="http://www.w3.org/2000/svg"  width="28"  height="28"  viewBox="0 0 24 24"
                            fill="none" stroke="currentColor" stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 6l-12 12" /><path d="M6 6l12 12" />
                       </svg>
                     </div>
 
-                    <div class="w-full bg-neutral-50 py-5 lg:px-0 px-5 border-y-2">
+                    <div class="grid grid-cols-1 pt-2 text-lg font-serif text-gray-600">
+                      <p>En validant vous approuvez le transfert de:
+                        <span class="font-semibold text-black text-lg">
+              {{ amountRecharge ? formatMontant(amountRecharge) : '____' + ` FCFA ` }}
+            </span>
+                        <span class="font-semibold text-green-600">
+              à {{valueName? valueName: "____ "}}
+            </span>
+                      </p>
+                    </div>
+
+                      <div class="relative w-full py-8 lg:px-0 px-5 max-w-md mx-auto group">
+                        <!-- Icône à gauche -->
+                        <svg class="absolute lg:left-4 left-10 top-1/2 -translate-y-1/2 text-gray-400 group-hover:text-green-500"  xmlns="http://www.w3.org/2000/svg"
+                             width="32"  height="32"  viewBox="0 0 24 24"  fill="none"
+                              stroke="currentColor"  stroke-width="1"  stroke-linecap="round"  stroke-linejoin="round">
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                          <path d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1 -1.8 -1" /><path d="M12 7v10" />
+                        </svg>
+
+                        <!-- Input -->
+                        <input
+                          type="number"
+                          v-model="amountRecharge"
+                          placeholder="Montant de la recharge"
+                          class="text-2xl font-semibold text-green-500 w-full py-3 pl-12 pr-16 border focus:outline-none focus:ring-2
+           focus:ring-green-300 focus:border-green-500 rounded-[2rem] lg:placeholder:text-xl
+           placeholder:text-lg placeholder:font-medium
+           placeholder:text-gray-500 text-right"
+                          maxlength="14"
+                        />
+
+                        <!-- Icône à droite -->
+                        <svg
+                          class="absolute lg:right-4 right-10 top-1/2 -translate-y-1/2"
+                          :class="amountRecharge? 'text-green-700' : 'text-gray-400'"
+                          width="40" height="24" xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <text x="0" y="20" font-size="20" fill="currentColor">XAF</text>
+                        </svg>
+
+                        <svg
+                          class="absolute lg:right-4 right-10 top-1/2 -translate-y-1/2 text-gray-400 hidden"
+                          :class="amountRecharge? 'hidden' : ''"
+                          xmlns="http://www.w3.org/2000/svg"  width="32"  height="32"  viewBox="0 0 24 24"  fill="none"
+                              stroke="currentColor"  stroke-width="1"  stroke-linecap="round"  stroke-linejoin="round" >
+                          <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                          <path d="M12 17l0 .01" /><path d="M12 13.5a1.5 1.5 0 0 1 1 -1.5a2.6 2.6 0 1 0 -3 -4" />
+                        </svg>
+                      </div>
+
+                    <div class="w-full py-8 lg:px-0 px-5 hidden">
                       <input
                         type="number"
                         v-model="amountRecharge"
-                        placeholder="Entrer le montant"
-                        class="text-2xl font-semibold text-green-500 w-full max-w-xs p-4 border focus:outline-none focus:ring-2
-                        focus:ring-green-300 focus:border-green-500 rounded-lg lg:placeholder:text-xl
-                        placeholder:text-lg placeholder:font-roboto placeholder:font-bold
-                        placeholder:text-gray-400 text-right placeholder:focus:text-green-500"
+                        placeholder="Montant de la recharge"
+                        class="text-2xl font-semibold text-green-500 w-full max-w-lg py-3 px-5 border focus:outline-none focus:ring-2
+                        focus:ring-green-300 focus:border-green-500 rounded-[2rem] lg:placeholder:text-xl
+                        placeholder:text-lg placeholder:font-medium
+                        placeholder:text-gray-500 text-right placeholder:focus:text-green-500"
                         maxlength="14"
                       />
                     </div>
                   </div>
-                  <div class="grid grid-cols-1 px-4 pt-2">
-                    <p class="">En validant vous approuvez le transfert de:
-                      <span class="font-semibold text-green-600">
-              {{ amountRecharge ? amountRecharge + ' FCFA' : '---' }}
-            </span>
-                      <span class="font-semibold text-green-600">
-              à {{point? point: "FOTSO VICTOR"}}
-            </span>
-                    </p>
-                  </div>
-                  <div class="p-4 text-right md:block">
+                  <div class="px-5 pb-4 text-right flex w-full justify-end space-x-4">
+                    <button
+                      class="mb-2 md:mb-0 border border-green-500 px-5 py-2 text-lg shadow-sm
+                      font-semibold tracking-wider text-black rounded-[1.5rem] hover:shadow-lg hover:bg-gray-600 hover:text-gray-100"
+                    >
+                      annulé
+                    </button>
                     <button
                       class="mb-2 md:mb-0 bg-green-500 border border-green-500 px-5 py-2 text-lg shadow-sm
-                      font-semibold tracking-wider text-white rounded-md hover:shadow-lg hover:bg-green-600"
+                      font-semibold tracking-wider text-white rounded-[1.5rem] hover:shadow-lg hover:bg-green-600"
                     >
                       valider
 <!--                      <svg  xmlns="http://www.w3.org/2000/svg"  width="30"  height="30"  viewBox="0 0 24 24"  fill="currentColor">-->
@@ -301,6 +349,7 @@ const amountRecharge = ref(null);
 // Données des points de vente (vous pouvez les charger depuis une API)
 const pointsDeVente = ref([
   {
+    code: null,
     nom: 'Fred Code',
     mobile: '+237 693 45 78 23',
     email: 'joel@gmail.com',
@@ -328,7 +377,12 @@ const toggleMenu = () => {
   }
 };
 
-const onToggle = () => {
+let valueName = '';
+let valueGuid = '';
+
+const onToggle = (name , guid) => {
+  valueName = name;
+  valueGuid = guid;
   isModalVisible.value = !isModalVisible.value;
 }
 
@@ -414,7 +468,7 @@ onMounted(async () => {
       console.log('not_found_partner');
       return;
     }
-    console.log("partnerData", partnerData);
+    console.log("partnerData", partnerData.map(entry => entry.code));
 
     // Vérifiez si les données sont un tableau ou un objet unique
     if (Array.isArray(partnerData)) {
