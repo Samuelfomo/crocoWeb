@@ -1,10 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Auth from "@public/login/authentication.vue"
-import Home from "@public/home.vue"
+import Home from "@public/point_saleData.vue"
 import Point_sale from "@public/point_sale.vue"
 import Table from "@public/table.vue"
 import Transaction from "@public/transaction.vue"
 import Partner from "@public/point_saleData.vue"
+import Formula from "@public/formula.vue"
 
 const routes = [
   {
@@ -36,6 +37,11 @@ const routes = [
         path: 'transaction',
         name: 'transaction',
         component: Transaction
+      },
+      {
+        path: 'formula',
+        name: 'formula',
+        component: Formula
       },
       {
         path: 'partner',

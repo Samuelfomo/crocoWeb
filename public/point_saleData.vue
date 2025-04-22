@@ -19,8 +19,34 @@
       <!-- Main Content Area -->
       <div class="flex-grow flex">
         <main class="flex-grow bg-neutral-100 rounded-lg shadow-md lg:pl-32 lg:p-16 py-6 w-full space-y-10">
-          <div class="grid grid-cols-4 gap-4 items-center">
-            <div></div> <div></div><div></div>
+          <div class="grid lg:grid-cols-4 grid-cols-1 gap-4 items-center px-5">
+            <div>
+              <u class="underline">
+                <h1 class="text-2xl font-bold text-gray-600 italic">Mes points de vente </h1>
+              </u>
+            </div>
+            <div></div>
+            <div class="relative">
+<!--              &lt;!&ndash; Dropdown pour les filtres &ndash;&gt;-->
+<!--              <div class="relative">-->
+<!--                <button @click="toggleFilterMenu" class="flex items-center justify-between w-full px-4 py-3 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-300">-->
+<!--                  <span>{{ currentFilter === 'all' ? 'Tous les filtres' :-->
+<!--                    currentFilter === 'city' ? 'Filtrer par ville' :-->
+<!--                      currentFilter === 'solde' ? 'Filtrer par solde' : 'Filtrer par CA' }}</span>-->
+<!--                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">-->
+<!--                    <path d="M6 9l6 6 6-6"/>-->
+<!--                  </svg>-->
+<!--                </button>-->
+<!--                <div v-if="isFilterMenuOpen" ref="filterMenu" class="absolute left-0 right-0 z-10 w-full mt-2 origin-top-right bg-white border border-gray-300 rounded-md shadow-lg">-->
+<!--                  <div class="py-1">-->
+<!--                    <a @click="applyFilter('all')" class="block px-4 py-2 text-gray-700 hover:bg-green-50 cursor-pointer">Tous les filtres</a>-->
+<!--                    <a @click="applyFilter('city')" class="block px-4 py-2 text-gray-700 hover:bg-green-50 cursor-pointer">Filtrer par ville</a>-->
+<!--                    <a @click="applyFilter('solde')" class="block px-4 py-2 text-gray-700 hover:bg-green-50 cursor-pointer">Filtrer par solde</a>-->
+<!--                    <a @click="applyFilter('ca')" class="block px-4 py-2 text-gray-700 hover:bg-green-50 cursor-pointer">Filtrer par CA</a>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+            </div>
             <div class="relative col-span-1">
               <div class="flex items-center border border-gray-300 rounded-lg p-4 focus-within:ring-2 focus-within:ring-green-300 bg-gray-100 hover:bg-gray-50 shadow-sm transition duration-300 space-x-2">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -41,44 +67,10 @@
           </div>
 
           <div class="flex flex-col w-full" ref="box">
-            <div class="p-5 w-full border-x border-b border-green-600 border-opacity-20 flex justify-between items-center hidden">
-              <span class="text-xl font-bold text-gray-950">Point de vente</span>
-              <div class="relative">
-                <div class="flex items-center justify-between cursor-pointer" @click="toggleMenu">
-                  <span class="text-lg font-medium text-gray-700">Menu</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18 9c.852 0 1.297 .986 .783 1.623l-.076 .084l-6 6a1 1 0 0 1 -1.32
-                  .083l-.094 -.083l-6 -6l-.083 -.094l-.054 -.077l-.054 -.096l-.017 -.036l-.027 -.067l-.032 -.108l-.01 -.053l-.01 -.06l-.004
-                   -.057v-.118l.005 -.058l.009 -.06l.01 -.052l.032 -.108l.027 -.067l.07 -.132l.065 -.09l.073 -.081l.094 -.083l.077 -.054l.096
-                    -.054l.036 -.017l.067 -.027l.108 -.032l.053 -.01l.06 -.01l.057 -.004l12.059 -.002z" />
-                  </svg>
-                </div>
-                <div ref="menuBox" class="absolute top-full right-2 bg-white shadow-md rounded-lg px-5 py-2 w-48 border hidden">
-                  <div class="flex justify-start items-center text-gray-500 font-serif text-lg py-2 cursor-pointer hover:bg-green-50">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                         stroke="#87D04C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" >
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" />
-                    </svg>
-                    Partenaire
-                  </div>
-                  <div
-                    @click="router.push('/point_sale')"
-                    class="flex justify-start items-center text-gray-500 font-light text-lg py-2 cursor-pointer hover:bg-green-50"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                         stroke="#87D04C" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" >
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" />
-                    </svg>
-                    Point de vente
-                  </div>
-                </div>
-              </div>
-            </div>
-
             <!-- Grille de cartes pour points de vente -->
             <div class="grid lg:grid-cols-2 grid-cols-1 gap-6 p-5">
               <!-- Carte pour chaque point de vente -->
-              <div v-for="(point, index) in pointsDeVente" :key="index" class="flex flex-col bg-white shadow-lg rounded-lg border hover:shadow-xl transition-shadow duration-300">
+              <div v-for="(point, index) in paginatedPoints" :key="index" class="flex flex-col bg-white shadow-lg rounded-lg border hover:shadow-xl transition-shadow duration-300" ref="pointCard">
                 <div class="border bg-gray-800 rounded-t-lg">
                   <div class="flex items-center justify-between p-4">
                     <span class="text-xl font-semibold text-white">{{ point.nom }}</span>
@@ -133,7 +125,7 @@
 
                 <!-- Boutons d'action -->
                 <div class="grid grid-cols-5 border-t gap-1 p-2 bg-gray-50" >
-                  <div class="flex flex-col justify-start items-center cursor-pointer" v-for="(action, index) in actions" :key="index" @click="() => { console.log('clicked', action.description); action.value(point.nom, point.code) }">
+                  <div class="flex flex-col justify-start items-center cursor-pointer" v-for="(action, actionIndex) in actions" :key="actionIndex" @click="() => { action.value(point.nom, point.code ) }">
                     <span v-html="action.svg">
                     </span>
                     <span class="font-bold text-gray-400 text-sm">{{action.description}}</span>
@@ -141,18 +133,37 @@
                 </div>
               </div>
             </div>
+
+            <!-- Pagination -->
+            <div class="flex justify-between items-center p-5">
+              <div class="text-lg font-light  text-black leading-6">
+                Affichage de {{ startIndex + 1 }}-{{ Math.min(endIndex, filteredPoints.length) }} sur {{ filteredPoints.length }} points de vente
+              </div>
+              <div class="flex space-x-2">
+                <button
+                  @click="prevPage"
+                  :disabled="currentPage === 1"
+                  :class="{'bg-gray-300 cursor-not-allowed': currentPage === 1, 'bg-green-600 hover:bg-green-700': currentPage !== 1}"
+                  class="px-4 py-2 rounded-lg text-white font-medium transition-colors duration-300">
+                  Précédent
+                </button>
+                <button
+                  @click="nextPage"
+                  :disabled="currentPage >= totalPages"
+                  :class="{'bg-gray-300 cursor-not-allowed': currentPage >= totalPages, 'bg-green-600 hover:bg-green-700': currentPage < totalPages}"
+                  class="px-4 py-2 rounded-lg text-white font-medium transition-colors duration-300">
+                  Suivant
+                </button>
+              </div>
+            </div>
           </div>
 
-<!--          Modal de recharge-->
+          <!-- Modal de recharge -->
           <transition name="fade">
             <div v-if="isModalVisible" class="fixed inset-0 z-50 flex items-start justify-center px-4">
-<!--            <div v-if="isModalVisible" class="absolute top-24 lg:left-0 -left-5 bottom-0 w-full lg:px-0 lg:py-0 py-8 px-4">-->
-              <div class="fixed inset-0 bg-black opacity-60 z-40"
-              >
+              <div class="fixed inset-0 bg-black opacity-60 z-40">
               </div>
-              <div
-                class="relative w-full max-w-lg m-auto bg-white rounded-xl z-50"
-              >
+              <div class="relative w-full max-w-lg m-auto bg-white rounded-xl z-50">
                 <div>
                   <div class="text-center flex-auto justify-center leading-6">
                     <div class="flex w-full justify-between items-center p-5 border-b shadow-sm">
@@ -167,86 +178,63 @@
                     <div class="grid grid-cols-1 pt-2 text-lg font-serif text-gray-600">
                       <p>En validant vous approuvez le transfert de:
                         <span class="font-semibold text-black text-lg">
-              {{ amountRecharge ? formatMontant(amountRecharge) : '____' + ` FCFA ` }}
-            </span>
-                        <span class="font-semibold text-green-600">
-              à {{valueName? valueName: "____ "}}
-            </span>
+                          {{ amountRecharge ? formatMontant(amountRecharge) : '____' + ` FCFA ` }}
+                        </span>
+                        <div class="text-lg font-serif">
+                          à
+                          <span class="font-semibold text-green-600">
+                           {{valueName ? valueName : "____ "}}
+                        </span>
+                        </div>
+
                       </p>
                     </div>
 
-                      <div class="relative w-full py-8 lg:px-0 px-5 max-w-md mx-auto group">
-                        <!-- Icône à gauche -->
-                        <svg class="absolute lg:left-4 left-10 top-1/2 -translate-y-1/2 text-gray-400 group-hover:text-green-500"  xmlns="http://www.w3.org/2000/svg"
-                             width="32"  height="32"  viewBox="0 0 24 24"  fill="none"
-                              stroke="currentColor"  stroke-width="1"  stroke-linecap="round"  stroke-linejoin="round">
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
-                          <path d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1 -1.8 -1" /><path d="M12 7v10" />
-                        </svg>
+                    <div class="relative w-full py-8 lg:px-0 px-5 max-w-md mx-auto group">
+                      <!-- Icône à gauche -->
+                      <svg class="absolute lg:left-4 left-10 top-1/2 -translate-y-1/2 text-gray-400 group-hover:text-green-500"  xmlns="http://www.w3.org/2000/svg"
+                           width="32"  height="32"  viewBox="0 0 24 24"  fill="none"
+                           stroke="currentColor"  stroke-width="1"  stroke-linecap="round"  stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
+                        <path d="M14.8 9a2 2 0 0 0 -1.8 -1h-2a2 2 0 1 0 0 4h2a2 2 0 1 1 0 4h-2a2 2 0 0 1 -1.8 -1" /><path d="M12 7v10" />
+                      </svg>
 
-                        <!-- Input -->
-                        <input
-                          type="number"
-                          v-model="amountRecharge"
-                          placeholder="Montant de la recharge"
-                          class="text-2xl font-semibold text-green-500 w-full py-3 pl-12 pr-16 border focus:outline-none focus:ring-2
-           focus:ring-green-300 focus:border-green-500 rounded-[2rem] lg:placeholder:text-xl
-           placeholder:text-lg placeholder:font-medium
-           placeholder:text-gray-500 text-right"
-                          maxlength="14"
-                        />
-
-                        <!-- Icône à droite -->
-                        <svg
-                          class="absolute lg:right-4 right-10 top-1/2 -translate-y-1/2"
-                          :class="amountRecharge? 'text-green-700' : 'text-gray-400'"
-                          width="40" height="24" xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <text x="0" y="20" font-size="20" fill="currentColor">XAF</text>
-                        </svg>
-
-                        <svg
-                          class="absolute lg:right-4 right-10 top-1/2 -translate-y-1/2 text-gray-400 hidden"
-                          :class="amountRecharge? 'hidden' : ''"
-                          xmlns="http://www.w3.org/2000/svg"  width="32"  height="32"  viewBox="0 0 24 24"  fill="none"
-                              stroke="currentColor"  stroke-width="1"  stroke-linecap="round"  stroke-linejoin="round" >
-                          <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0" />
-                          <path d="M12 17l0 .01" /><path d="M12 13.5a1.5 1.5 0 0 1 1 -1.5a2.6 2.6 0 1 0 -3 -4" />
-                        </svg>
-                      </div>
-
-                    <div class="w-full py-8 lg:px-0 px-5 hidden">
+                      <!-- Input -->
                       <input
                         type="number"
                         v-model="amountRecharge"
                         placeholder="Montant de la recharge"
-                        class="text-2xl font-semibold text-green-500 w-full max-w-lg py-3 px-5 border focus:outline-none focus:ring-2
-                        focus:ring-green-300 focus:border-green-500 rounded-[2rem] lg:placeholder:text-xl
+                        class="text-2xl font-semibold text-green-500 w-full py-3 pl-12 pr-16 border focus:outline-none focus:ring-2
+                        focus:ring-green-300 focus:border-green-500 rounded-full lg:placeholder:text-xl
                         placeholder:text-lg placeholder:font-medium
-                        placeholder:text-gray-500 text-right placeholder:focus:text-green-500"
+                        placeholder:text-gray-500 text-right"
                         maxlength="14"
                       />
+
+                      <!-- Icône à droite -->
+                      <svg
+                        class="absolute lg:right-4 right-10 top-1/2 -translate-y-1/2"
+                        :class="amountRecharge? 'text-green-700' : 'text-gray-400'"
+                        width="40" height="24" xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <text x="0" y="20" font-size="20" fill="currentColor">XAF</text>
+                      </svg>
                     </div>
                   </div>
                   <div class="px-5 pb-4 text-right flex w-full justify-end space-x-4">
                     <button
                       class="mb-2 md:mb-0 border border-green-500 px-5 py-2 text-lg shadow-sm
-                      font-semibold tracking-wider text-black rounded-[1.5rem] hover:shadow-lg hover:bg-gray-600 hover:text-gray-100"
+                      font-semibold tracking-wider text-black rounded-full hover:shadow-lg hover:bg-gray-600 hover:text-gray-100"
+                      @click="onToggle"
                     >
-                      annulé
+                      Annuler
                     </button>
                     <button
                       class="mb-2 md:mb-0 bg-green-500 border border-green-500 px-5 py-2 text-lg shadow-sm
-                      font-semibold tracking-wider text-white rounded-[1.5rem] hover:shadow-lg hover:bg-green-600"
+                      font-semibold tracking-wider text-white rounded-full hover:shadow-lg hover:bg-green-600"
+                      @click="processRecharge"
                     >
-                      valider
-<!--                      <svg  xmlns="http://www.w3.org/2000/svg"  width="30"  height="30"  viewBox="0 0 24 24"  fill="currentColor">-->
-<!--                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M18.333 6a3.667 3.667 0 0 1 3.667 3.667v8.666a3.667 3.667 0 0 1-->
-<!--                         -3.667 3.667h-8.666a3.667 3.667 0 0 1 -3.667 -3.667v-8.666a3.667 3.667 0 0 1 3.667 -3.667zm-3.333 -4c1.094 0 1.828 .533 2.374-->
-<!--                         1.514a1 1 0 1 1 -1.748 .972c-.221 -.398 -.342 -.486 -.626 -.486h-10c-.548 0 -1 .452 -1 1v9.998c0 .32 .154 .618 .407 .805l.1-->
-<!--                         .065a1 1 0 1 1 -.99 1.738a3 3 0 0 1 -1.517 -2.606v-10c0 -1.652 1.348 -3 3 -3zm1.293 9.293l-3.293 3.292l-1.293 -1.292a1 1 0 0 0-->
-<!--                          -1.414 1.414l2 2a1 1 0 0 0 1.414 0l4 -4a1 1 0 0 0 -1.414 -1.414" />-->
-<!--                      </svg>-->
+                      Valider
                     </button>
                   </div>
                 </div>
@@ -254,64 +242,63 @@
             </div>
           </transition>
 
-          <transition class="hidden" name="fade">
-            <div v-if="isModalVisible" class="fixed inset-0 z-50 flex items-start justify-center pt-24 px-4">
+          <transition name="fade">
+            <div v-if="isModalDeleted" class="fixed inset-0 z-50 flex items-center justify-center px-4">
               <!-- Overlay -->
-              <div class="fixed inset-0 bg-black opacity-50 z-40" @click="onToggle"></div>
+              <div class="fixed inset-0 bg-black bg-opacity-60"></div>
 
-              <!-- Modal content -->
-              <div class="relative w-full max-w-lg bg-white rounded-lg shadow-xl z-50">
+              <!-- Modal -->
+              <div class="relative w-full max-w-md bg-white rounded-lg shadow-lg z-50">
                 <!-- Header -->
-                <div class="flex justify-between items-center p-5 border-b">
-                  <h2 class="text-2xl font-semibold text-gray-800">Transfert compte à compte</h2>
-                  <button
-                    @click="onToggle"
-                    aria-label="Fermer"
-                    class="text-gray-500 hover:text-red-500 transition"
-                  >
+                <div class="flex items-center justify-between py-4 px-6 border-b">
+                <div class="flex items-center justify-between gap-2">
+                  <svg  xmlns="http://www.w3.org/2000/svg"  width="30"  height="30"  viewBox="0 0 24 24"  fill="#e81e1e">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M17 3.34a10 10 0 1 1 -15 8.66l.005 -.324a10 10 0 0 1 14.995
+                     -8.336m-5 11.66a1 1 0 0 0 -1 1v.01a1 1 0 0 0 2 0v-.01a1 1 0 0 0 -1 -1m0 -7a1 1 0 0 0 -1 1v4a1 1 0 0 0 2 0v-4a1 1 0 0 0 -1 -1" />
+                  </svg>
+                  <h2 class="text-xl font-semibold text-gray-800">Bloquer <span class="text-[#e81e1e] text-lg font-bold uppercase">{{valueName ? valueName : "____ "}}</span> ?</h2>
+                </div>
+
+                  <button @click="onBlock" class="text-gray-500 hover:text-red-600 hover:border-red-600 hover:border-2 hover:rounded-md transition">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                          fill="none" stroke="currentColor" stroke-width="2"
-                         stroke-linecap="round" stroke-linejoin="round">
+                         stroke-linecap="round" stroke-linejoin="round"
+                         class="w-6 h-6">
                       <path d="M18 6L6 18" />
                       <path d="M6 6l12 12" />
                     </svg>
                   </button>
                 </div>
 
-                <!-- Input -->
-                <div class="p-6 bg-gray-50">
-                  <label class="block mb-2 text-gray-600 font-medium">Montant à transférer</label>
-                  <input
-                    type="number"
-                    v-model="amountRecharge"
-                    placeholder="Ex: 5000"
-                    maxlength="14"
-                    class="w-full p-4 text-right text-green-600 text-xl font-bold border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
-                  />
-                </div>
-
-                <!-- Validation message -->
-                <div class="px-6 pb-4">
-                  <p class="text-gray-700">
-                    En validant, vous approuvez le transfert de :
-                    <span class="font-semibold text-green-600">
-              {{ amountRecharge ? amountRecharge + ' FCFA' : '---' }}
-            </span>
+                <!-- Body -->
+                <div class="py-4 px-6 space-y-4">
+                  <p class="text-base font-semibold text-gray-700 leading-6">
+                    En bloquant cet utilisateur, vous l’empêchez d’accéder à :
                   </p>
+                  <ul class="list-disc list-inside text-sm text-gray-600 font-bold px-4">
+                    <li>l’application</li>
+                    <li>ses commissions</li>
+                  </ul>
                 </div>
 
                 <!-- Footer -->
-                <div class="px-6 pb-6 flex justify-end">
+                <div class="flex justify-end space-x-3 py-4 px-6 border-t">
                   <button
-                    class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded-md text-lg font-semibold transition shadow"
-                    @click="validerTransfert"
+                    @click="onBlock"
+                    class="px-4 py-2 rounded-lg text-base font-bold border border-gray-300 text-gray-700 hover:bg-gray-100 transition"
                   >
-                    Valider
+                    Annuler
+                  </button>
+                  <button
+                    class="px-4 py-2 rounded-lg text-base font-bold bg-red-600 text-white hover:bg-red-700 transition"
+                  >
+                    Bloquer
                   </button>
                 </div>
               </div>
             </div>
           </transition>
+
         </main>
       </div>
 
@@ -322,7 +309,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import {ref, computed, onMounted, watch, nextTick, onUnmounted} from 'vue';
 import { useRouter } from "vue-router";
 const router = useRouter();
 const store = userLoginStore();
@@ -336,46 +323,61 @@ import Dashboard from "@public/components/dashboard.vue";
 import gsap from "gsap";
 import Login from "@/repository/Login";
 import userLoginStore from "@/stores/userStore";
-import {storeToRefs} from "pinia";
+import { storeToRefs } from "pinia";
+import Account from "@/class/Account";
 
 const box = ref(null);
+const pointCard = ref([]);
 const isMenuOpen = ref(false);
+const isLoading = ref(false);
 const isModalVisible = ref(false);
 const menuBox = ref(null);
 const search = ref('');
+const isFilterMenuOpen = ref(false);
+const filterMenu = ref(null);
+const currentFilter = ref('all');
+const isModalDeleted = ref(false);
+
+// Pagination
+const itemsPerPage = 4;
+const currentPage = ref(1);
+const startIndex = computed(() => (currentPage.value - 1) * itemsPerPage);
+const endIndex = computed(() => startIndex.value + itemsPerPage);
+const totalPages = computed(() => Math.ceil(filteredPoints.value.length / itemsPerPage));
 
 const amountRecharge = ref(null);
+
 
 // Données des points de vente (vous pouvez les charger depuis une API)
 const pointsDeVente = ref([
   {
     code: null,
-    nom: 'Fred Code',
-    mobile: '+237 693 45 78 23',
-    email: 'joel@gmail.com',
-    city: 'Douala, Akwa Nord',
-    address:'',
-    solde: 300000,
-    depenseMois: 150000,
-    commission: 45000,
-    derniereRecharge: 100000
-  },
+    nom: '',
+    mobile: '',
+    email: '',
+    city: '',
+    address: '',
+    solde: null,
+    depenseMois: null,
+    commission: null,
+    derniereRecharge: null
+  }
 ]);
 
-
-// Fonction pour formater les montants
-const formatMontant = (montant) => {
-  return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'XAF', maximumFractionDigits: 0 }).format(montant);
-};
-
-const toggleMenu = () => {
-  isMenuOpen.value = !isMenuOpen.value;
-  if (isMenuOpen.value) {
-    gsap.to(menuBox.value, { opacity: 1, y: 0, duration: 0.3, display: 'block' });
-  } else {
-    gsap.to(menuBox.value, { opacity: 0, y: -10, duration: 0.2, onComplete: () => menuBox.value.style.display = 'none' });
-  }
-};
+// const pointsDeVente = ref([
+//   {
+//     code: null,
+//     nom: 'Fred Code',
+//     mobile: '+237 693 45 78 23',
+//     email: 'joel@gmail.com',
+//     city: 'Douala',
+//     address: 'Akwa Nord',
+//     solde: 300000,
+//     depenseMois: 150000,
+//     commission: 45000,
+//     derniereRecharge: 100000
+//   }
+// ]);
 
 let valueName = '';
 let valueGuid = '';
@@ -386,8 +388,10 @@ const onToggle = (name , guid) => {
   isModalVisible.value = !isModalVisible.value;
 }
 
-const onBlock = () => {
-  alert("Action bloquer");
+const onBlock = (name, guid) => {
+  valueGuid = guid;
+  valueName = name;
+  isModalDeleted.value = !isModalDeleted.value;
 };
 
 const onEdit = () => {
@@ -456,24 +460,132 @@ const actions = ref([
   }
 ]);
 
-const isLoading = ref(false);
+// Filtre et recherche
+const filteredPoints = computed(() => {
+  let result = [...pointsDeVente.value];
 
+  // Appliquer la recherche
+  // if (search.value) {
+  //   const searchLower = search.value.toLowerCase();
+  //   result = result.filter(point =>
+  //     point.nom.toLowerCase().includes(searchLower) ||
+  //     point.city.toLowerCase().includes(searchLower) ||
+  //     point.email.toLowerCase().includes(searchLower) ||
+  //     point.mobile.toLowerCase().includes(searchLower) ||
+  //     point.address.toLowerCase().includes(searchLower)
+  //   );
+  // }
+  if (search.value) {
+    const searchLower = search.value.toLowerCase();
+    result = result.filter(point =>
+      (point.nom?.toLowerCase() || '').includes(searchLower) ||
+      (point.city?.toLowerCase() || '').includes(searchLower) ||
+      (point.email?.toLowerCase() || '').includes(searchLower) ||
+      (point.mobile?.toLowerCase() || '').includes(searchLower) ||
+      (point.address?.toLowerCase() || '').includes(searchLower)
+    );
+  }
+
+  // Appliquer le filtre
+  if (currentFilter.value === 'city') {
+    // Trier par ville
+    result.sort((a, b) => a.city.localeCompare(b.city));
+  } else if (currentFilter.value === 'solde') {
+    // Trier par solde (décroissant)
+    result.sort((a, b) => b.solde - a.solde);
+  } else if (currentFilter.value === 'ca') {
+    // Trier par chiffre d'affaires (décroissant)
+    result.sort((a, b) => b.depenseMois - a.depenseMois);
+  }
+
+  return result;
+});
+
+// Points de vente paginés
+const paginatedPoints = computed(() => {
+  return filteredPoints.value.slice(startIndex.value, endIndex.value);
+});
+
+// Fonction pour passer à la page suivante
+const nextPage = () => {
+  if (currentPage.value < totalPages.value) {
+    currentPage.value++;
+  }
+};
+
+// Fonction pour passer à la page précédente
+const prevPage = () => {
+  if (currentPage.value > 1) {
+    currentPage.value--;
+  }
+};
+
+// // Gestion des filtres
+// const toggleFilterMenu = () => {
+//   isFilterMenuOpen.value = !isFilterMenuOpen.value;
+// };
+
+// // Appliquer un filtre
+// const applyFilter = (filter) => {
+//   currentFilter.value = filter;
+//   isFilterMenuOpen.value = false;
+//   // Retour à la première page quand on change de filtre
+//   currentPage.value = 1;
+// };
+
+// Fermer le menu de filtre quand on clique en dehors
+const handleClickOutside = (event) => {
+  if (filterMenu.value && !filterMenu.value.contains(event.target)) {
+    isFilterMenuOpen.value = false;
+  }
+  if (menuBox.value && !menuBox.value.contains(event.target)) {
+    isMenuOpen.value = false;
+  }
+};
+
+// Fonction pour traiter la recharge
+const processRecharge = async () => {
+  // Validation du montant
+  if (!amountRecharge.value || amountRecharge.value <= 0) {
+    alert("Veuillez entrer un montant valide");
+    return;
+  }
+
+  // Ici vous pouvez implémenter l'API pour traiter la recharge
+  console.log(`Recharge de ${amountRecharge.value} FCFA pour ${valueName}, ${valueGuid} par ${guid.value}`);
+  try {
+    const result = await Account.Recharge(guid.value, amountRecharge.value, valueGuid, token.value);
+    if (result){
+      alert('operation successfully recharged');
+    }
+  } catch (error) {
+
+  } finally {
+    // Reset et fermeture du modal
+    amountRecharge.value = null;
+    isModalVisible.value = false;
+  }
+
+
+  // Vous pourriez ajouter une notification de succès ici
+};
+
+// Écouter les clics en dehors des menus
 onMounted(async () => {
-  gsap.fromTo(box.value, {y: 500, opacity: 0}, {y: 1, opacity: 1, duration: 1});
+  document.addEventListener('click', handleClickOutside);
 
-  // isLoading.value = true;
+  isLoading.value = true;
   try {
     const partnerData = await Login.myPartner(guid.value, token.value);
     if (!partnerData) {
       console.log('not_found_partner');
       return;
     }
-    console.log("partnerData", partnerData.map(entry => entry.code));
 
     // Vérifiez si les données sont un tableau ou un objet unique
     if (Array.isArray(partnerData)) {
       pointsDeVente.value = partnerData.map(partner => ({
-        nom: partner.agency || partner.name || null,
+        nom: partner.name || null,
         firstname: partner.contact.firstname,
         lastname: partner.contact.lastname,
         mobile: partner.contact.mobile,
@@ -481,8 +593,11 @@ onMounted(async () => {
         city: partner.contact.city.name,
         country: partner.contact.city.country.alpha2,
         address: partner.contact.location,
-        code: partner.code || partner.id
-        // solde: partner.account.balance || null
+        code: partner.code || partner.id,
+        solde: partner.account?.balance ?? 0,
+        depenseMois: 0,
+        commission: 0,
+        derniereRecharge: 0
       }));
     } else {
       // Si c'est un objet unique, créez un tableau avec cet objet
@@ -495,287 +610,86 @@ onMounted(async () => {
         city: partnerData.city,
         country: partnerData.country,
         address: partnerData.address,
-        code: partnerData.code
-        // solde: partnerData.account.balance
+        code: partnerData.code,
+        solde: partnerData.account?.balance?? 0,
+        depenseMois: 0,
+        commission: 0,
+        derniereRecharge: 0
       }];
     }
   } catch (error) {
     console.error('Erreur lors du chargement des partenaires:', error);
   } finally {
-    // isLoading.value = false;
+    isLoading.value = false;
   }
+
+  // isLoading.value = true;
+  // try {
+  //   const partnerData = await Login.myPartner(guid.value, token.value);
+  //
+  //   if (!partnerData) {
+  //     console.log('not_found_partner');
+  //     return;
+  //   }
+  //
+  //   console.log("partnerData", partnerData.map(entry => entry?.account));
+  //   console.log("AccountAmount", partnerData.map(entry => entry?.account?.balance ?? null));
+  //
+  //   if (Array.isArray(partnerData)) {
+  //     pointsDeVente.value = partnerData
+  //       .filter(partner => partner && partner.contact && partner.account) // sécurité
+  //       .map(partner => ({
+  //         nom: partner.name || null,
+  //         firstname: partner.contact?.firstname ?? null,
+  //         lastname: partner.contact?.lastname ?? null,
+  //         mobile: partner.contact?.mobile ?? null,
+  //         email: partner.contact?.email ?? null,
+  //         city: partner.contact?.city?.name ?? null,
+  //         country: partner.contact?.city?.country?.alpha2 ?? null,
+  //         address: partner.contact?.location ?? null,
+  //         code: partner.code || partner.id,
+  //         solde: partner.account?.balance ?? 0
+  //       }));
+  //   } else {
+  //     pointsDeVente.value = [{
+  //       agency: partnerData.agency || partnerData.name,
+  //       firstname: partnerData.firstname ?? null,
+  //       lastname: partnerData.lastname ?? null,
+  //       mobile: partnerData.mobile ?? null,
+  //       email: partnerData.email ?? null,
+  //       city: partnerData.city ?? null,
+  //       country: partnerData.country ?? null,
+  //       address: partnerData.address ?? null,
+  //       code: partnerData.code ?? null,
+  //       solde: partnerData.account?.balance ?? 0
+  //     }];
+  //   }
+  // } catch (error) {
+  //   console.error('Erreur lors du chargement des partenaires:', error);
+  // } finally {
+  //   isLoading.value = false;
+  // }
+
+  // Animation des cartes
+  await nextTick(() => {
+    if (pointCard.value.length) {
+      gsap.from(pointCard.value, {y: 50, opacity: 0, duration: 1, stagger: 0.2, ease: "power2.out"});
+    }
+  });
 });
+
+// Ne pas oublier de retirer l'écouteur d'événement lorsque le composant est détruit
+onUnmounted(() => {
+  document.removeEventListener('click', handleClickOutside);
+});
+
+// Surveiller les changements de recherche pour revenir à la première page
+watch(search, () => {
+  currentPage.value = 1;
+});
+
+// Fonction pour formater les montants
+const formatMontant = (montant) => {
+  return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'XAF', maximumFractionDigits: 0 }).format(montant);
+};
 </script>
-
-<!--<template>-->
-<!--  <div class="flex min-h-screen">-->
-<!--    &lt;!&ndash; Sidebar / Dashboard Navigation &ndash;&gt;-->
-<!--    <Dashboard />-->
-<!--    <div class=" flex flex-col w-full">-->
-<!--      &lt;!&ndash; Header &ndash;&gt;-->
-<!--      <Header />-->
-
-<!--      &lt;!&ndash; Main Content Area &ndash;&gt;-->
-<!--      <div class="flex-grow flex">-->
-<!--        <main class="flex-grow bg-neutral-100 lg:pl-32 pr-16  lg:py-16 py-6 w-full justify-center">-->
-<!--          <div class="flex flex-col w-full h-full bg-white mx-auto border-2 shadow-lg">-->
-<!--            <header class="flex flex-wrap items-center justify-between p-4 ">-->
-<!--              <span class="font-semibold text-2xl text-gray-500 leading-6 uppercase">-->
-<!--                point de vente-->
-<!--              </span>-->
-<!--              <span class="font-semibold text-xl text-gray-950 leading-6">-->
-<!--                Imediatis sarl-->
-<!--              </span>-->
-<!--            </header>-->
-<!--            <main class="flex flex-col p-4 space-y-4">-->
-<!--              <div class="w-full border bg-neutral-50 flex flex-col p-4">-->
-<!--                <div class="flex w-full justify-between items-center">-->
-<!--                  <span class="font-semibold text-xl leading-6">M. Gaetane </span>-->
-<!--                  <span class="font-semibold text-xl leading-6">699675645 </span>-->
-<!--                </div>-->
-<!--                <div class="flex w-full justify-between items-center">-->
-<!--                <span class="text-sm font-bold text-gray-400 font-serif leading-6">Douala, ABONGMBANG ABONG MBANG</span>-->
-<!--                <button type="button" class="flex justify-center items-center gap-2 text-sm font-bold text-gray-400 font-serif leading-6">-->
-<!--                  Discuter sur-->
-<!--                  <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="32" height="32" viewBox="0 0 48 48">-->
-<!--                    <path fill="#fff" d="M4.9,43.3l2.7-9.8C5.9,30.6,5,27.3,5,24C5,13.5,13.5,5,24,5c5.1,0,9.8,2,13.4,5.6C41,14.2,43,18.9,43,24-->
-<!--                    c0,10.5-8.5,19-19,19c0,0,0,0,0,0h0c-3.2,0-6.3-0.8-9.1-2.3L4.9,43.3z"></path>-->
-<!--                    <path fill="#fff" d="M4.9,43.8c-0.1,0-0.3-0.1-0.4-0.1c-0.1-0.1-0.2-0.3-0.1-0.5L7,33.5c-1.6-2.9-2.5-6.2-2.5-9.6-->
-<!--                    C4.5,13.2,13.3,4.5,24,4.5c5.2,0,10.1,2,13.8,5.7c3.7,3.7,5.7,8.6,5.7,13.8c0,10.7-8.7,19.5-19.5,19.5c-3.2,0-6.3-0.8-9.1-2.3-->
-<!--                    L5,43.8C5,43.8,4.9,43.8,4.9,43.8z"></path><path fill="#cfd8dc" d="M24,5c5.1,0,9.8,2,13.4,5.6C41,14.2,43,18.9,-->
-<!--                    43,24c0,10.5-8.5,19-19,19h0c-3.2,0-6.3-0.8-9.1-2.3L4.9,43.3	l2.7-9.8C5.9,30.6,5,27.3,5,24C5,13.5,13.5,5,24,5-->
-<!--                    M24,43L24,43L24,43 M24,43L24,43L24,43 M24,4L24,4C13,4,4,13,4,24	c0,3.4,0.8,6.7,2.5,9.6L3.9,43c-0.1,0.3,0,0.7,-->
-<!--                    0.3,1c0.2,0.2,0.4,0.3,0.7,0.3c0.1,0,0.2,0,0.3,0l9.7-2.5c2.8,1.5,6,2.2,9.2,2.2	c11,0,20-9,20-20c0-5.3-2.1-10.4-5.8-14.1C34.4,-->
-<!--                    6.1,29.4,4,24,4L24,4z"></path><path fill="#40c351" d="M35.2,12.8c-3-3-6.9-4.6-11.2-4.6C15.3,8.2,8.2,15.3,8.2,24c0,3,0.8,5.9,2.4,-->
-<!--                    8.4L11,33l-1.6,5.8l6-1.6l0.6,0.3	c2.4,1.4,5.2,2.2,8,2.2h0c8.7,0,15.8-7.1,15.8-15.8C39.8,19.8,38.2,15.8,35.2,12.8z"></path>-->
-<!--                    <path fill="#fff" fill-rule="evenodd" d="M19.3,16c-0.4-0.8-0.7-0.8-1.1-0.8c-0.3,0-0.6,0-0.9,0s-0.8,0.1-1.3,0.6c-0.4,0.5-1.7,-->
-<!--                    1.6-1.7,4	s1.7,4.6,1.9,4.9s3.3,5.3,8.1,7.2c4,1.6,4.8,1.3,5.7,1.2c0.9-0.1,2.8-1.1,3.2-2.3c0.4-1.1,0.4-2.1,-->
-<!--                    0.3-2.3c-0.1-0.2-0.4-0.3-0.9-0.6	s-2.8-1.4-3.2-1.5c-0.4-0.2-0.8-0.2-1.1,0.2c-0.3,0.5-1.2,1.5-1.5,1.9c-0.3,0.3-0.6,0.4-1,-->
-<!--                    0.1c-0.5-0.2-2-0.7-3.8-2.4	c-1.4-1.3-2.4-2.8-2.6-3.3c-0.3-0.5,0-0.7,0.2-1c0.2-0.2,0.5-0.6,0.7-0.8c0.2-0.3,0.3-0.5,-->
-<!--                    0.5-0.8c0.2-0.3,0.1-0.6,0-0.8	C20.6,19.3,19.7,17,19.3,16z" clip-rule="evenodd"></path>-->
-<!--                  </svg>-->
-<!--                </button>-->
-<!--                </div>-->
-<!--              </div>-->
-
-
-<!--              <div class="flex flex-col py-10">-->
-<!--                <p class="text-lg font-serif text-gray-600 uppercase py-1"> Réabonnement(s)</p>-->
-<!--                <div class="grid grid-cols-2 gap-3">-->
-<!--                  <div class="w-full flex flex-col justify-between items-center bg-black p-1">-->
-<!--                    <div class="flex w-full justify-between items-center py-2 px-4">-->
-<!--                    <span class="font-bold text-white leading-6 text-base flex items-start flex-col">-->
-<!--                      24100151083952-->
-<!--                      <span class="font-bold text-gray-300 leading-2 text-xs">-->
-<!--                      Sami Fomo-->
-<!--                    </span>-->
-<!--                    </span>-->
-<!--                      <span class="font-bold text-yellow-400 leading-6 text-base flex items-end flex-col animate-pulse">-->
-<!--                      ...En Attente-->
-<!--                      <span class="font-bold text-gray-400 leading-2 text-xs">-->
-<!--                      24-05-2025-->
-<!--                    </span>-->
-<!--                    </span>-->
-
-<!--                    </div>-->
-<!--                    <div class="grid grid-cols-2 justify-center items-center w-full border-y border-white pb-2 px-2">-->
-<!--                    <span class="font-bold text-white leading-6 gap-1 text-base flex  items-start flex-col px-2">-->
-<!--                                                         Access+-->
-<!--                      <div class="leading-4  flex flex-wrap justify-start gap-x-4 text-xs text-gray-200">-->
-<!--                        <span class="">CHARME</span>-->
-<!--                        <span class="">ENGLISH PLUS ACCESS</span>-->
-<!--                        <span class=" ">ENGLISH PLUS EVASION</span>-->
-<!--                      </div>-->
-<!--                    </span>-->
-<!--                      <span class="font-bold text-white leading-6 text-base flex items-end flex-col px-2">-->
-<!--                                        25.000XAF-->
-<!--                    </span>-->
-<!--                    </div>-->
-<!--                    <div class="w-full grid grid-cols-2 p-1">-->
-<!--                      <div>-->
-<!--                        <span class="font-bold text-white leading-6 text-base flex  items-start flex-col px-2">-->
-<!--                                        Date d'expiration : 19 Février 2024-->
-<!--                    </span>-->
-<!--                      </div>-->
-<!--                      <div class="flex justify-end">-->
-<!--                        <div class="grid flex-col px-4 cursor-pointer">-->
-<!--                        <span class="font-bold text-white leading-6 flex  items-center flex-col  group">-->
-<!--                          <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"-->
-<!--                                stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round" >-->
-<!--                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 12l5 5l10 -10" /><path d="M2 12l5 5m5 -5l5 -5" />-->
-<!--                          </svg>-->
-<!--                        </span>-->
-<!--                          <span class="font-semibold text-white text-opacity-80 leading-6 text-xs flex  items-end flex-col">Confirmer</span>-->
-<!--                        </div>-->
-<!--                        <div class="grid flex-col px-4 cursor-pointer">-->
-<!--                        <span class="font-bold text-white leading-6 flex  items-center flex-col  group">-->
-<!--                          <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"-->
-<!--                                stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  >-->
-<!--                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 13v-8a1 1 0 0 0 -1 -1h-2a1 1 0 0-->
-<!--                             0 -1 1v7a1 1 0 0 0 1 1h3a4 4 0 0 1 4 4v1a2 2 0 0 0 4 0v-5h3a2 2 0 0 0 2 -2l-1 -5a2 3 0 0 0 -2-->
-<!--                              -2h-7a3 3 0 0 0 -3 3" />-->
-<!--                          </svg>-->
-<!--                        </span>-->
-<!--                          <span class="font-semibold text-white text-opacity-80 leading-6 text-xs flex  items-end flex-col">Annulé</span>-->
-<!--                        </div>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                  <div class="w-full flex flex-col justify-between items-center bg-green-600 p-1">-->
-<!--                    <div class="flex w-full justify-between items-center py-2 px-4">-->
-<!--                    <span class="font-bold text-white leading-6 text-base flex items-start flex-col">-->
-<!--                      24100151083952-->
-<!--                      <span class="font-bold text-gray-300 leading-2 text-xs">-->
-<!--                      Sami Fomo-->
-<!--                    </span>-->
-<!--                    </span>-->
-<!--                      <span class="font-bold text-white leading-6 text-base flex items-end flex-col">-->
-<!--                      Activé-->
-<!--                      <span class="font-bold text-gray-300 leading-2 text-xs">-->
-<!--                      24-05-2025-->
-<!--                    </span>-->
-<!--                    </span>-->
-
-<!--                    </div>-->
-<!--                    <div class="grid grid-cols-2 justify-center items-center w-full border-y border-white pb-2 px-2">-->
-<!--                    <span class="font-bold text-white leading-6 gap-1 text-base flex  items-start flex-col px-2">-->
-<!--                                                         Access+-->
-<!--                      <div class="leading-4  flex flex-wrap justify-start gap-x-4 text-xs text-gray-200">-->
-<!--                        <span class="">CHARME</span>-->
-<!--                        <span class="">ENGLISH PLUS ACCESS</span>-->
-<!--                        <span class=" ">ENGLISH PLUS EVASION</span>-->
-<!--                      </div>-->
-<!--                    </span>-->
-<!--                      <span class="font-bold text-white leading-6 text-base flex items-end flex-col px-2">-->
-<!--                                        25.000XAF-->
-<!--                    </span>-->
-<!--                    </div>-->
-<!--                    <div class="w-full grid grid-cols-2 p-1">-->
-<!--                      <div>-->
-<!--                        <span class="font-bold text-white leading-6 text-base flex  items-start flex-col px-2">-->
-<!--                                        Date d'expiration : 19 Février 2024-->
-<!--                        </span>-->
-<!--                      </div>-->
-<!--                      <div class="flex justify-end hidden">-->
-<!--                        <div class="grid flex-col px-4 cursor-pointer">-->
-<!--                        <span class="font-bold text-white leading-6 flex  items-center flex-col  group">-->
-<!--                          <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"-->
-<!--                                stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round" >-->
-<!--                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 12l5 5l10 -10" /><path d="M2 12l5 5m5 -5l5 -5" />-->
-<!--                          </svg>-->
-<!--                        </span>-->
-<!--                          <span class="font-semibold text-white text-opacity-80 leading-6 text-xs flex  items-end flex-col">Confirmer</span>-->
-<!--                        </div>-->
-<!--                        <div class="grid flex-col px-4 cursor-pointer">-->
-<!--                        <span class="font-bold text-white leading-6 flex  items-center flex-col  group">-->
-<!--                          <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"-->
-<!--                                stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  >-->
-<!--                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 13v-8a1 1 0 0 0 -1 -1h-2a1 1 0 0-->
-<!--                             0 -1 1v7a1 1 0 0 0 1 1h3a4 4 0 0 1 4 4v1a2 2 0 0 0 4 0v-5h3a2 2 0 0 0 2 -2l-1 -5a2 3 0 0 0 -2-->
-<!--                              -2h-7a3 3 0 0 0 -3 3" />-->
-<!--                          </svg>-->
-<!--                        </span>-->
-<!--                          <span class="font-semibold text-white text-opacity-80 leading-6 text-xs flex  items-end flex-col">Annulé</span>-->
-<!--                        </div>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                  <div class="w-full flex flex-col justify-between items-center bg-red-600 p-1">-->
-<!--                    <div class="flex w-full justify-between items-center py-2 px-4">-->
-<!--                    <span class="font-bold text-white leading-6 text-base flex items-start flex-col">-->
-<!--                      24100151083952-->
-<!--                      <span class="font-bold text-gray-300 leading-2 text-xs">-->
-<!--                      Sami Fomo-->
-<!--                    </span>-->
-<!--                    </span>-->
-<!--                      <span class="font-bold text-white leading-6 text-base flex items-end flex-col">-->
-<!--                      Échouée-->
-<!--                      <span class="font-bold text-gray-400 leading-2 text-xs">-->
-<!--                      24-05-2025-->
-<!--                    </span>-->
-<!--                    </span>-->
-
-<!--                    </div>-->
-<!--                    <div class="grid grid-cols-2 justify-center items-center w-full border-y border-white pb-2 px-2">-->
-<!--                    <span class="font-bold text-white leading-6 gap-1 text-base flex  items-start flex-col px-2">-->
-<!--                                                         Access+-->
-<!--                      <div class="leading-4  flex flex-wrap justify-start gap-x-4 text-xs text-gray-200">-->
-<!--                        <span class="">CHARME</span>-->
-<!--                        <span class="">ENGLISH PLUS ACCESS</span>-->
-<!--                        <span class=" ">ENGLISH PLUS EVASION</span>-->
-<!--                      </div>-->
-<!--                    </span>-->
-<!--                      <span class="font-bold text-white leading-6 text-base flex items-end flex-col px-2">-->
-<!--                                        25.000XAF-->
-<!--                    </span>-->
-<!--                    </div>-->
-<!--                    <div class="w-full grid grid-cols-2 p-1">-->
-<!--                      <div>-->
-<!--                        <span class="font-bold text-white leading-6 text-base flex  items-start flex-col px-2">-->
-<!--                                        Date d'expiration : 19 Février 2024-->
-<!--                    </span>-->
-<!--                      </div>-->
-<!--                      <div class="flex justify-end">-->
-<!--                        <div class="grid flex-col px-4 cursor-pointer hidden">-->
-<!--                        <span class="font-bold text-white leading-6 flex  items-center flex-col  group">-->
-<!--                          <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"-->
-<!--                                stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round" >-->
-<!--                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 12l5 5l10 -10" /><path d="M2 12l5 5m5 -5l5 -5" />-->
-<!--                          </svg>-->
-<!--                        </span>-->
-<!--                          <span class="font-semibold text-white text-opacity-80 leading-6 text-xs flex  items-end flex-col">Confirmer</span>-->
-<!--                        </div>-->
-<!--                        <div class="grid flex-col px-4 cursor-pointer hidden">-->
-<!--                        <span class="font-bold text-white leading-6 flex  items-center flex-col  group">-->
-<!--                          <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"-->
-<!--                                stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  >-->
-<!--                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 13v-8a1 1 0 0 0 -1 -1h-2a1 1 0 0-->
-<!--                             0 -1 1v7a1 1 0 0 0 1 1h3a4 4 0 0 1 4 4v1a2 2 0 0 0 4 0v-5h3a2 2 0 0 0 2 -2l-1 -5a2 3 0 0 0 -2-->
-<!--                              -2h-7a3 3 0 0 0 -3 3" />-->
-<!--                          </svg>-->
-<!--                        </span>-->
-<!--                          <span class="font-semibold text-white text-opacity-80 leading-6 text-xs flex  items-end flex-col">Annulé</span>-->
-<!--                        </div>-->
-<!--                        <div class="grid flex-col px-4 cursor-pointer">-->
-<!--                        <span class="font-bold text-white leading-6 flex  items-center flex-col hover:animate-spin">-->
-<!--                          <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"-->
-<!--                                stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">-->
-<!--                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M4 12v-3a3 3 0 0 1 3 -3h13m-3 -3l3 3l-3 3" />-->
-<!--                            <path d="M20 12v3a3 3 0 0 1 -3 3h-13m3 3l-3 -3l3 -3" /><path d="M11 11l1 -1v4" />-->
-<!--                          </svg>-->
-<!--                        </span>-->
-<!--                          <span class="font-semibold text-white text-opacity-80 leading-6 text-xs flex  items-end flex-col">Relancer</span>-->
-<!--                        </div>-->
-<!--                      </div>-->
-<!--                    </div>-->
-<!--                  </div>-->
-<!--                </div>-->
-<!--              </div>-->
-<!--            </main>-->
-<!--          </div>-->
-
-<!--        </main>-->
-
-<!--      </div>-->
-
-<!--      &lt;!&ndash; Footer &ndash;&gt;-->
-<!--      <Footer />-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</template>-->
-<!--<script setup lang="ts">-->
-<!--import {ref, onMounted} from "vue";-->
-<!--import {useRoute} from "vue-router";-->
-
-<!--import Dashboard from "../public/components/dashboard.vue";-->
-<!--import Header from "../public/components/header.vue";-->
-<!--import Footer from "../public/components/footer.vue";-->
-
-<!--const route = useRoute();-->
-<!--let user = ref(null);-->
-
-<!--onMounted(async () => {-->
-<!--   user.value = route.query.partner;-->
-<!--})-->
-
-<!--</script>-->

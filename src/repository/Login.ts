@@ -53,23 +53,7 @@ class Login {
     if (!guid) return null;
 
     const SiteUrl = "http://13.38.59.232/";
-    // const version = '1.0.0';
-    // const name = 'CROCO';
-    // const appCode = '154269875632';
-
     try {
-      // const { data: uuidData } = await axios.get(`${SiteUrl}/token/uuid`);
-      // const identified = uuidData.response;
-      //
-      // const { data: tokenData } = await axios.post(`${SiteUrl}/token/auth`, {
-      //   version,
-      //   name,
-      //   appCode,
-      //   identified,
-      // });
-      //
-      // const bearerToken = tokenData.response.token;
-      console.log("token is", token);
 
       const { data: response } = await axios.put(`${SiteUrl}/user/myPartner`, {
         manager: guid,
@@ -83,9 +67,8 @@ class Login {
       if (!response.status) return null;
 
       const data = response.response;
-      console.log(data.map(entry => User.fromJson(entry)));
-      return data.map((entry : any) => User.fromJson(entry));
-      // return User.fromJson(response.response);
+      return data.map((entry : User) => User.fromJson(entry));
+
     } catch (error) {
       console.error('Erreur dans myPartner:', error);
       throw error;

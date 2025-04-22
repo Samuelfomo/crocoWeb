@@ -47,7 +47,8 @@ class User{
   }
 
   public static fromJson(json: any): User {
-    return new User(json.guid, json.name, json.code, json.pin, json.profil, json.contact, json.blocked, json.activated, json.createdBy? json.createdBy : null, json.deleted, json.isSecured, new Date(json.lastLogin), json.account)
+    return new User(
+      json.guid, json.name, json.code, json.pin, json.profil, json.contact, json.blocked, json.activated, json.createdBy? json.createdBy : null, json.deleted, json.isSecured, new Date(json.lastLogin), json.account);
   }
 }
 export default User;

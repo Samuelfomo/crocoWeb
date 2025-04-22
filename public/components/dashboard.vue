@@ -326,9 +326,9 @@ const LogoutIcon = (props) => h('svg', {
 ]);
 const menuItems = [
   {label: 'Tableau de bord', icon: HomeIcon, route: '/home'},
-  {label: 'Statistiques', icon: ChartIcon, route: '#'},
+  {label: 'Statistiques', icon: ChartIcon, route: 'point_sale'},
   {label: 'Activités', icon: Activity, route: '#'},
-  {label: 'Formules', icon: Formulas, route: '#'},
+  {label: 'Formules', icon: Formulas, route: '/formula'},
   {label: 'Lexiques', icon: Lexicon, route: '#'},
   // {label: 'Utilisateurs', icon: UsersIcon},
   {label: 'Documents', icon: DocsIcon, route: '#'},

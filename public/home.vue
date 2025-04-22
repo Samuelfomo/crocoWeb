@@ -126,7 +126,7 @@ const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value;
   if (isMenuOpen.value) {
     gsap.to(menuBox.value, { opacity: 1, y: 0, duration: 0.3, display: 'block' });
-  } else {
+  } else  {
     gsap.to(menuBox.value, { opacity: 0, y: -10, duration: 0.2, onComplete: () => menuBox.value.style.display = 'none' });
   }
 };
