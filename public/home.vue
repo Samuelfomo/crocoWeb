@@ -106,7 +106,7 @@ import Dashboard from "@public/components/dashboard.vue";
 import gsap from "gsap";
 import {useRoute} from "vue-router";
 import User from "@/repository/Login";
-import Table from "@public/table.vue";
+import Table from "@public/table/table.vue";
 
 import userLoginStore from '@/stores/userStore'
 import { storeToRefs } from 'pinia'

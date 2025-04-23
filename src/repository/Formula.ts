@@ -20,6 +20,30 @@ class Formula {
     } catch (error){
       throw error;
     }
+  };
+
+  static async save(formula: Formula, token: string): Promise<Formula> {
+
+    const siteUrl = 'http://13.38.59.232';
+
+    try {
+      console.log("formula send saving", formula);
+      const response = await axios.post(`${siteUrl}/formula/add`, formula, {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      })
+      if (!response.status) {
+        return null;
+      }
+      console.log(Formulas.fromJson(response.data.response));
+      return Formulas.fromJson(response.data.response);
+      // return response.data;
+    } catch (error)
+    {
+      throw error;
+    }
   }
 
 }

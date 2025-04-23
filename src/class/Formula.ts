@@ -1,3 +1,5 @@
+import axios from "axios";
+
 class Formula {
   public guid: number;
   public code: string;
@@ -43,7 +45,82 @@ class Formula {
       json.description,
       new Date(json.created)
     );
+  };
+
+  async save(token: string) {
+    const siteUrl = "http://13.38.59.232";
+
+    try {
+      const response = await axios.post(`${siteUrl}/formula/add`, {
+        guid: this.guid,
+        code: this.code,
+        name: this.name,
+        amount: this.amount,
+        isOption: this.isOption,
+        includes: this.includes,
+        extendes: this.extendes,
+        description: this.description,
+        created: this.created,
+      }, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      if (response.status === 200 && response.data?.status !== false) {
+        console.log("success", response.data.response);
+        return Formula.fromJson(response.data.response);
+      } else {
+        // L'API a retourné un message d'erreur explicite
+        throw new Error(response.data.message || "Erreur inconnue de l'API");
+      }
+
+    } catch (error: any) {
+      // Gestion des erreurs Axios + backend
+      if (error.response && error.response.data) {
+        const apiMessage = error.response.data.message || "Erreur serveur";
+        console.error("Erreur API :", apiMessage);
+        throw new Error(apiMessage);
+      } else {
+        // Autres erreurs (réseau, timeout, etc.)
+        console.error("Erreur système :", error.message);
+        throw new Error(error.message);
+      }
+    }
   }
+
+
+  // async save(token : string) {
+  //
+  //   const siteUrl = "http://13.38.59.232";
+  //
+  //   try {
+  //     const response = await axios.post(`${siteUrl}/formula/add`,{
+  //       guid: this.guid,
+  //       code: this.code,
+  //       name: this.name,
+  //       amount: this.amount,
+  //       isOption: this.isOption,
+  //       includes: this.includes,
+  //       extendes: this.extendes,
+  //       description: this.description,
+  //       created: this.created,
+  //     }, {
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${token}`
+  //       }
+  //     });
+  //     if (response.status === 200) {
+  //       console.log("success", response.data.response);
+  //       return Formula.fromJson(response.data.response);
+  //     }
+  //     return null;
+  //   } catch (error){
+  //     throw error;
+  //   }
+  // }
 }
 
 export default Formula;

@@ -329,7 +329,7 @@ const menuItems = [
   {label: 'Statistiques', icon: ChartIcon, route: 'point_sale'},
   {label: 'Activités', icon: Activity, route: '#'},
   {label: 'Formules', icon: Formulas, route: '/formula'},
-  {label: 'Lexiques', icon: Lexicon, route: '#'},
+  {label: 'Lexiques', icon: Lexicon, route: '/lexicon'},
   // {label: 'Utilisateurs', icon: UsersIcon},
   {label: 'Documents', icon: DocsIcon, route: '#'},
 ];

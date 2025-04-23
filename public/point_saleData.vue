@@ -176,7 +176,7 @@
                     </div>
 
                     <div class="grid grid-cols-1 pt-2 text-lg font-serif text-gray-600">
-                      <p>En validant vous approuvez le transfert de:
+                      <div>En validant vous approuvez le transfert de:
                         <span class="font-semibold text-black text-lg">
                           {{ amountRecharge ? formatMontant(amountRecharge) : '____' + ` FCFA ` }}
                         </span>
@@ -187,7 +187,7 @@
                         </span>
                         </div>
 
-                      </p>
+                      </div>
                     </div>
 
                     <div class="relative w-full py-8 lg:px-0 px-5 max-w-md mx-auto group">
