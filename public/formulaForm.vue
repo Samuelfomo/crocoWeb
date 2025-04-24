@@ -28,7 +28,7 @@
               <div class="p-8">
                 <div class="grid grid-cols-2 pb-4">
                   <h2 class="lg:text-4xl text-xl text-nowrap font-black font-serif text-gray-700 pb-6 italic">
-                    {{ formData.code ? 'Modifier la formule' : 'Ajouter une formule' }}
+                    {{ formData.guid ? 'Modifier la formule' : 'Ajouter une formule' }}
                   </h2>
                   <div class="relative flex items-start justify-end">
                     <div class="flex items-center justify-between cursor-pointer" @click="toggleMenu">
@@ -236,6 +236,7 @@
                       @click="resetForm"
                       class="px-6 py-3 rounded-lg bg-gray-500 hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-300 text-white transition duration-300"
                       ref="resetButton"
+                      :class="formData.guid?'hidden':''"
                     >
                       Réinitialiser
                     </button>
@@ -243,8 +244,9 @@
                       type="submit"
                       class="px-6 py-3 rounded-lg bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-300 text-white font-medium transition duration-300"
                       ref="submitButton"
+                      :class="formData.guid?'text-xl font-black font-serif w-[12.5rem]':''"
                     >
-                      Enregistrer
+                      {{ formData.guid ? 'Modifier' : 'Enregistrer' }}
                     </button>
                   </div>
                 </form>
@@ -292,7 +294,7 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
 import gsap from 'gsap';
-import {useRouter} from "vue-router";
+import {useRouter, useRoute} from "vue-router";
 
 import Dashboard from "@public/components/dashboard.vue";
 import Header from "@public/components/header.vue";
@@ -308,6 +310,7 @@ const store = userLoginStore();
 // Utiliser storeToRefs pour préserver la réactivité
 const { token } = storeToRefs(store);
 const router = useRouter();
+const route = useRoute();
 
 const isLoading = ref(false);
 
@@ -332,6 +335,9 @@ const selectedExtendOption = ref('');
 
 // Récupérer le nom d'une option par son code
 const getOptionName = (code) => {
+  console.log("Recherche du nom pour le code:", code);
+  console.log("Options disponibles:", availableOptions.value);
+
   const option = availableOptions.value.find(option => option.code === code);
   return option ? option.name : code;
 };
@@ -356,12 +362,13 @@ const updateFormType = () => {
 
 // Données du formulaire avec support pour les options multiples
 const formData = reactive({
+  guid: 0,
   name: '',
   code: '',
-  price: null,
-  include: [], // Tableau pour stocker plusieurs options
+  price: 0,
+  include: [] || '', // Tableau pour stocker plusieurs options
   isOption: false,
-  extend: [] // Tableau pour stocker plusieurs options
+  extend: [] || '' // Tableau pour stocker plusieurs options
 });
 // Gestion des erreurs
 const errors = ref({
@@ -377,7 +384,7 @@ const errors = ref({
 const validateForm = () => {
   let isValid = true;
 
-  const specialCharRegex = /^[a-zA-Z0-9\sÀ-ÿ'-]+$/; // Autorise lettres, chiffres, espaces, accents
+  // const specialCharRegex = /^[a-zA-Z0-9\sÀ-ÿ'-]+$/; // Autorise lettres, chiffres, espaces, accents
   const codeRegex = /^[a-zA-Z0-9-_]+$/; // Alphanumérique, tiret et underscore seulement
 
   errors.value = {
@@ -393,10 +400,27 @@ const validateForm = () => {
   if (!formData.name.trim()) {
     errors.value.name = 'Le nom de la formule est requis';
     isValid = false;
-  } else if (!specialCharRegex.test(formData.name.trim())) {
-    errors.value.name = 'Le nom ne doit pas contenir de caractères spéciaux';
-    isValid = false;
   }
+  // else if (!specialCharRegex.test(formData.name.trim())) {
+  //   errors.value.name = 'Le nom contient des caractères non autorisés';
+  //   isValid = false;
+  // }
+  else {
+    // Vérifie que le nom contient au moins une lettre ou un chiffre
+    const alphaNumericCheck = /[a-zA-Z0-9À-ÿ]/;
+    if (!alphaNumericCheck.test(formData.name.trim())) {
+      errors.value.name = 'Le nom ne peut pas être constitué uniquement de caractères spéciaux';
+      isValid = false;
+    }
+  }
+
+  // if (!formData.name.trim()) {
+  //   errors.value.name = 'Le nom de la formule est requis';
+  //   isValid = false;
+  // } else if (!specialCharRegex.test(formData.name.trim())) {
+  //   errors.value.name = 'Le nom ne doit pas contenir de caractères spéciaux';
+  //   isValid = false;
+  // }
 
   // Code
   if (!formData.code.trim()) {
@@ -493,7 +517,7 @@ const submitForm = async () => {
 
   try {
     const newFormula = new Formulas(
-      null,
+      formData.guid,
       formData.code,
       formData.name,
       Number(formData.price),
@@ -503,7 +527,6 @@ const submitForm = async () => {
       null,
       null
     );
-
     const savedFormula = await newFormula.save(token.value);
 
     if (!savedFormula) {
@@ -528,7 +551,7 @@ const submitForm = async () => {
 
     // Message de succès
     messageType.value = 'success';
-    messageText.value = `${formData.isOption ? 'Option' : 'Formule'} enregistrée avec succès`;
+    messageText.value = `${formData.isOption ? 'Option' : 'Formule'}${formData.guid ?' mise à jour avec succès' : 'enregistrée avec succès' } `;
     showMessage();
 
   } catch (error) {
@@ -638,7 +661,6 @@ try {
     return;
   }
   if (Array.isArray(result)) {
-    console.log(result);
     availableOptions.value = result.map((opt) => ({
       name: opt.name,
       code: opt.code,
@@ -652,7 +674,24 @@ try {
       isOptionValue: result.isOption
     }]
   }
-  console.log('availableOptions.value', availableOptions.value);
+  const formulaFromQuery = route.query.code;
+  if (formulaFromQuery) {
+   const formulaData = await Formula.getFormulaByCode(formulaFromQuery, token.value);
+   if (!formulaData){
+     console.error('formulaData not found');
+     return;
+   }
+    formData.guid = formulaData.guid;
+    formData.name = formulaData.name;
+    formData.code = formulaData.code;
+    formData.price = formulaData.amount;
+    formData.include = formulaData.includes.map(entry => entry.code) || [];
+    formData.isOption = formulaData.isOption;
+    formData.extend = formulaData.extendes.map(entry => entry.code) || [];
+  }
+// if (guidFromQuery) {
+//   await loadContactData(Number(guidFromQuery))
+// }
   await new Promise(resolve => setTimeout(resolve, 1000));
 
 } catch (error) {

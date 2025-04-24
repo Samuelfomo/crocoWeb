@@ -22,6 +22,24 @@ class Formula {
     }
   };
 
+  static async getFormulaByCode(code : string, token: string) {
+    try {
+      const siteUrl = 'http://13.38.59.232';
+      const response = await axios.get(`${siteUrl}/formula/${code}`, {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      });
+      if (response.status !== 200) {
+        return null;
+      }
+      return Formulas.fromJson(response.data.response);
+    } catch (error){
+      throw error;
+    }
+  }
+
   static async save(formula: Formula, token: string): Promise<Formula> {
 
     const siteUrl = 'http://13.38.59.232';

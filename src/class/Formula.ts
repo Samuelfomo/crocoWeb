@@ -6,8 +6,8 @@ class Formula {
   public name: string;
   public amount: number;
   public isOption: boolean;
-  public includes: Formula;
-  public extendes: Formula;
+  public includes: Formula[];
+  public extendes: Formula[];
   public description: string;
   public created: Date;
 
@@ -17,8 +17,8 @@ class Formula {
     name: string,
     amount: number,
     is_option: boolean,
-    includes: Formula,
-    extendes: Formula,
+    includes: Formula[] = [],
+    extendes: Formula[] = [],
     description: string,
     created: Date
   ) {
@@ -40,8 +40,10 @@ class Formula {
       json.name,
       json.amount,
       json.isOption,
-      json.includes ?? [],
-      json.extendes ?? [],
+      Array.isArray(json.includes) ? json.includes.map((f: any) => Formula.fromJson(f)) : [],
+      Array.isArray(json.extendes) ? json.extendes.map((f: any) => Formula.fromJson(f)) : [],
+      // json.includes ?? [],
+      // json.extendes ?? [],
       json.description,
       new Date(json.created)
     );
