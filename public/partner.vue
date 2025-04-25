@@ -112,7 +112,7 @@
                 </table>
 
                 <!-- Message quand aucun résultat -->
-                <div v-if="!isLoading" class="py-4 text-center text-lg font-serif text-red-500">
+                <div v-if="!isLoading && filteredPartners.length === 0" class="py-4 text-center text-lg font-serif text-red-500">
                   Aucun partenaire n’a été trouvé pour le moment.
                 </div>
 
@@ -144,7 +144,7 @@
                 <div class="flex flex-col md:flex-row justify-between items-center mt-4 gap-2">
                   <div class="text-sm text-gray-700">
                     Page {{ currentPage }} sur {{ totalPages || 1 }}
-                    (Total: {{  0 }} partenaires)
+                    (Total: {{  filteredPartners.length || 0 }} partenaires)
                   </div>
                   <div class="flex space-x-2">
                     <button
@@ -265,7 +265,7 @@ const filteredPartners = computed(() => {
 
 // Calcul du nombre total de pages
 const totalPages = computed(() => {
-  // return Math.ceil(filteredFormulas.value.length / entriesPerPage.value);
+  return Math.ceil(filteredPartners.value.length / entriesPerPage.value);
 });
 
 // const formatMontant = (value) => {
