@@ -249,9 +249,9 @@ const box = ref(null);
 const isLoading = ref(true);
 const isLoading1 = ref(true);
 const currentPage = ref(1);
-const entriesPerPage = ref(5); // Modifié à 5 entrées par page par défaut
+const entriesPerPage = ref(5);
 const searchTerm = ref('');
-const searchType = ref('name'); // Par défaut recherche par nom
+const searchType = ref('name');
 
 const searchTypeLabel = computed(() => {
   if (searchType.value === 'name') return 'nom';

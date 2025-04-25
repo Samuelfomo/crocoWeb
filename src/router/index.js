@@ -1,10 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Auth from "@public/login/authentication.vue"
 import Home from "@public/point_saleData.vue"
-import Point_sale from "@public/point_sale.vue"
-import Table from "@public/table/table.vue"
-import Transaction from "@public/transaction.vue"
-import Partner from "@public/home.vue"
+import PointSaleForm from "@public/point_sale.vue"
+// import Table from "@public/table/table.vue"
+// import Transaction from "@public/brouillon/transaction.vue"
+import Partner from "@public/partner.vue"
 import FormulaForm from "@public/formulaForm.vue"
 import Formula from "@public/formula.vue"
 import Lexicon from "@public/lexicon.vue"
@@ -26,20 +26,20 @@ const routes = [
         component: Home
       },
       {
-        path: 'point_sale',
-        name: 'point_sale',
-        component: Point_sale
+        path: 'formPoint_sale',
+        name: 'formPoint_sale',
+        component: PointSaleForm
       },
-      {
-        path: 'table',
-        name: 'table',
-        component: Table
-      },
-      {
-        path: 'transaction',
-        name: 'transaction',
-        component: Transaction
-      },
+      // {
+      //   path: 'table',
+      //   name: 'table',
+      //   component: Table
+      // },
+      // {
+      //   path: 'transaction',
+      //   name: 'transaction',
+      //   component: Transaction
+      // },
       {
         path: 'formulaForm',
         name: 'formulaForm',
@@ -76,7 +76,7 @@ export default router
 // import Auth from "@public/login/authentication.vue";
 // // import Modal from "@public/login/login.vue";
 // import Point_sale from "@public/point_sale.vue";
-// import Home from "@public/home.vue";
+// import Home from "@public/partner.vue";
 // import Table from "@public/table.vue";
 // import Transaction from "@public/transaction.vue";
 //
@@ -129,7 +129,7 @@ import { useLoginStore } from '@/stores/loginStore'
 
 import Login from "@public/login.vue";
 import Check from "@public/check-user.vue";
-import Home from "@public/home.vue";
+import Home from "@public/partner.vue";
 import Service from "@public/service.vue";
 import Contact from "@public/contact.vue";
 import Compte from "@public/parameter/compte.vue";
