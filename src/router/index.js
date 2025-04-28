@@ -1,10 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Auth from "@public/login/authentication.vue"
-import Home from "@public/point_saleData.vue"
-import PointSaleForm from "@public/point_sale.vue"
+import PointSale from "@public/point_sale.vue"
+import PointSaleFormForm from "@public/point_saleForm.vue"
 // import Table from "@public/table/table.vue"
 // import Transaction from "@public/brouillon/transaction.vue"
 import Partner from "@public/partner.vue"
+import PartnerForm from "@public/partnerForm.vue"
 import FormulaForm from "@public/formulaForm.vue"
 import Formula from "@public/formula.vue"
 import Lexicon from "@public/lexicon.vue"
@@ -23,12 +24,12 @@ const routes = [
       {
         path: 'home',
         name: 'home',
-        component: Home
+        component: PointSale
       },
       {
         path: 'formPoint_sale',
         name: 'formPoint_sale',
-        component: PointSaleForm
+        component: PointSaleFormForm
       },
       // {
       //   path: 'table',
@@ -56,6 +57,11 @@ const routes = [
         component: Lexicon
       },
       {
+        path: 'partnerForm',
+        name: 'partnerForm',
+        component: PartnerForm
+      },
+      {
         path: 'partner',
         name: 'partnerData',
         component: Partner
@@ -75,8 +81,8 @@ export default router
 // import { createRouter, createWebHistory } from 'vue-router';
 // import Auth from "@public/login/authentication.vue";
 // // import Modal from "@public/login/login.vue";
-// import Point_sale from "@public/point_sale.vue";
-// import Home from "@public/partner.vue";
+// import Point_sale from "@public/point_saleForm.vue";
+// import PointSale from "@public/partner.vue";
 // import Table from "@public/table.vue";
 // import Transaction from "@public/transaction.vue";
 //
@@ -95,7 +101,7 @@ export default router
 //   {
 //     path: '/home',
 //     name: 'home',
-//     component: Home,
+//     component: PointSale,
 //     meta: { requiresAuth: true }
 //   },
 //   {
@@ -129,7 +135,7 @@ import { useLoginStore } from '@/stores/loginStore'
 
 import Login from "@public/login.vue";
 import Check from "@public/check-user.vue";
-import Home from "@public/partner.vue";
+import PointSale from "@public/partner.vue";
 import Service from "@public/service.vue";
 import Contact from "@public/contact.vue";
 import Compte from "@public/parameter/compte.vue";
@@ -160,7 +166,7 @@ const routes = [
       {
         path: '/home',
         name: 'home',
-        component: Home
+        component: PointSale
       },
       {
         path: '/service',

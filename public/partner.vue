@@ -26,6 +26,7 @@
               <span class="text-2xl font-bold font-roboto text-gray-950 uppercase">Mes Partenaires</span>
               <div class="flex items-center justify-between gap-2 cursor-pointer">
                 <div
+                  @click="router.push('/partnerForm')"
                   class="relative flex items-center justify-center rounded-full h-14 w-14
                 border bg-gradient-to-br from-white to-[#87D04C] transition-transform duration-500 hover:scale-125"
                 >
@@ -49,12 +50,12 @@
                 <table id="contact-table" class="w-full bg-white rounded table-class">
                   <thead>
                   <tr class="bg-white border-2 shadow-sm">
-                    <th class="py-2 px-4 border-2 border-white text-left text-lg font-bold text-gray-400 w-[0.25rem]">
+                    <th class="px-4 border-2 border-white text-left text-lg font-bold text-gray-400">
                       <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"
-                            stroke="currentColor"  stroke-width="3"  stroke-linecap="round"  stroke-linejoin="round" >
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                        <path d="M20.925 13.163a8.998 8.998 0 0 0 -8.925 -10.163a9 9 0 0 0 0 18" /><path d="M9 10h.01" /><path d="M15 10h.01" />
-                        <path d="M9.5 15c.658 .64 1.56 1 2.5 1s1.842 -.36 2.5 -1" /><path d="M15 19l2 2l4 -4" />
+                            stroke="currentColor"  stroke-width="3"  stroke-linecap="round"  stroke-linejoin="round">
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+                        <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                        <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
                       </svg>
                     </th>
                     <th class="py-2 px-4 border-2 border-white text-left text-lg font-bold text-gray-400">
@@ -75,17 +76,12 @@
                     <th class="hidden lg:table-cell px-4 border-2 border-white text-left text-lg font-bold text-gray-400">
                       Localisation
                     </th>
-                    <th class="px-4 border-2 border-white text-left text-lg font-bold text-gray-400">
-                      <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none" class="hidden"
-                            stroke="currentColor"  stroke-width="3"  stroke-linecap="round"  stroke-linejoin="round" ><path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                        <path d="M19.364 4.636a2 2 0 0 1 0 2.828a7 7 0 0 1 -1.414 7.072l-2.122 2.12a4 4 0 0 0 -.707 3.536l-11.313 -11.312a4 4 0 0 0 3.535 -.707l2.121 -2.123a7 7 0 0 1 7.072 -1.414a2 2 0 0 1 2.828 0z" />
-                        <path d="M7.343 12.414l-.707 .707a3 3 0 0 0 4.243 4.243l.707 -.707" />
-                      </svg>
+                    <th class="py-2 px-4 border-2 border-white text-left text-lg font-bold text-gray-400 w-[0.25rem]">
                       <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"
-                            stroke="currentColor"  stroke-width="3"  stroke-linecap="round"  stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
-                        <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                        <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
+                            stroke="currentColor"  stroke-width="3"  stroke-linecap="round"  stroke-linejoin="round" >
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M20.925 13.163a8.998 8.998 0 0 0 -8.925 -10.163a9 9 0 0 0 0 18" /><path d="M9 10h.01" /><path d="M15 10h.01" />
+                        <path d="M9.5 15c.658 .64 1.56 1 2.5 1s1.842 -.36 2.5 -1" /><path d="M15 19l2 2l4 -4" />
                       </svg>
                     </th>
                   </tr>
@@ -93,19 +89,19 @@
                   <tbody>
                   <tr
                     class="hover:bg-gray-50 text-left border-b border-gray-300 text-gray-800 italic" v-for="(partner, index) in partners" :key="index">
-                    <td class="py-2 px-4 text-green-300 font-bold">
-                      <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"
-                            stroke-width="3"  stroke-linecap="round"  stroke-linejoin="round" ><path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                        <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-                      </svg>
-                    </td>
+                    <td class="py-2 px-4 text-green-300 font-bold">{{ partner.point_sale }}</td>
                     <td class="py-2 px-4 uppercase">{{ partner.structure }}</td>
                     <td class="py-2 px-4 hidden lg:table-cell">{{ partner.lastname }} {{partner.firstname}}</td>
                     <td class="py-2 px-4 hidden lg:table-cell">{{ partner.mobile }}</td>
                     <td class="py-2 px-4 hidden lg:table-cell">{{ partner.email }}</td>
                     <td class="py-2 px-4 uppercase hidden lg:table-cell">{{ partner.city }}-{{partner.country}}</td>
                     <td class="py-2 px-4 hidden lg:table-cell">{{ partner.location }}</td>
-                    <td class="py-2 px-4 text-green-300 font-bold">{{ partner.point_sale }}</td>
+                    <td class="py-2 px-4 text-green-300 font-bold">
+                      <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"
+                            stroke-width="3"  stroke-linecap="round"  stroke-linejoin="round" ><path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                        <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
+                      </svg>
+                    </td>
                   </tr>
 
                   </tbody>
@@ -180,6 +176,8 @@
 
 <script setup>
 import { ref, onMounted, computed } from 'vue';
+import {useRouter} from "vue-router";
+const router = useRouter();
 
 import Header from "@public/components/header.vue";
 import Footer from "@public/components/footer.vue";
@@ -268,60 +266,84 @@ const totalPages = computed(() => {
   return Math.ceil(filteredPartners.value.length / entriesPerPage.value);
 });
 
-// const formatMontant = (value) => {
-//   if (!value) return '0 XAF'
-//   return new Intl.NumberFormat('fr-FR').format(value) + ' XAF'
-// }
-
 onMounted(async () => {
-  const partnerData = await Login.myPartner(guid.value, token.value);
+  isLoading.value = true;
+  try {
+    // Récupérer tous les partners
+    const partnerData = await Login.myPartner(guid.value, token.value);
 
-  if (!partnerData) {
-    console.error('No partner data found');
-    return;
+    if (!partnerData) {
+      console.error('No partner data found');
+      isLoading.value = false;
+      return;
+    }
+
+    let partnersArray = [];
+
+    if (Array.isArray(partnerData)) {
+      const filteredPartners = partnerData.filter(p => p.profil?.reference === "PARTNER");
+
+      // Pour chaque Partner
+      for (const partner of filteredPartners) {
+        // await new Promise(resolve => setTimeout(resolve, 1000));
+        // Récupérer les points de vente de ce partner
+        const pointsDeVente = await Login.myPartner(partner.guid, token.value);
+        console.log('pointsDeVente', pointsDeVente);
+
+        partnersArray.push({
+          structure: partner.name,
+          lastname: partner.contact.lastname.toUpperCase(),
+          firstname: partner.contact.firstname,
+          mobile: partner.contact.mobile,
+          email: partner.contact.email,
+          city: partner.contact.city.name,
+          country: partner.contact.city.country.alpha2,
+          location: partner.contact.location,
+          // point_sale: partner.guid.length? partner.guid.length : 0,
+          point_sale: pointsDeVente ? pointsDeVente.length : 0, // Nombre de points de vente
+        });
+      }
+    } else if (partnerData.profil?.reference === "PARTNER") {
+      const pointsDeVente = await Login.myPartner(partnerData.guid, token.value);
+
+      partnersArray = [{
+        structure: partnerData.name,
+        lastname: partnerData.contact.lastname.toUpperCase(),
+        firstname: partnerData.contact.firstname,
+        mobile: partnerData.contact.mobile,
+        email: partnerData.contact.email,
+        city: partnerData.contact.city.name,
+        country: partnerData.contact.city.country.alpha2,
+        location: partnerData.contact.location,
+        // point_sale: partnerData? partnerData.length : 0
+        point_sale: pointsDeVente ? pointsDeVente.length : 0,
+      }];
+    }
+    partners.value = partnersArray;
+    console.log("Liste finale des partners avec nombre de points de vente", partners.value);
   }
-
-  if (Array.isArray(partnerData)) {
-    const filtered = partnerData.filter(p => p.profil?.reference === "PARTNER");
-
-    partners.value = filtered.map(partner => ({
-      structure: partner.name,
-      lastname: partner.contact.lastname.toUpperCase(),
-      firstname: partner.contact.firstname,
-      mobile: partner.contact.mobile,
-      email: partner.contact.email,
-      city: partner.contact.city.name,
-      country: partner.contact.city.country.alpha2,
-      location: partner.contact.location
-    }));
-  } else if (partnerData.profil?.reference === "PARTNER") {
-    partners.value = [{
-      structure: partnerData.name,
-      lastname: partnerData.contact.lastname.toUpperCase(),
-      firstname: partnerData.contact.firstname,
-      mobile: partnerData.contact.mobile,
-      email: partnerData.contact.email,
-      city: partnerData.contact.city.name,
-      country: partnerData.contact.city.country.alpha2,
-      location: partnerData.contact.location
-    }];
+catch (error) {
+    console.error('Erreur lors de la récupération des partners:', error.response ? error.response.data : error.message);
+  } finally {
+    isLoading.value = false;
   }
-
-  console.log("Filtered partnerData", partners.value);
-
   gsap.fromTo(box.value, { y: 200, opacity: 0 }, { y: 1, opacity: 9, duration: 1 });
 });
 
 
 // onMounted(async () => {
-//
 //   const partnerData = await Login.myPartner(guid.value, token.value);
+//
 //   if (!partnerData) {
-//     console.error('not partner data found');
+//     console.error('No partner data found');
 //     return;
 //   }
+//   let partnersArray = [];
+//
 //   if (Array.isArray(partnerData)) {
-//     partners.value = partnerData.map(partner => ({
+//     const filtered = partnerData.filter(p => p.profil?.reference === "PARTNER");
+//
+//     partnersArray = filtered.map(partner => ({
 //       structure: partner.name,
 //       lastname: partner.contact.lastname.toUpperCase(),
 //       firstname: partner.contact.firstname,
@@ -330,23 +352,25 @@ onMounted(async () => {
 //       city: partner.contact.city.name,
 //       country: partner.contact.city.country.alpha2,
 //       location: partner.contact.location,
+//       point_sale: partner.guid? partner.guid : 0
 //     }));
-//   } else {
-//     partners.value = [{
+//   } else if (partnerData.profil?.reference === "PARTNER") {
+//     partnersArray = [{
 //       structure: partnerData.name,
-//       lastname: partnerData.contact.lastname,
+//       lastname: partnerData.contact.lastname.toUpperCase(),
 //       firstname: partnerData.contact.firstname,
 //       mobile: partnerData.contact.mobile,
 //       email: partnerData.contact.email,
 //       city: partnerData.contact.city.name,
 //       country: partnerData.contact.city.country.alpha2,
 //       location: partnerData.contact.location,
+//       point_sale: partnerData.guid? partnerData.guid : 0
 //     }];
 //   }
-//   console.log("partnerData found", partnerData);
+//   partners.value = partnersArray;
+//   console.log("Filtered partnerData", partners.value);
 //
-//   gsap.fromTo(box.value, {y: 200, opacity: 0}, {y: 1, opacity: 9, duration: 1});
-//
+//   gsap.fromTo(box.value, { y: 200, opacity: 0 }, { y: 1, opacity: 9, duration: 1 });
 // });
 
 </script>

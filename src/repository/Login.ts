@@ -50,13 +50,15 @@ class Login {
   };
 
   static async myPartner(guid: number, token: string) {
-    if (!guid) return null;
+    if (!Number(guid)) return null;
 
-    const SiteUrl = "http://13.38.59.232/";
+    const SiteUrl = "http://13.38.59.232";
     try {
 
+      // const response  = await axios.put(`${SiteUrl}/user/myPartner`, {
       const { data: response } = await axios.put(`${SiteUrl}/user/myPartner`, {
-        manager: guid,
+        // manager: 100002,
+        manager: Number(guid),
       }, {
         headers: {
           "Content-Type": "application/json",
@@ -64,14 +66,15 @@ class Login {
         }
       });
 
-      if (!response.status) return null;
+      if (response.status === false) return null;
 
       const data = response.response;
       return data.map((entry : User) => User.fromJson(entry));
 
     } catch (error) {
-      console.error('Erreur dans myPartner:', error);
-      throw error;
+      console.error('Erreur dans myPartner:', error.response ? error.response.data : error.message);
+      // throw error;
+      return null;
     }
   }
 
