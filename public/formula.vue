@@ -144,16 +144,33 @@
                       <span v-else>-</span>
                     </td>
                     <td class="py-2 px-4 uppercase hover:text-green-500 group cursor-pointer">
-                      <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"
+                      <svg xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"
                             :class="formula.isOption? 'text-green-500': 'hidden'"
-                            stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round" >
+                            stroke="currentColor"  stroke-width="1"  stroke-linecap="round"  stroke-linejoin="round" >
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8.56 3.69a9 9 0 0 0 -2.92 1.95" />
                         <path d="M3.69 8.56a9 9 0 0 0 -.69 3.44" /><path d="M3.69 15.44a9 9 0 0 0 1.95 2.92" />
                         <path d="M8.56 20.31a9 9 0 0 0 3.44 .69" /><path d="M15.44 20.31a9 9 0 0 0 2.92 -1.95" />
                         <path d="M20.31 15.44a9 9 0 0 0 .69 -3.44" /><path d="M20.31 8.56a9 9 0 0 0 -1.95 -2.92" />
                         <path d="M15.44 3.69a9 9 0 0 0 -3.44 -.69" /><path d="M9 12l2 2l4 -4" />
                       </svg>
+                      <svg  class="relative" xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"
+                            :class="formula.isOption ? 'hidden' : 'text-[#87D04C]'"
+                            @click="toggleMenu"
+                            stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round" >
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                        <path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                      </svg>
 
+                      <div
+                        ref="menuBox"
+                        class="absolute right-16 bg-white border shadow-lg rounded-md w-44 z-50 hidden"
+                      >
+                        <ul class="py-2 text-xs text-gray-700">
+                          <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Modifier</li>
+                          <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Etendre des options</li>
+                          <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Inclure des options</li>
+                        </ul>
+                      </div>
                     </td>
 
                   </tr>
@@ -252,6 +269,17 @@ const currentPage = ref(1);
 const entriesPerPage = ref(5);
 const searchTerm = ref('');
 const searchType = ref('name');
+const isMenuOpen = ref(false);
+const menuBox = ref(null);
+
+const toggleMenu = () => {
+  isMenuOpen.value = !isMenuOpen.value;
+  if (isMenuOpen.value) {
+    gsap.to(menuBox.value, { opacity: 1, y: 0, duration: 0.3, display: 'block' });
+  } else  {
+    gsap.to(menuBox.value, { opacity: 0, y: -10, duration: 0.2, onComplete: () => menuBox.value.style.display = 'none' });
+  }
+};
 
 const searchTypeLabel = computed(() => {
   if (searchType.value === 'name') return 'nom';
