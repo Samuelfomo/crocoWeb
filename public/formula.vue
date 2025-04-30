@@ -155,7 +155,7 @@
                       </svg>
                       <svg  class="relative" xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"
                             :class="formula.isOption ? 'hidden' : 'text-[#87D04C]'"
-                            @click="toggleMenu"
+                            @click="toggleMenu (formula.guid)"
                             stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round" >
                         <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
                         <path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
@@ -163,12 +163,13 @@
 
                       <div
                         ref="menuBox"
-                        class="absolute right-16 bg-white border shadow-lg rounded-md w-44 z-50 hidden"
+                        class="absolute right-16 bg-white border shadow-lg rounded-md w-44 z-50 menu-box-{{formula.guid}}"
+                        v-if="activeMenu === formula.guid"
                       >
                         <ul class="py-2 text-xs text-gray-700">
-                          <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Modifier</li>
-                          <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Etendre des options</li>
-                          <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Inclure des options</li>
+                          <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer" @click="editFormula(formula.code)">Modifier</li>
+                          <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer" @click="openModal('extend', formula.code)">Étendre des options</li>
+                          <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer" @click="openModal('include', formula.code)">Inclure des options</li>
                         </ul>
                       </div>
                     </td>
@@ -234,6 +235,12 @@
             </div>
           </div>
 
+          <Modal  v-if="modalVisible"
+                  :type="modalData.type"
+                  :code="modalData.code"
+                  @close="modalVisible = false"
+          />
+
         </main>
 
       </div>
@@ -251,9 +258,10 @@ import gsap from "gsap";
 import userLoginStore from "@/stores/userStore";
 import {storeToRefs} from "pinia";
 
-import Header from "@public/components/header.vue";
-import Footer from "@public/components/footer.vue";
-import Dashboard from "@public/components/dashboard.vue";
+import Header from "./components/header.vue";
+import Footer from "./components/footer.vue";
+import Dashboard from "./components/dashboard.vue";
+import Modal from "./brouillon/modal.vue"
 
 import Formula from "@/repository/Formula";
 
@@ -269,15 +277,33 @@ const currentPage = ref(1);
 const entriesPerPage = ref(5);
 const searchTerm = ref('');
 const searchType = ref('name');
-const isMenuOpen = ref(false);
 const menuBox = ref(null);
+const activeMenu = ref(null);
 
-const toggleMenu = () => {
-  isMenuOpen.value = !isMenuOpen.value;
-  if (isMenuOpen.value) {
-    gsap.to(menuBox.value, { opacity: 1, y: 0, duration: 0.3, display: 'block' });
-  } else  {
-    gsap.to(menuBox.value, { opacity: 0, y: -10, duration: 0.2, onComplete: () => menuBox.value.style.display = 'none' });
+const modalData = ref({ type: null, code: null });
+const openModal = (type, code) => {
+  modalData.value = { type, code };
+  modalVisible.value = true;
+};
+
+const modalVisible = ref(false);
+
+const toggleMenu = (guid) => {
+  // Si le menu cliqué est déjà ouvert, le fermer
+  if (activeMenu.value === guid) {
+    activeMenu.value = null;
+  } else {
+    activeMenu.value = guid; // Ouvrir le nouveau menu
+  }
+
+  // Animer le menu avec GSAP
+  const menuBox = document.querySelector(`.menu-box-${guid}`); // Récupérer le menu spécifique
+  if (activeMenu.value === guid) {
+    gsap.to(menuBox, { opacity: 1, y: 0, duration: 0.3, display: 'block' });
+  } else if (menuBox) {
+    gsap.to(menuBox, { opacity: 0, y: -10, duration: 0.2, onComplete: () => {
+        menuBox.style.display = 'none'; // Masquer après l'animation
+      }});
   }
 };
 
@@ -293,7 +319,7 @@ const Formulas = ref([
     guid: null,
     name: '',
     code: '',
-    amount: 0,
+    amount: null,
     includes: [] || '',
     extendes: [] || '',
     isOption: false

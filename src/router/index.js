@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Auth from "@public/login/authentication.vue"
 import PointSale from "@public/point_sale.vue"
 import PointSaleFormForm from "@public/point_saleForm.vue"
+import Modal from "@public/brouillon/modal.vue";
 // import Table from "@public/table/table.vue"
 // import Transaction from "@public/brouillon/transaction.vue"
 import Partner from "@public/partner.vue"
@@ -60,6 +61,11 @@ const routes = [
         path: 'partnerForm',
         name: 'partnerForm',
         component: PartnerForm
+      },
+      {
+        path: 'modal',
+        name: 'modal',
+        component: Modal
       },
       {
         path: 'partner',

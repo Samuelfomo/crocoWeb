@@ -11,12 +11,12 @@
           <span>Rechercher</span>
         </div>
         <transition name="fade">
-          <div v-if="isModalVisible" class="absolute top-24 lg:left-0 -left-5 bottom-0 w-full lg:px-0 lg:py-0 py-8 px-4">
-            <div class="absolute bg-black opacity-50 inset-0 z-0"
-            >
-            </div>
+<!--          <div v-if="isModalVisible" class="absolute top-24 lg:left-0 -left-5 bottom-0 w-full h-full lg:px-0 lg:py-0 py-8 px-4">-->
+          <div v-if="isModalVisible" class="absolute inset-0 z-40 flex items-center justify-center">
+            <div class="fixed inset-0 bg-black bg-opacity-60"></div>
+<!--            <div class="absolute bg-black opacity-50 inset-0 z-0"></div>-->
             <div
-              class="w-full max-w-lg relative m-auto rounded-md shadow-lg bg-white lg:top-40 top-20 lg:pl-0 pl-4"
+              class="w-full max-w-lg relative m-auto rounded-md shadow-lg bg-white"
             >
               <div>
                 <div class="text-center flex-auto justify-center leading-6">
