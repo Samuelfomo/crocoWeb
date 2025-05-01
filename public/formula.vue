@@ -163,6 +163,7 @@
 
                       <div
                         ref="menuBox"
+                        :class="formula.guid?'': 'hidden'"
                         class="absolute right-16 bg-white border shadow-lg rounded-md w-44 z-50 menu-box-{{formula.guid}}"
                         v-if="activeMenu === formula.guid"
                       >
@@ -261,7 +262,7 @@ import {storeToRefs} from "pinia";
 import Header from "./components/header.vue";
 import Footer from "./components/footer.vue";
 import Dashboard from "./components/dashboard.vue";
-import Modal from "./brouillon/modal.vue"
+import Modal from "./components/modal.vue"
 
 import Formula from "@/repository/Formula";
 
@@ -284,6 +285,7 @@ const modalData = ref({ type: null, code: null });
 const openModal = (type, code) => {
   modalData.value = { type, code };
   modalVisible.value = true;
+  activeMenu.value = null;
 };
 
 const modalVisible = ref(false);
@@ -385,6 +387,7 @@ const editFormula = (formula) => {
     name: 'formulaForm',
     query: { code: formula?.toString() },
   });
+  activeMenu.value = null;
 }
 
 onMounted(async () => {

@@ -120,9 +120,26 @@
 <!--          <button @click="$emit('close')">Fermer</button>-->
           <button
             class="px-6 py-2 rounded-md text-base font-bold bg-green-600 text-white hover:bg-gradient-to-br transition capitalize"
+            @click="UpdateFormula"
+            ref="submitButton"
           >
             inclure
           </button>
+        </div>
+      </div>
+      <!-- Message dynamique -->
+      <div
+        ref="successMessage"
+        :class="[
+    'fixed top-8 right-8 text-white p-4 rounded-lg shadow-lg opacity-0 transform translate-y-4 transition-all duration-300',
+    messageType === 'success' ? 'bg-green-600' : 'bg-red-600'
+  ]"
+      >
+        <div class="flex items-center">
+          <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          <span>{{ messageText }}</span>
         </div>
       </div>
     </div>
@@ -135,6 +152,7 @@ import gsap from 'gsap';
 // import {useRouter, useRoute} from "vue-router";
 
 import Formula from "@/repository/Formula";
+import Formulas from "@/class/Formula";
 import userLoginStore from "@/stores/userStore";
 import {storeToRefs} from "pinia";
 
@@ -143,15 +161,14 @@ const isModalVisible = ref(true);
 //   isModalVisible.value = !isModalVisible.value;
 // }
 
-
-
 const store = userLoginStore();
 // Utiliser storeToRefs pour préserver la réactivité
 const { token } = storeToRefs(store);
-
-
 const isLoading = ref(false);
-
+const successMessage = ref(null);
+const messageText = ref('');
+const messageType = ref("success");
+const submitButton = ref(null);
 
 // Options disponibles pour l'exemple
 const availableOptions = ref([
@@ -173,6 +190,7 @@ const getOptionName = (code) => {
 
 // Données du formulaire avec support pour les options multiples
 const formData = reactive({
+  guid: Number(''),
   name: '',
   code: '',
   price: 0,
@@ -180,7 +198,6 @@ const formData = reactive({
   isOption: false,
   extend: [] || '' // Tableau pour stocker plusieurs options
 });
-
 
 // Ajouter une option à inclure
 const addIncludeOption = () => {
@@ -227,7 +244,57 @@ const removeExtendOption = (index) => {
 const props = defineProps({
   type: String,
   code: String
-})
+});
+const UpdateFormula = async () =>{
+  try {
+    isLoading.value = true;
+    const newFormula = new Formulas(formData.guid, formData.code, formData.name, formData.price, formData.isOption, formData.include, formData.extend, null, null);
+    const result = await newFormula.save(token.value);
+    if (!result) {
+      messageType.value = 'error';
+      messageText.value = `Échec de la mise a jour`;
+      showMessage();
+      return;
+    }
+    // Animation du bouton
+    gsap.to(submitButton.value, {
+      scale: 0.95,
+      duration: 0.1,
+      onComplete: () => {
+        gsap.to(submitButton.value, {
+          scale: 1,
+          duration: 0.3,
+          ease: 'elastic.out(1, 0.3)'
+        });
+      }
+    });
+
+    // Message de succès
+    messageType.value = 'success';
+    messageText.value = ` formule mise à jour avec succès'} `;
+    showMessage();
+  } catch (error){
+
+  }
+
+};
+const showMessage = () => {
+  gsap.to(successMessage.value, {
+    opacity: 1,
+    y: 0,
+    duration: 0.5,
+    ease: 'power3.out',
+    onComplete: () => {
+      setTimeout(() => {
+        gsap.to(successMessage.value, {
+          opacity: 0,
+          y: -10,
+          duration: 0.5
+        });
+      }, 3000);
+    }
+  });
+};
 
 onMounted(async () => {
 
@@ -260,6 +327,10 @@ onMounted(async () => {
         console.error('formulaData not found');
         return;
       }
+      formData.guid = formulaData.guid;
+      formData.name = formulaData.name;
+      formData.code = formulaData.code;
+      formData.price = formulaData.amount;
       formData.include = formulaData.includes.map(entry => entry.code) || [];
       formData.isOption = formulaData.isOption;
       formData.extend = formulaData.extendes.map(entry => entry.code) || [];
