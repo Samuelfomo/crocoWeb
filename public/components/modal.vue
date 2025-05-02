@@ -1,6 +1,16 @@
 <template>
+  <!-- Loader (identique aux autres composants) -->
+  <div v-if="isLoading" class="fixed inset-0 flex flex-col items-center justify-center bg-black bg-opacity-40 z-50">
+    <svg aria-hidden="true" role="status"   class="w-24 h-24 text-gray-200 animate-spin dark:text-gray-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  fill="none"
+         stroke="#3AEA52"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path  d="M12 6l0 -3" /><path d="M16.25 7.75l2.15 -2.15" />
+      <path d="M18 12l3 0" /><path d="M16.25 16.25l2.15 2.15" /><path d="M12 18l0 3" />
+      <path d="M7.75 16.25l-2.15 2.15" /><path d="M6 12l-3 0" /><path d="M7.75 7.75l-2.15 -2.15" />
+    </svg>
+    <p class="mt-4 font-light font-serif text-white text-xl animate-pulse">Veuillez patienter pendant le chargement des données...</p>
+  </div>
   <transition name="fade">
-    <div v-if="isModalVisible" class="fixed inset-0 z-50 flex justify-center items-center p-4">
+    <div v-if="isModalVisible" class="fixed inset-0 z-40 flex justify-center items-center p-4">
       <!-- Overlay -->
       <div class="fixed inset-0 bg-black bg-opacity-50"></div>
 
@@ -149,7 +159,6 @@
 <script setup>
 import { ref, reactive, onMounted } from 'vue';
 import gsap from 'gsap';
-// import {useRouter, useRoute} from "vue-router";
 
 import Formula from "@/repository/Formula";
 import Formulas from "@/class/Formula";
@@ -157,9 +166,6 @@ import userLoginStore from "@/stores/userStore";
 import {storeToRefs} from "pinia";
 
 const isModalVisible = ref(true);
-// const onBlock = () => {
-//   isModalVisible.value = !isModalVisible.value;
-// }
 
 const store = userLoginStore();
 // Utiliser storeToRefs pour préserver la réactivité
@@ -271,10 +277,15 @@ const UpdateFormula = async () =>{
 
     // Message de succès
     messageType.value = 'success';
-    messageText.value = ` formule mise à jour avec succès'} `;
+    messageText.value = ` formule mise à jour avec succès `;
     showMessage();
-  } catch (error){
 
+  } catch (error){
+    messageType.value = 'error';
+    messageText.value = "Erreur lors de la mise à jour.";
+    showMessage();
+  }finally {
+    isLoading.value = false;
   }
 
 };

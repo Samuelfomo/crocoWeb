@@ -17,7 +17,7 @@ class Contact{
   constructor(id: number, guid: number, firstname: string, lastname: string, city: City, location: string, language: string,
               gender: string, mobile: string, email: string, created: Date){
     this.id = id;
-    this.guid = guid;
+    this.guid = guid || null;
     this.firstname = firstname;
     this.lastname = lastname;
     this.city = city;
@@ -46,16 +46,29 @@ class Contact{
   }
 
   async saved(token: string){
+
+    console.log("Payload envoyé", {
+      guid: this.guid,
+      firstname: this.firstname,
+      lastname: this.lastname,
+      city: this.city,
+      location: this.location,
+      language: this.language,
+      gender: this.gender,
+      mobile: this.mobile,
+      email: this.email,
+    });
+
     try {
       const response = await axios.post(`http://13.38.59.232/contact/add`, {
         guid: this.guid,
         firstname: this.firstname,
         lastname: this.lastname,
-        city: this.city,
+        city: Number(this.city),
         location: this.location,
         language: this.language,
         gender: this.gender,
-        mobile: this.mobile,
+        mobile: Number(this.mobile),
         email: this.email,
         created: this.created,
       },{
@@ -71,7 +84,16 @@ class Contact{
       // console.log("response.data", response.data.response)
       return Contact.fromJson(response.data.response);
     } catch (error){
-      throw error;
+
+      console.error('Erreur serveur - réponse', error.response, error.response.data.message);
+      console.error('Erreur complète Axios', {
+        message: error.message,
+        status: error.response?.status,
+        data: error.response?.data,
+        headers: error.response?.headers
+      });
+
+      console.error('error serveur', error.data && error.data.response && error.response);
     }
   }
 

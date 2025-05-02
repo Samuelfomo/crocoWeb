@@ -266,6 +266,7 @@ const totalPages = computed(() => {
   return Math.ceil(filteredPartners.value.length / entriesPerPage.value);
 });
 
+
 onMounted(async () => {
   isLoading.value = true;
   try {
