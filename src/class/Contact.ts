@@ -2,7 +2,6 @@ import City from "./City";
 import axios from "axios";
 
 class Contact{
-  public id: number;
   public guid: number;
   public firstname: string;
   public lastname: string;
@@ -14,10 +13,9 @@ class Contact{
   public email: string;
   public created: Date
 
-  constructor(id: number, guid: number, firstname: string, lastname: string, city: City, location: string, language: string,
+  constructor(guid: number, firstname: string, lastname: string, city: City, location: string, language: string,
               gender: string, mobile: string, email: string, created: Date){
-    this.id = id;
-    this.guid = guid || null;
+    this.guid = guid;
     this.firstname = firstname;
     this.lastname = lastname;
     this.city = city;
@@ -31,8 +29,7 @@ class Contact{
 
   public static fromJson(json: any){
     return new Contact(
-      json.id,
-      json.guid,
+      json.code,
       json.firstname,
       json.lastname,
       json.city,
@@ -77,23 +74,24 @@ class Contact{
           "Authorization": `Bearer ${token}`
         }
       });
-      if (response.status !== 200) {
-        console.log("response.data", response.data.message);
-        return null
+      if (response.status === 200 && response.data?.status !== false) {
+        console.log("success", response.data.response);
+        return Contact.fromJson(response.data.response);
+      } else {
+        // L'API a retourné un message d'erreur explicite
+        throw new Error(response.data.message || "Erreur inconnue de l'API");
       }
-      // console.log("response.data", response.data.response)
-      return Contact.fromJson(response.data.response);
-    } catch (error){
-
-      console.error('Erreur serveur - réponse', error.response, error.response.data.message);
-      console.error('Erreur complète Axios', {
-        message: error.message,
-        status: error.response?.status,
-        data: error.response?.data,
-        headers: error.response?.headers
-      });
-
-      console.error('error serveur', error.data && error.data.response && error.response);
+    }  catch (error: any) {
+      // Gestion des erreurs Axios + backend
+      if (error.response && error.response.data) {
+        const apiMessage = error.response.data.message || "Erreur serveur";
+        console.error("Erreur API :", apiMessage);
+        throw new Error(apiMessage);
+      } else {
+        // Autres erreurs (réseau, timeout, etc.)
+        console.error("Erreur système :", error.message);
+        throw new Error(error.message);
+      }
     }
   }
 

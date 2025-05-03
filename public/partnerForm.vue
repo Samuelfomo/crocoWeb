@@ -291,7 +291,7 @@
               <p v-if="errors.structure" class="text-red-500 text-xs mt-1">{{ errors.structure }}</p>
             </div>
 
-            <div class="bg-green-50 p-4 rounded-lg border border-green-100 mt-6">
+            <div class="bg-green-50 p-4 rounded-lg border border-green-100 mt-6 hidden">
               <div class="flex items-start">
                 <svg class="h-6 w-6 text-green-500 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -368,19 +368,64 @@
       <p class="mt-4 text-white text-xl font-medium">Chargement en cours...</p>
     </div>
   </div>
+      <!-- Modal pour afficher le code du partenaire -->
+      <div v-if="isModalVisible" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg shadow-lg p-6 max-w-md w-full mx-4">
+          <!-- En-tête avec icône d'avertissement -->
+          <div class="flex items-center mb-4">
+            <div class="bg-green-600 text-white rounded-full p-2 mr-10">
+              <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"
+                    stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 12l5 5l10 -10" /><path d="M2 12l5 5m5 -5l5 -5" />
+              </svg>
+
+            </div>
+            <h2 class="text-2xl font-bold text-gray-700 font-roboto">CONFIRMATION</h2>
+          </div>
+
+          <!-- Message principal -->
+          <p class="text-gray-600 text-lg mb-8">
+            Voulez-vous envoyer le code <strong>{{ partnerCode }}</strong> au partenaire ?
+            <br>
+            Cette action ne peut pas être annulée.
+          </p>
+
+          <!-- Boutons d'action -->
+          <div class="flex justify-end gap-4">
+            <button
+              @click="closeModal"
+              class="flex items-center px-6 py-3 bg-gray-200 hover:bg-gray-300 text-gray-700 font-medium rounded-md transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+              ANNULER
+            </button>
+
+            <button
+              @click="sendBothNotifications"
+              class="flex items-center px-6 py-3 bg-green-500 hover:bg-green-600 text-white font-medium rounded-md transition-colors">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+              CONFIRMER
+            </button>
+          </div>
+        </div>
+      </div>
 
   <!-- Toast de succès -->
-  <transition name="fade">
-    <div
-      v-if="showSuccessToast"
-      class="fixed bottom-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center"
-    >
-      <svg class="h-6 w-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-      </svg>
-      Point de vente créé avec succès!
-    </div>
-  </transition>
+      <div
+        v-if="MessageService.isVisible"
+        class="message fixed right-8 text-white p-4 rounded-lg shadow-lg opacity-0 transform translate-y-4 transition-all duration-300"
+        :class="MessageService.getMessageClass()"
+      >
+        <div class="flex items-center">
+          <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+          <span>{{ MessageService.messageText }}</span>
+        </div>
+      </div>
       <Footer />
     </div>
   </div>
@@ -398,10 +443,13 @@ import City from "@/class/City";
 import userLoginStore from "@/stores/userStore";
 import {storeToRefs} from "pinia";
 import Contact from "@/class/Contact";
+import MessageService from '@/services/Message';
+import User from "@/class/User";
+import {VariableValue} from "@/services/utils/VariableValue";
 
 const store = userLoginStore()
 // Utiliser storeToRefs pour préserver la réactivité
-const { token } = storeToRefs(store);
+const { token, guid } = storeToRefs(store);
 
 // Router
 const router = useRouter();
@@ -410,7 +458,10 @@ const router = useRouter();
 const formContainer = ref(null);
 const isLoading = ref(false);
 const isSubmitting = ref(false);
-const showSuccessToast = ref(false);
+const partnerCode = ref('');
+const isModalVisible = ref(false);
+const mobile = ref('');
+const email = ref('');
 
 
 // Configuration des étapes
@@ -652,20 +703,26 @@ const submitForm = async () => {
         await new Promise(resolve => setTimeout(resolve, 2000));
 
         // Dans un environnement réel, vous feriez d'abord un appel pour créer le contact
-        const contactData = new Contact(null, null, form.value.firstname, form.value.lastname, form.value.city, form.value.location, form.value.language, form.value.gender, form.value.phone, form.value.email, null);
-        console.log('contactData is : ', contactData);
+        const contactData = new Contact(null, form.value.firstname, form.value.lastname, form.value.city, form.value.location, form.value.language, form.value.gender, form.value.phone, form.value.email, null);
         const contactResult = await contactData.saved(token.value);
         if (!contactResult) {
-          alert('error during contact saving 😤');
+          MessageService.showMessage('error during contact saving 😤', 'error');
+          return;
         }
-        alert("contact saved successfully", contactResult.guid.toString());
+        const partnerData = new User(null, form.value.structure, null, null, VariableValue.partner(), contactResult.guid, false, true, guid.value, false, false, null )
+        console.log('partnerData is :', partnerData);
+        const partnerResult = await partnerData.saved(token.value);
+        if (!partnerResult) {
+          MessageService.showMessage('error during partner saving', 'error');
+          return;
+        }
+        MessageService.showMessage(`partner saved successfully , ${partnerResult.code}, ${partnerResult.contact.mobile}`, 'success');
+        // Afficher le modal avec le code du partenaire
+        partnerCode.value = partnerResult.code.toString();
+        mobile.value = partnerResult.contact.mobile;
+        email.value = partnerResult.contact.email;
+        isModalVisible.value = true;
         // Puis un appel pour créer le point de vente avec l'ID du contact retourné
-
-        // Afficher un toast de succès
-        showSuccessToast.value = true;
-        setTimeout(() => {
-          showSuccessToast.value = false;
-        }, 3000);
 
         // Rediriger vers la page de succès ou le tableau de bord
         // setTimeout(() => {
@@ -673,8 +730,7 @@ const submitForm = async () => {
         // }, 1500);
 
       } catch (error) {
-        console.error('Erreur lors de la création du point de vente:', error);
-        // Gérer l'erreur (afficher un message, etc.)
+        MessageService.showMessage(error.response?.data?.message || error.message || 'Une erreur est survenue', 'error');
       } finally {
         isSubmitting.value = false;
         isLoading.value = false;
@@ -733,6 +789,69 @@ const submitForm = async () => {
         isLoading.value = false;
       }
     };
+
+// const sendWhatsApp = () => {
+//   let mobilePartner = mobile.value.toString().replace(/\D/g, '');
+//
+//   if (!mobilePartner.startsWith('237') || mobilePartner.startsWith('6')) {
+//     mobilePartner = '237' + mobilePartner.substring(0);
+//   }
+//
+//   const message = `Bonjour chère partenaire, vous trouverez ci-dessous votre code de connexion au service Croco+ : ${partnerCode.value}`;
+//   const whatsappUrl = `https://wa.me/${mobilePartner}?text=${encodeURIComponent(message)}`;
+//   window.open(whatsappUrl, '_blank');
+// };
+
+const closeModal = () => {
+  isModalVisible.value = false;
+};
+
+// Fonction pour envoyer un message WhatsApp
+const sendWhatsApp = () => {
+  let mobilePartner = mobile.value.toString().replace(/\D/g, '');
+
+  // Si le numéro commence par 0 (ex : 0699...), le remplacer par l'indicatif du pays
+  if (!mobilePartner.startsWith('237') || mobilePartner.startsWith('6')) {
+    mobilePartner = '237' + mobilePartner.substring(0);
+  }
+
+  const message = `Bonjour chère partenaire, vous trouverez ci-dessous votre code de connexion au service Croco+ : ${partnerCode.value}`;
+  const whatsappUrl = `https://wa.me/${mobilePartner}?text=${encodeURIComponent(message)}`;
+  window.open(whatsappUrl, '_blank');
+};
+
+// Fonction pour envoyer un email
+const sendEmail = () => {
+  const partnerEmail = email.value;
+  console.log(partnerEmail);
+
+  if (!partnerEmail) {
+    alert("Veuillez entrer une adresse email valide");
+    return;
+  }
+
+  const subject = "Votre code de connexion Croco+";
+  const body = `Bonjour chère partenaire,
+
+Vous trouverez ci-dessous votre code de connexion au service Croco+ :
+
+CODE: ${partnerCode.value}
+
+Ce code est personnel et confidentiel, merci de ne pas le partager.
+
+Cordialement,
+L'équipe Croco+`;
+
+  const mailtoUrl = `mailto:${partnerEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.open(mailtoUrl, '_blank');
+};
+
+// Fonction pour envoyer le code par WhatsApp et email
+const sendBothNotifications = () => {
+  sendWhatsApp();
+  // sendEmail();
+};
+
 </script>
 
 <style scoped>
