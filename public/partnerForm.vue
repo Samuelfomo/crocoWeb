@@ -6,11 +6,11 @@
       <!-- Header -->
       <Header />
 
-  <div class="min-h-screen bg-gradient-to-br from-[#87D04C] to-white flex items-center justify-center p-4">
+  <div class="min-h-screen bg-gradient-to-br from-[#87D04C] to-white flex items-center justify-center">
 
     <div
       ref="formContainer"
-      class="w-full max-w-5xl bg-white shadow-2xl shadow-gray-500 rounded-lg overflow-hidden"
+      class="w-full max-w-5xl bg-white shadow-2xl shadow-gray-500 rounded-t-md overflow-hidden"
     >
       <!-- Header avec logo et étapes -->
       <div class="bg-white border-b p-6">
@@ -43,7 +43,7 @@
               :class="{'text-green-600 font-medium': step <= currentStep, 'text-gray-400': step > currentStep}"
             >
               <div
-                class="rounded-full w-10 h-10 flex items-center justify-center mb-1 transition-all duration-300"
+                class="rounded-full w-10 h-10 flex items-center justify-center mb-1 transition-all duration-300 cursor-pointer"
                 :class="step <= currentStep ? 'bg-green-600 text-white font-bold' : 'bg-gray-200 text-gray-500'"
               >
                 {{ step }}

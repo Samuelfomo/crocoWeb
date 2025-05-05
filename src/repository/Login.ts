@@ -5,7 +5,7 @@ import useLoginStore from "../stores/userStore";
 class Login {
 
   static async auth(code: number, pin: number) {
-    const SiteUrl = "http://13.38.59.232/"
+    const SiteUrl = "http://13.38.59.232"
     const uuid = await axios.get(`${SiteUrl}/token/uuid`);
 
     const version = '1.0.0';
@@ -22,7 +22,7 @@ class Login {
       });
 
       if (token.data.status !== true) {
-        return null;
+        throw new Error(token.data.message || "Erreur inconnue de l'API");
       }
 
       const tokenStore = useLoginStore();
@@ -30,22 +30,31 @@ class Login {
         token: token.data.response.token,
       })
 
-      const response = await axios.put(`${SiteUrl}/user/login`, {
-        code: code,
-        pin: pin
-      }, {
-        headers: {
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token.data.response.token}`
-        },
-      });
-      if (response.data.status !== true){
-        return null;
+      try {
+        const response = await axios.put(`${SiteUrl}/user/login`, {
+          code: code,
+          pin: pin
+        }, {
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token.data.response.token}`
+          },
+        });
+        if (response.data.status !== true){
+          throw new Error(response.data.message || "Erreur inconnue de l'API");
+        }
+        return User.fromJson(response.data.response);
       }
-      return User.fromJson(response.data.response);
+      catch (error: any) {
+        // Gestion des erreurs Axios + backend
+        const apiMessage = error?.response?.data?.message || error?.message || "Erreur serveur";
+        throw new Error(apiMessage);
+      }
 
-    } catch (error){
-      return null;
+    } catch (error : any){
+      // Gestion des erreurs Axios + backend
+      const apiMessage = error?.response?.data?.message || error?.message || "Erreur serveur";
+      throw new Error(apiMessage);
     }
   };
 

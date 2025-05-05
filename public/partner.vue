@@ -39,7 +39,7 @@
 
             </div>
             <div class="flex w-full lg:justify-end items-center p-5">
-              <input type="text" v-model="Search" placeholder="Rechercher" class="w-full bg-gray-50 hover:bg-white lg:max-w-[16rem]
+              <input type="text" v-model="searchTerm" placeholder="Rechercher" class="w-full bg-gray-50 hover:bg-white lg:max-w-[16rem]
                p-4 border focus:right-2 rounded-lg placeholder:text-gray-700 placeholder:text-lg focus:outline-none
                focus:ring-0 focus:ring-green-300 focus:border-green-500 focus:text-green-500 focus:font-font-medium focus:text-lg lg:placeholder:text-xl
                placeholder:font-roboto placeholder:font-normal text-right placeholder:focus:text-green-500">
@@ -50,14 +50,6 @@
                 <table id="contact-table" class="w-full bg-white rounded table-class">
                   <thead>
                   <tr class="bg-white border-2 shadow-sm">
-                    <th class="px-4 border-2 border-white text-left text-lg font-bold text-gray-400">
-                      <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"
-                            stroke="currentColor"  stroke-width="3"  stroke-linecap="round"  stroke-linejoin="round">
-                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
-                        <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
-                        <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
-                      </svg>
-                    </th>
                     <th class="py-2 px-4 border-2 border-white text-left text-lg font-bold text-gray-400">
                       Partenaire
                     </th>
@@ -76,6 +68,15 @@
                     <th class="hidden lg:table-cell px-4 border-2 border-white text-left text-lg font-bold text-gray-400">
                       Localisation
                     </th>
+                    <th class="px-4 border-2 border-white text-left text-lg font-bold text-gray-400">
+                      <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"
+                            stroke="currentColor"  stroke-width="3"  stroke-linecap="round"  stroke-linejoin="round"
+                      >
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M9 7m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
+                        <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /><path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                        <path d="M21 21v-2a4 4 0 0 0 -3 -3.85" />
+                      </svg>
+                    </th>
                     <th class="py-2 px-4 border-2 border-white text-left text-lg font-bold text-gray-400 w-[0.25rem]">
                       <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"
                             stroke="currentColor"  stroke-width="3"  stroke-linecap="round"  stroke-linejoin="round" >
@@ -88,27 +89,56 @@
                   </thead>
                   <tbody>
                   <tr
-                    class="hover:bg-gray-50 text-left border-b border-gray-300 text-gray-800 italic" v-for="(partner, index) in partners" :key="index">
-                    <td class="py-2 px-4 text-green-300 font-bold">{{ partner.point_sale }}</td>
-                    <td class="py-2 px-4 uppercase">{{ partner.structure }}</td>
+                    class="hover:bg-gray-50 text-left border-b border-gray-300 text-gray-800 italic"
+                    v-for="(partner, index) in paginatedPartners" :key="index">
+<!--                    <td class="py-2 px-4 uppercase">{{ partner.structure }}</td>-->
+                    <td class="py-2 px-4 uppercase hover:text-green-500 group cursor-pointer not-italic">
+                      <div class="inline-block relative text-nowrap " @click="editPartner(partner.guid)">
+                        {{ partner.structure }}
+                        <span class="absolute bottom-0.5 left-0 h-[1.2px] bg-black transition-all duration-300 w-full group-hover:bg-green-500"></span>
+                      </div>
+                    </td>
                     <td class="py-2 px-4 hidden lg:table-cell">{{ partner.lastname }} {{partner.firstname}}</td>
                     <td class="py-2 px-4 hidden lg:table-cell">{{ partner.mobile }}</td>
                     <td class="py-2 px-4 hidden lg:table-cell">{{ partner.email }}</td>
-                    <td class="py-2 px-4 uppercase hidden lg:table-cell">{{ partner.city }}-{{partner.country}}</td>
+                    <td class="py-2 px-4 uppercase hidden lg:table-cell">{{ partner.city }}{{partner.country? '-': '' }}{{partner.country}}</td>
                     <td class="py-2 px-4 hidden lg:table-cell">{{ partner.location }}</td>
-                    <td class="py-2 px-4 text-green-300 font-bold">
-                      <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"
-                            stroke-width="3"  stroke-linecap="round"  stroke-linejoin="round" ><path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                        <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />
-                      </svg>
+                    <td class="py-2 px-4 uppercase text-[#87D04C] group cursor-pointer not-italic">
+                      <div class="text-nowrap bg-[#87D04C] bg-opacity-10 h-6 w-8 flex justify-center items-center text-sm font-bold" @click="editPartner(partner.guid)">
+                        {{ partner.point_sale }}
+                      </div>
                     </td>
+                    <td class="py-2 px-4 font-bold" v-if="partner.guid">
+                      <svg  class="relative text-[#87D04C]" xmlns="http://www.w3.org/2000/svg"
+                            width="24"  height="24"  viewBox="0 0 24 24"  fill="none"
+                            stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"
+                            @click="toggleMenu (partner.guid)"
+                      >
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                        <path d="M12 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" /><path d="M12 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0" />
+                      </svg>
+
+                      <div
+                        ref="menuBox"
+                        :class="partner.guid?'': 'hidden'"
+                        class="absolute right-12 mt-auto bg-white border shadow-lg rounded-md w-40 z-50 menu-box-{{partner.guid}}"
+                        v-if="activeMenu === partner.guid"
+                      >
+                        <ul class="py-2 text-sm text-gray-700 not-italic flex flex-col justify-center uppercase">
+                          <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer transition-transform hover:scale-105 duration-300" @click="editPartner(partner.guid)">Modifier</li>
+                          <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer transition-transform hover:scale-105 duration-300">copier le code</li>
+<!--                          <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Inclure des options</li>-->
+                        </ul>
+                      </div>
+                    </td>
+
                   </tr>
 
                   </tbody>
                 </table>
 
                 <!-- Message quand aucun résultat -->
-                <div v-if="!isLoading && filteredPartners.length === 0" class="py-4 text-center text-lg font-serif text-red-500">
+                <div v-if="!isLoading && filteredPartners.length === 1" class="py-4 text-center text-lg font-serif text-red-500">
                   Aucun partenaire n’a été trouvé pour le moment.
                 </div>
 
@@ -139,7 +169,7 @@
 <!--                 Pagination Controls -->
                 <div class="flex flex-col md:flex-row justify-between items-center mt-4 gap-2">
                   <div class="text-sm text-gray-700">
-                    Page {{ currentPage }} sur {{ totalPages || 1 }}
+                    Page {{ currentPage }} sur {{ totalPages || 0 }}
                     (Total: {{  filteredPartners.length || 0 }} partenaires)
                   </div>
                   <div class="flex space-x-2">
@@ -175,7 +205,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import {ref, onMounted, computed, watch} from 'vue';
 import {useRouter} from "vue-router";
 const router = useRouter();
 
@@ -201,9 +231,12 @@ const currentPage = ref(1);
 const entriesPerPage = ref(5);
 const searchTerm = ref('');
 const searchType = ref('name');
+const menuBox = ref(null);
+const activeMenu = ref(null);
 
 const partners = ref([
   {
+    guid: Number(''),
     structure: '',
     lastname: '',
     firstname: '',
@@ -215,14 +248,17 @@ const partners = ref([
     point_sale: '' || null
   }
 ]);
-
+// Calcul du nombre total de pages
+const totalPages = computed(() => {
+  return Math.ceil(filteredPartners.value.length / entriesPerPage.value);
+});
 
 // Calcul des éléments à afficher sur la page courante
-// const paginatedFormulas = computed(() => {
-//   const startIndex = (currentPage.value - 1) * entriesPerPage.value;
-//   const endIndex = startIndex + entriesPerPage.value;
-//   return filteredFormulas.value.slice(startIndex, endIndex);
-// });
+const paginatedPartners = computed(() => {
+  const startIndex = (currentPage.value - 1) * entriesPerPage.value;
+  const endIndex = startIndex + entriesPerPage.value;
+  return filteredPartners.value.slice(startIndex, endIndex);
+});
 
 function nextPage() {
   if (currentPage.value < totalPages.value) {
@@ -236,9 +272,14 @@ function prevPage() {
   }
 }
 
-// function resetPagination() {
-//   currentPage.value = 1;
-// }
+function resetPagination() {
+  currentPage.value = 1;
+}
+
+// Observer les changements du terme de recherche et du type de recherche
+watch([searchTerm, searchType, entriesPerPage], () => {
+  resetPagination();
+});
 
 // Filtrage des données en fonction du terme de recherche
 const filteredPartners = computed(() => {
@@ -261,10 +302,33 @@ const filteredPartners = computed(() => {
   });
 });
 
-// Calcul du nombre total de pages
-const totalPages = computed(() => {
-  return Math.ceil(filteredPartners.value.length / entriesPerPage.value);
-});
+
+const toggleMenu = (guid) => {
+  // Si le menu cliqué est déjà ouvert, le fermer
+  if (activeMenu.value === guid) {
+    activeMenu.value = null;
+  } else {
+    activeMenu.value = guid; // Ouvrir le nouveau menu
+  }
+
+  // Animer le menu avec GSAP
+  const menuBox = document.querySelector(`.menu-box-${guid}`); // Récupérer le menu spécifique
+  if (activeMenu.value === guid) {
+    gsap.to(menuBox, { opacity: 1, y: 0, duration: 0.3, display: 'block' });
+  } else if (menuBox) {
+    gsap.to(menuBox, { opacity: 0, y: -10, duration: 0.2, onComplete: () => {
+        menuBox.style.display = 'none'; // Masquer après l'animation
+      }});
+  }
+};
+
+const editPartner = (partner) => {
+  router.push({
+    name: 'partnerForm',
+    query: { guid: partner?.toString() },
+  });
+  activeMenu.value = null;
+}
 
 
 onMounted(async () => {
@@ -292,6 +356,7 @@ onMounted(async () => {
         console.log('pointsDeVente', pointsDeVente);
 
         partnersArray.push({
+          guid: partner.guid,
           structure: partner.name,
           lastname: partner.contact.lastname.toUpperCase(),
           firstname: partner.contact.firstname,
@@ -308,6 +373,7 @@ onMounted(async () => {
       const pointsDeVente = await Login.myPartner(partnerData.guid, token.value);
 
       partnersArray = [{
+        guid: partnerData.guid,
         structure: partnerData.name,
         lastname: partnerData.contact.lastname.toUpperCase(),
         firstname: partnerData.contact.firstname,

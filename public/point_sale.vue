@@ -76,7 +76,7 @@
                     <span class="text-xl font-semibold text-white">{{ point.nom }}</span>
                     <div class="flex flex-col text-white items-end">
                       <span class="text-sm text-gray-300">Solde</span>
-                      <span class="font-bold">{{ formatMontant(point.solde) }}</span>
+                      <span class="font-semibold font-roboto">{{ formatMontant(point.solde) }}</span>
                     </div>
                   </div>
                 </div>
@@ -309,13 +309,8 @@
 </template>
 
 <script setup>
-import {ref, computed, onMounted, watch, nextTick, onUnmounted} from 'vue';
-import { useRouter } from "vue-router";
-const router = useRouter();
-const store = userLoginStore();
-// Utiliser storeToRefs pour préserver la réactivité
-const { guid, token } = storeToRefs(store);
-
+import {computed, nextTick, onMounted, onUnmounted, ref, watch} from 'vue';
+import {useRouter} from "vue-router";
 import Header from "@public/components/header.vue";
 import Footer from "@public/components/footer.vue";
 import Dashboard from "@public/components/dashboard.vue";
@@ -323,8 +318,13 @@ import Dashboard from "@public/components/dashboard.vue";
 import gsap from "gsap";
 import Login from "@/repository/Login";
 import userLoginStore from "@/stores/userStore";
-import { storeToRefs } from "pinia";
+import {storeToRefs} from "pinia";
 import Account from "@/class/Account";
+
+const router = useRouter();
+const store = userLoginStore();
+// Utiliser storeToRefs pour préserver la réactivité
+const { guid, token } = storeToRefs(store);
 
 const box = ref(null);
 const pointCard = ref([]);
@@ -689,7 +689,37 @@ watch(search, () => {
 });
 
 // Fonction pour formater les montants
-const formatMontant = (montant) => {
-  return new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'XAF', maximumFractionDigits: 0 }).format(montant);
+// const formatMontant = (montant) => {
+//   let amount = 0;
+//   if (montant){
+//     amount = montant;
+//   }
+//   // Convertir le nombre en string avec séparation des milliers personnalisée
+//   const parties = amount.toString().split('').reverse();
+//   let groupes = [];
+//
+//   for (let i = 0; i < parties.length; i += 3) {
+//     groupes.push(parties.slice(i, i + 3).reverse().join(''));
+//   }
+//
+//   const chiffreFormate = groupes.reverse().join(' '); // espace double entre les groupes
+//   return `${chiffreFormate}  FCFA`;
+// };
+
+// const formatMontant = (montant) => {
+//   return new Intl.NumberFormat('fr-FR', {style: 'currency', currency: 'XAF', maximumFractionDigits: 0}).format(montant)
+// };
+
+const formatMontant = (amount) => {
+  if (amount == null) return '';
+
+  let price = String(amount).replace(/\D/g, ''); // garde uniquement les chiffres
+  if (price.length > 2) {
+    price = price.replace(/\B(?=(\d{3})+(?!\d))/g, ' '); // Double espace entre les groupes
+  }
+  return price + '  FCFA'; // Double espace avant FCFA
 };
+
+
+
 </script>
