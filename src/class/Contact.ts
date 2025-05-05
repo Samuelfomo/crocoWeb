@@ -93,6 +93,31 @@ class Contact{
         throw new Error(error.message);
       }
     }
+  };
+
+  static async getByMobile(mobile: number , token: string){
+    const siteUrl = "http://13.38.59.232";
+    try {
+      const response = await axios.put(`${siteUrl}/contact/check`, {
+        mobile: mobile
+      }, {
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`
+        }
+      });
+      if (response.status === 200 && response.data?.status !== false) {
+        return Contact.fromJson(response.data.response);
+      }
+      else {
+        throw new Error(response.data.message || "Erreur inconnue de l'API");
+      }
+
+    } catch (error : any){
+      const apiMessage = error.response.data.message || "Erreur serveur";
+      console.error("Erreur API :", apiMessage);
+      throw new Error(apiMessage);
+    }
   }
 
   toJson(){

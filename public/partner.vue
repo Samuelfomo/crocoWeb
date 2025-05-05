@@ -93,7 +93,7 @@
                     v-for="(partner, index) in paginatedPartners" :key="index">
 <!--                    <td class="py-2 px-4 uppercase">{{ partner.structure }}</td>-->
                     <td class="py-2 px-4 uppercase hover:text-green-500 group cursor-pointer not-italic">
-                      <div class="inline-block relative text-nowrap " @click="editPartner(partner.guid)">
+                      <div class="inline-block relative text-nowrap " @click="editPartner(partner.mobile)">
                         {{ partner.structure }}
                         <span class="absolute bottom-0.5 left-0 h-[1.2px] bg-black transition-all duration-300 w-full group-hover:bg-green-500"></span>
                       </div>
@@ -104,7 +104,7 @@
                     <td class="py-2 px-4 uppercase hidden lg:table-cell">{{ partner.city }}{{partner.country? '-': '' }}{{partner.country}}</td>
                     <td class="py-2 px-4 hidden lg:table-cell">{{ partner.location }}</td>
                     <td class="py-2 px-4 uppercase text-[#87D04C] group cursor-pointer not-italic">
-                      <div class="text-nowrap bg-[#87D04C] bg-opacity-10 h-6 w-8 flex justify-center items-center text-sm font-bold" @click="editPartner(partner.guid)">
+                      <div class="text-nowrap bg-[#87D04C] bg-opacity-10 h-6 w-8 flex justify-center items-center text-sm font-bold" @click="editPartner(partner.mobile)">
                         {{ partner.point_sale }}
                       </div>
                     </td>
@@ -125,9 +125,8 @@
                         v-if="activeMenu === partner.guid"
                       >
                         <ul class="py-2 text-sm text-gray-700 not-italic flex flex-col justify-center uppercase">
-                          <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer transition-transform hover:scale-105 duration-300" @click="editPartner(partner.guid)">Modifier</li>
+                          <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer transition-transform hover:scale-105 duration-300" @click="editPartner(partner.mobile)">Modifier</li>
                           <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer transition-transform hover:scale-105 duration-300">copier le code</li>
-<!--                          <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer">Inclure des options</li>-->
                         </ul>
                       </div>
                     </td>

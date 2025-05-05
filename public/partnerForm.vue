@@ -433,7 +433,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import gsap from 'gsap';
 import Header from "@public/components/header.vue";
 import Dashboard from "@public/components/dashboard.vue";
@@ -453,6 +453,7 @@ const { token, guid } = storeToRefs(store);
 
 // Router
 const router = useRouter();
+const route = useRoute();
 
 // Références et états
 const formContainer = ref(null);
@@ -738,7 +739,7 @@ const submitForm = async () => {
     };
 
 // Initialisation
-    onMounted(() => {
+    onMounted(async () => {
       // Animation d'entrée du formulaire
       gsap.from(formContainer.value, {
         y: 50,
@@ -748,7 +749,19 @@ const submitForm = async () => {
       });
 
       // Charger les données initiales (dans un cas réel, vous feriez des appels API ici)
-      loadInitialData();
+      await loadInitialData();
+
+      const partnerFromQuery = route.query.guid;
+      if (partnerFromQuery) {
+        console.log(partnerFromQuery);
+        // await new Promise(resolve => setTimeout(resolve, 1500));
+        const partnerResponse = await Contact.getByMobile(Number(partnerFromQuery), token.value);
+        if (!partnerResponse) {
+          console.error('partner search not found');
+          return;
+        }
+        console.log('partnerResponse', partnerResponse);
+      }
     });
 
 // Fonction pour charger les données initiales (pays, villes, etc.)
