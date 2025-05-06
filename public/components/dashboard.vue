@@ -45,7 +45,7 @@
     <div class="menu-section flex-grow">
       <!--    <div class="menu-section flex-grow overflow-y-auto">-->
       <ul class="py-4 space-y-2">
-        <li v-for="(item, index) in menuItems" :key="index" class="px-3 cursor-pointer" @click="router.push(item.route)">
+        <li v-for="(item, index) in filteredMenus" :key="index" class="px-3 cursor-pointer transition-transform hover:scale-110 duration-500" @click="router.push(item.route)">
           <a  class="flex items-center p-2 rounded-md hover:bg-gray-700 transition-colors duration-200">
             <!-- Icône toujours visible -->
             <component :is="item.icon" class="w-6 h-6 flex-shrink-0" />
@@ -61,7 +61,7 @@
     <!-- Section Configuration -->
     <div class="config-section">
       <ul class="py-4 space-y-2 ">
-        <li v-for="(item, index) in configItems" :key="index" class="px-3 cursor-pointer" @click="router.push(item.route)">
+        <li v-for="(item, index) in configItems" :key="index" class="px-3 cursor-pointer transition hover:scale-110 duration-500" @click="router.push(item.route)">
           <a  class="flex items-center p-2 rounded-md hover:bg-gray-700 transition-colors duration-200">
             <!-- Icône toujours visible -->
             <component :is="item.icon" class="w-6 h-6 flex-shrink-0" />
@@ -77,8 +77,16 @@
 </template>
 
 <script setup>
-import {h, ref} from 'vue';
+import {h, ref, computed} from 'vue';
 import {useRouter} from "vue-router";
+import userLoginStore from "@/stores/userStore";
+import {storeToRefs} from "pinia";
+// import 'animate.css';
+
+
+const store = userLoginStore();
+// Utiliser storeToRefs pour préserver la réactivité
+const { profil } = storeToRefs(store);
 
 const router = useRouter();
 // import Croco from '@/assets/images/svg/croco-white.svg';
@@ -360,19 +368,23 @@ const LogoutIcon = (props) => h('svg', {
   })
 ]);
 const menuItems = [
-  {label: 'Tableau de bord', icon: HomeIcon, route: '/home'},
-  {label: 'Formules', icon: Formulas, route: '/formula'},
-  {label: 'Partenaires', icon: Partners, route: '/partner'},
-  {label: 'Statistiques', icon: ChartIcon, route: '/formPoint_sale'},
-  {label: 'Activités', icon: Activity, route: '#'},
-  {label: 'Lexiques', icon: Lexicon, route: '/lexicon'},
+  {label: 'Tableau de bord', icon: HomeIcon, route: '/home', roles: ['PARTNER', 'MANAGER']},
+  {label: 'Formules', icon: Formulas, route: '/formula', roles: ['MANAGER',]},
+  {label: 'Partenaires', icon: Partners, route: '/partner',  roles: ['MANAGER']},
+  {label: 'Statistiques', icon: ChartIcon, route: '/formPoint_sale', roles: ['PARTNER', 'MANAGER']},
+  {label: 'Activités', icon: Activity, route: '#', roles: ['PARTNER', 'MANAGER']},
+  {label: 'Lexiques', icon: Lexicon, route: '/lexicon', roles: ['PARTNER', 'MANAGER']},
   // {label: 'Utilisateurs', icon: UsersIcon},
-  {label: 'Documents', icon: DocsIcon, route: '#'},
+  {label: 'Documents', icon: DocsIcon, route: '#', roles: ['PARTNER', 'MANAGER']},
 ];
 const configItems = [
   {label: 'Paramètres', icon: SettingsIcon, route: '#'},
   {label: 'Déconnexion', icon: LogoutIcon, route: '/'},
 ];
+
+const filteredMenus = computed(() => {
+  return menuItems.filter(menu => menu.roles.includes(profil.value.toString().toUpperCase()));
+});
 
 // <svg id="Layer_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 490.01 490.01" xml:space="preserve" fill="#000000">
 //           <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>

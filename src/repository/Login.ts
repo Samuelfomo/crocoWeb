@@ -43,7 +43,12 @@ class Login {
         if (response.data.status !== true){
           throw new Error(response.data.message || "Erreur inconnue de l'API");
         }
-        return User.fromJson(response.data.response);
+        const result = User.fromJson(response.data.response);
+        console.log(result.profil.reference);
+        if (result.profil.reference === 'SALEPOINT'){
+          throw new Error( "user_permission_denied" );
+        }
+        return result;
       }
       catch (error: any) {
         // Gestion des erreurs Axios + backend

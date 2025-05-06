@@ -104,7 +104,7 @@
                     <td class="py-2 px-4 uppercase hidden lg:table-cell">{{ partner.city }}{{partner.country? '-': '' }}{{partner.country}}</td>
                     <td class="py-2 px-4 hidden lg:table-cell">{{ partner.location }}</td>
                     <td class="py-2 px-4 uppercase text-[#87D04C] group cursor-pointer not-italic">
-                      <div class="text-nowrap bg-[#87D04C] bg-opacity-10 h-6 w-8 flex justify-center items-center text-sm font-bold" @click="editPartner(partner.mobile)">
+                      <div class="text-nowrap bg-[#87D04C] bg-opacity-10 h-6 w-8 flex justify-center items-center text-sm font-bold" v-if="partner.guid">
                         {{ partner.point_sale }}
                       </div>
                     </td>
@@ -124,9 +124,21 @@
                         class="absolute right-12 mt-auto bg-white border shadow-lg rounded-md w-40 z-50 menu-box-{{partner.guid}}"
                         v-if="activeMenu === partner.guid"
                       >
-                        <ul class="py-2 text-sm text-gray-700 not-italic flex flex-col justify-center uppercase">
+                        <ul class="py-2 text-sm text-gray-700 not-italic flex flex-col justify-center uppercase relative">
                           <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer transition-transform hover:scale-105 duration-300" @click="editPartner(partner.mobile)">Modifier</li>
-                          <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer transition-transform hover:scale-105 duration-300">copier le code</li>
+                          <li class="px-4 py-2 hover:bg-gray-100 cursor-pointer transition-transform hover:scale-105 duration-300" @click="copyCode(partner.code)">
+                            Copier le code
+                            <!-- Toast de notification intégré près du bouton -->
+                            <span
+                              ref="toastEl"
+                              v-show="copySuccess !== null"
+                              :class="['absolute left-[50%] px-2 py-1 rounded-md text-xs inline-flex items-center opacity-0',
+                              copySuccess ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800']"
+                            >
+                              <span v-if="copySuccess" class="mr-1">✓</span>
+                              <span v-else class="mr-1">✗
+                              </span>{{ copySuccess ? 'Copié !' : 'Échec' }}</span>
+                          </li>
                         </ul>
                       </div>
                     </td>
@@ -137,9 +149,10 @@
                 </table>
 
                 <!-- Message quand aucun résultat -->
-                <div v-if="!isLoading && filteredPartners.length === 1" class="py-4 text-center text-lg font-serif text-red-500">
+                <div v-if="!isLoading && filteredPartners.length === 0" class="py-4 text-center text-lg font-serif text-red-500">
                   Aucun partenaire n’a été trouvé pour le moment.
                 </div>
+
 
                 <!-- Skeleton Loader -->
                 <div v-if="isLoading" class="animate-pulse">
@@ -233,21 +246,23 @@ const searchType = ref('name');
 const menuBox = ref(null);
 const activeMenu = ref(null);
 
-const partners = ref([
-  {
-    guid: Number(''),
-    structure: '',
-    lastname: '',
-    firstname: '',
-    mobile:'',
-    email:'',
-    city: '',
-    country: '',
-    location: '',
-    point_sale: '' || null
-  }
-]);
+// const partners = ref([
+//   {
+//     guid: Number(''),
+//     structure: '',
+//     lastname: '',
+//     firstname: '',
+//     mobile:'',
+//     email:'',
+//     city: '',
+//     country: '',
+//     location: '',
+//     point_sale: '' || null,
+//     code: ''
+//   }
+// ]);
 // Calcul du nombre total de pages
+const partners = ref([]);
 const totalPages = computed(() => {
   return Math.ceil(filteredPartners.value.length / entriesPerPage.value);
 });
@@ -282,24 +297,44 @@ watch([searchTerm, searchType, entriesPerPage], () => {
 
 // Filtrage des données en fonction du terme de recherche
 const filteredPartners = computed(() => {
-  if (!searchTerm.value) return partners.value;
+  const term = searchTerm.value.toLowerCase();
+  if (!term) return partners.value;
 
   return partners.value.filter(partner => {
-    const term = searchTerm.value.toString().toLowerCase();
-
-    if (searchType.value === 'name') {
-      return partner.structure.toLowerCase().includes(term);
-    } else if (searchType.value === 'code') {
-      return partner.lastname.toLowerCase().includes(term);
-    } else if (searchType.value === 'amount') {
-      // Convertir en string pour la recherche
-      const mobileStr = partner.mobile.toString();
-      return mobileStr.includes(term);
-    }
-
-    return false;
+    return [
+      partner.code.toString(),
+      partner.structure,
+      partner.lastname,
+      partner.firstname,
+      partner.email,
+      partner.location,
+      partner.mobile?.toString(),
+    ]
+      .filter(Boolean) // enlève les valeurs nulles/undefined
+      .some(field => field.toLowerCase().includes(term));
   });
 });
+
+
+// const filteredPartners = computed(() => {
+//   if (!searchTerm.value) return partners.value;
+//
+//   return partners.value.filter(partner => {
+//     const term = searchTerm.value.toString().toLowerCase();
+//
+//     if (searchType.value === 'name') {
+//       return partner.structure.toLowerCase().includes(term);
+//     } else if (searchType.value === 'code') {
+//       return partner.lastname.toLowerCase().includes(term);
+//     } else if (searchType.value === 'amount') {
+//       // Convertir en string pour la recherche
+//       const mobileStr = partner.mobile.toString();
+//       return mobileStr.includes(term);
+//     }
+//
+//     return false;
+//   });
+// });
 
 
 const toggleMenu = (guid) => {
@@ -324,9 +359,52 @@ const toggleMenu = (guid) => {
 const editPartner = (partner) => {
   router.push({
     name: 'partnerForm',
-    query: { guid: partner?.toString() },
+    query: { mobile: partner?.toString() },
   });
   activeMenu.value = null;
+};
+
+const copySuccess = ref(null); // null = rien, true = succès, false = erreur
+const toastEl = ref(null); // référence pour l'élément de notification
+
+function copyCode(code) {
+  navigator.clipboard.writeText(code)
+    .then(() => {
+      copySuccess.value = true;
+      animateToast();
+    })
+    .catch(() => {
+      copySuccess.value = false;
+      animateToast();
+    });
+}
+function animateToast() {
+  // Réinitialiser les styles au cas où il y aurait une animation en cours
+  gsap.killTweensOf(toastEl.value);
+
+  // Animation d'entrée
+  gsap.fromTo(toastEl.value,
+    { opacity: 0, y: -10 },
+    {
+      opacity: 1,
+      y: 0,
+      duration: 0.3,
+      ease: "power2.out",
+      onComplete: () => {
+        // Animation de sortie après un délai
+        gsap.to(toastEl.value, {
+          opacity: 0,
+          y: -10,
+          delay: 0.5, // Total 0.5s avec les animations
+          duration: 0.3,
+          ease: "power2.in",
+          onComplete: () => {
+            copySuccess.value = null;
+          }
+        });
+      }
+    }
+  );
 }
 
 
@@ -335,6 +413,7 @@ onMounted(async () => {
   try {
     // Récupérer tous les partners
     const partnerData = await Login.myPartner(guid.value, token.value);
+    // console.log('partnerData', partnerData.map(entry => entry.code));
 
     if (!partnerData) {
       console.error('No partner data found');
@@ -351,8 +430,8 @@ onMounted(async () => {
       for (const partner of filteredPartners) {
         // await new Promise(resolve => setTimeout(resolve, 1000));
         // Récupérer les points de vente de ce partner
+        console.log(partner.code)
         const pointsDeVente = await Login.myPartner(partner.guid, token.value);
-        console.log('pointsDeVente', pointsDeVente);
 
         partnersArray.push({
           guid: partner.guid,
@@ -364,6 +443,7 @@ onMounted(async () => {
           city: partner.contact.city.name,
           country: partner.contact.city.country.alpha2,
           location: partner.contact.location,
+          code: partner.code,
           // point_sale: partner.guid.length? partner.guid.length : 0,
           point_sale: pointsDeVente ? pointsDeVente.length : 0, // Nombre de points de vente
         });

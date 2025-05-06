@@ -22,7 +22,7 @@
           <div class="grid lg:grid-cols-4 grid-cols-1 gap-4 items-center px-5">
             <div>
               <u class="underline">
-                <h1 class="text-2xl font-bold text-gray-600 italic">Mes points de vente </h1>
+                <h1 class="text-2xl font-semibold font-roboto text-gray-800">Mes points de vente </h1>
               </u>
             </div>
             <div></div>
@@ -132,6 +132,10 @@
                   </div>
                 </div>
               </div>
+            </div>
+            <!-- Message quand aucun résultat -->
+            <div v-if="!isLoading && filteredPoints.length === 0" class="py-4 text-center text-lg font-serif text-red-500">
+              Aucun point de vente n’a été trouvé pour le moment.
             </div>
 
             <!-- Pagination -->
@@ -350,34 +354,19 @@ const amountRecharge = ref(null);
 
 // Données des points de vente (vous pouvez les charger depuis une API)
 const pointsDeVente = ref([
-  {
-    code: null,
-    nom: '',
-    mobile: '',
-    email: '',
-    city: '',
-    address: '',
-    solde: null,
-    depenseMois: null,
-    commission: null,
-    derniereRecharge: null
-  }
+  // {
+  //   code: null,
+  //   nom: '',
+  //   mobile: '',
+  //   email: '',
+  //   city: '',
+  //   address: '',
+  //   solde: null,
+  //   depenseMois: null,
+  //   commission: null,
+  //   derniereRecharge: null
+  // }
 ]);
-
-// const pointsDeVente = ref([
-//   {
-//     code: null,
-//     nom: 'Fred Code',
-//     mobile: '+237 693 45 78 23',
-//     email: 'joel@gmail.com',
-//     city: 'Douala',
-//     address: 'Akwa Nord',
-//     solde: 300000,
-//     depenseMois: 150000,
-//     commission: 45000,
-//     derniereRecharge: 100000
-//   }
-// ]);
 
 let valueName = '';
 let valueGuid = '';

@@ -181,10 +181,9 @@
                 </table>
 
                 <!-- Message quand aucun résultat -->
-                <div v-if="!isLoading && filteredFormulas.length === 1" class="py-4 text-center text-lg font-serif text-red-500">
+                <div v-if="!isLoading && filteredFormulas.length === 0" class="py-4 text-center text-lg font-serif text-red-500">
                   Aucune formule ne correspond à votre recherche
                 </div>
-
                 <!-- Skeleton Loader -->
                 <div v-if="isLoading" class="animate-pulse">
                   <table class="min-w-full">
@@ -320,17 +319,18 @@ const searchTypeLabel = computed(() => {
   return 'nom';
 });
 
-const Formulas = ref([
-  {
-    guid: null,
-    name: '',
-    code: '',
-    amount: null,
-    includes: [] || '',
-    extendes: [] || '',
-    isOption: false
-  }
-]);
+// const Formulas = ref([
+//   {
+//     guid: null,
+//     name: '',
+//     code: '',
+//     amount: null,
+//     includes: [] || '',
+//     extendes: [] || '',
+//     isOption: false
+//   }
+// ]);
+const Formulas = ref([]);
 
 // Filtrage des données en fonction du terme de recherche
 const filteredFormulas = computed(() => {

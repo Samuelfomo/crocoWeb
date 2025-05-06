@@ -15,7 +15,7 @@
       <!-- Header avec logo et étapes -->
       <div class="bg-white border-b p-6">
         <div class="flex justify-between items-center">
-          <span class="text-2xl font-bold font-roboto text-gray-950 uppercase">Creation du Partenaire</span>
+          <span class="text-2xl font-bold font-roboto text-gray-950 uppercase">{{form.guidPartner? 'Mise à jour du Partenaire': 'Creation du Partenaire'}} </span>
           <button
             @click="router.push('/partner')"
             class="text-gray-500 hover:text-gray-700 transition-colors duration-300"
@@ -276,7 +276,8 @@
           </div>
 
           <!-- Étape 3: Information du point de vente -->
-          <div v-if="currentStep === 3" key="step3" class="space-y-6">
+          <div v-if="currentStep === 3 && !form.guidPartner" key="step3" class="space-y-6">
+<!--          <div v-if="currentStep === 3" key="step3" class="space-y-6">-->
             <h2 class="text-xl font-semibold text-gray-800 mb-6">Informations du point de vente</h2>
 
             <div>
@@ -343,7 +344,10 @@
               <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
           </span>
-          {{ isSubmitting ? "Création en cours..." : "Créer le point de vente" }}
+          {{ form.guidPartner
+          ? `${isSubmitting? `Mise à jour en cours...`: `Mettre à jour le Partenaire`}`
+          : `${isSubmitting? `Création en cours...`: `Créer le Partenaire`}`
+          }}
         </button>
       </div>
     </div>
@@ -432,7 +436,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import {ref, computed, onMounted, reactive} from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import gsap from 'gsap';
 import Header from "@public/components/header.vue";
@@ -467,11 +471,17 @@ const email = ref('');
 
 // Configuration des étapes
 const currentStep = ref(1);
-const totalSteps = 3;
+// const totalSteps = 3;
+const totalSteps = computed(() => {
+  // Si form.guidPartner existe, alors c'est une mise à jour, donc 2 étapes seulement
+  return form.guidPartner ? 2 : 3;
+});
+
 const stepTitles = ['Vos informations', 'Localisation', 'Point de vente'];
 
 // Formulaire
-const form = ref({
+const form = reactive({
+  guidPartner: '',
   gender: '',
   lastname: '',
   firstname: '',
@@ -510,28 +520,28 @@ const filteredCities = ref([]);
 
 // Récupérer le code de pays sélectionné
 const selectedCountryCode = computed(() => {
-  if (!form.value.country) return '';
-  const country = countryTable.value.find(c => c.alpha2 === form.value.country);
+  if (!form.country) return '';
+  const country = countryTable.value.find(c => c.alpha2 === form.country);
   return country ? country.dialcode : '';
 });
 
 // Obtenir le nom du pays sélectionné
 const getCountryName = computed(() => {
-  if (!form.value.country) return '';
-  const country = countryTable.value.find(c => c.alpha2 === form.value.country);
+  if (!form.country) return '';
+  const country = countryTable.value.find(c => c.alpha2 === form.country);
   return country ? country.fr : '';
 });
 
 // Obtenir le nom de la ville sélectionnée
 const getCityName = computed(() => {
-  if (!form.value.city) return '';
-  const city = filteredCities.value.find(c => c.guid === form.value.city);
+  if (!form.city) return '';
+  const city = filteredCities.value.find(c => c.guid === form.city);
   return city ? city.name : '';
 });
 
 // Charger les villes en fonction du pays sélectionné
 const loadCities = async () => {
-  if (!form.value.country) {
+  if (!form.country) {
     filteredCities.value = [];
     return;
   }
@@ -567,7 +577,7 @@ const loadCities = async () => {
   console.log("cityData is ", valueCity);
 
     cityTable.value = citiesData;
-    filteredCities.value = citiesData.filter(city => city.country === form.value.country);
+    filteredCities.value = citiesData.filter(city => city.country === form.country);
   } catch (error) {
     console.error('Erreur lors du chargement des villes:', error);
   } finally {
@@ -584,32 +594,31 @@ const validateStep1 = () => {
   errors.value.email = '';
   errors.value.phone = '';
 
-  if (!form.value.gender) {
+  if (!form.gender) {
     errors.value.gender = 'Veuillez sélectionner une civilité';
     isValid = false;
   }
 
-  if (!form.value.lastname.trim()) {
+  if (!form.lastname.toString().trim()) {
     errors.value.lastname = 'Le nom est requis';
     isValid = false;
   }
 
-  if (!form.value.email.trim()) {
+  if (!form.email.toString().trim()) {
     errors.value.email = 'L\'email est requis';
     isValid = false;
-  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.value.email.trim())) {
+  } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.toString().trim())) {
     errors.value.email = 'Veuillez entrer une adresse email valide';
     isValid = false;
   }
 
-  if (!form.value.phone.trim()) {
+  if (!form.phone.toString().trim()) {
     errors.value.phone = 'Le numéro de téléphone est requis';
     isValid = false;
-  } else if (!/^\d{8,10}$/.test(form.value.phone.trim())) {
+  } else if (!/^\d{8,10}$/.test(form.phone.toString().trim())) {
     errors.value.phone = 'Veuillez entrer un numéro de téléphone valide';
     isValid = false;
   }
-
   return isValid;
 };
 
@@ -619,12 +628,12 @@ const validateStep2 = () => {
   errors.value.country = '';
   errors.value.city = '';
 
-  if (!form.value.country) {
+  if (!form.country) {
     errors.value.country = 'Veuillez sélectionner un pays';
     isValid = false;
   }
 
-  if (form.value.country && !form.value.city) {
+  if (form.country && !form.city) {
     errors.value.city = 'Veuillez sélectionner une ville';
     isValid = false;
   }
@@ -637,11 +646,13 @@ const validateStep3 = () => {
   let isValid = true;
   errors.value.structure = '';
 
-  if (!form.value.structure.trim()) {
+  if (!form.structure.trim()) {
     errors.value.structure = 'Le nom du point de vente est requis';
     isValid = false;
   }
-
+  if (form.guidPartner){
+    isValid = true;
+  }
   return isValid;
 };
 
@@ -656,6 +667,12 @@ const nextStep = () => {
   }
 
   if (isValid) {
+    // Si c'est une mise à jour et on est à l'étape 2, on soumet directement
+    if (form.guidPartner && currentStep.value === 2) {
+      submitForm();
+      return;
+    }
+
     gsap.to(formContainer.value, {
       y: -10,
       opacity: 0,
@@ -672,6 +689,32 @@ const nextStep = () => {
     });
   }
 };
+// const nextStep = () => {
+//   let isValid = false;
+//
+//   if (currentStep.value === 1) {
+//     isValid = validateStep1();
+//   } else if (currentStep.value === 2) {
+//     isValid = validateStep2();
+//   }
+//
+//   if (isValid) {
+//     gsap.to(formContainer.value, {
+//       y: -10,
+//       opacity: 0,
+//       duration: 0.3,
+//       onComplete: () => {
+//         currentStep.value++;
+//         gsap.to(formContainer.value, {
+//           y: 0,
+//           opacity: 1,
+//           duration: 0.5,
+//           ease: 'power2.out'
+//         });
+//       }
+//     });
+//   }
+// };
 
 const prevStep = () => {
   gsap.to(formContainer.value, {
@@ -697,38 +740,41 @@ const submitForm = async () => {
       isSubmitting.value = true;
       isLoading.value = true;
 
-      // console.log("data partner is : ", form.value)
+      // console.log("data partner is : ", form)
 
       try {
         // Simuler un appel API (à remplacer par votre API réelle)
         await new Promise(resolve => setTimeout(resolve, 2000));
 
         // Dans un environnement réel, vous feriez d'abord un appel pour créer le contact
-        const contactData = new Contact(null, form.value.firstname, form.value.lastname, form.value.city, form.value.location, form.value.language, form.value.gender, form.value.phone, form.value.email, null);
+        const contactData = new Contact(Number(form.guidPartner), form.firstname, form.lastname, form.city, form.location, form.language, form.gender, form.phone, form.email, null);
         const contactResult = await contactData.saved(token.value);
         if (!contactResult) {
           MessageService.showMessage('error during contact saving 😤', 'error');
           return;
         }
-        const partnerData = new User(null, form.value.structure, null, null, VariableValue.partner(), contactResult.guid, false, true, guid.value, false, false, null )
-        console.log('partnerData is :', partnerData);
-        const partnerResult = await partnerData.saved(token.value);
-        if (!partnerResult) {
-          MessageService.showMessage('error during partner saving', 'error');
-          return;
+        if (!form.guidPartner){
+          const partnerData = new User(null, form.structure, null, null, VariableValue.partner(), contactResult.guid, false, true, guid.value, false, false, null )
+          console.log('partnerData is :', partnerData);
+          const partnerResult = await partnerData.saved(token.value);
+          if (!partnerResult) {
+            MessageService.showMessage('error during partner saving', 'error');
+            return;
+          }
+          // Afficher le modal avec le code du partenaire
+          partnerCode.value = partnerResult.code.toString();
+          mobile.value = partnerResult.contact.mobile;
+          email.value = partnerResult.contact.email;
+          isModalVisible.value = true;
         }
-        MessageService.showMessage(`partner saved successfully , ${partnerResult.code}, ${partnerResult.contact.mobile}`, 'success');
-        // Afficher le modal avec le code du partenaire
-        partnerCode.value = partnerResult.code.toString();
-        mobile.value = partnerResult.contact.mobile;
-        email.value = partnerResult.contact.email;
-        isModalVisible.value = true;
-        // Puis un appel pour créer le point de vente avec l'ID du contact retourné
+        MessageService.showMessage(`${form.guidPartner? `partner updated successfully` : `partner saved successfully`}`, 'success');
 
         // Rediriger vers la page de succès ou le tableau de bord
-        // setTimeout(() => {
-        //   router.push('/partner');
-        // }, 1500);
+        if (contactResult && form.guidPartner) {
+          setTimeout(() => {
+            router.push('/partner');
+          }, 1500);
+        }
 
       } catch (error) {
         MessageService.showMessage(error.response?.data?.message || error.message || 'Une erreur est survenue', 'error');
@@ -751,16 +797,35 @@ const submitForm = async () => {
       // Charger les données initiales (dans un cas réel, vous feriez des appels API ici)
       await loadInitialData();
 
-      const partnerFromQuery = route.query.guid;
+      const partnerFromQuery = route.query.mobile;
       if (partnerFromQuery) {
         console.log(partnerFromQuery);
         // await new Promise(resolve => setTimeout(resolve, 1500));
         const partnerResponse = await Contact.getByMobile(Number(partnerFromQuery), token.value);
+        console.log('partnerResponse', partnerResponse);
         if (!partnerResponse) {
           console.error('partner search not found');
           return;
         }
-        console.log('partnerResponse', partnerResponse);
+
+        form.gender = partnerResponse.gender? 'm': 'f';
+        form.lastname = partnerResponse.lastname;
+        form.firstname = partnerResponse.firstname;
+        form.phone = partnerResponse.mobile;
+        form.email = partnerResponse.email;
+        form.country = partnerResponse.city.country.alpha2;
+        form.city = partnerResponse.city.code.toString();
+        form.location = partnerResponse.location;
+        form.language = partnerResponse.language;
+        form.guidPartner = partnerResponse.guid.toString();
+        // form.referralCode = guid.value.toString();
+        // countryTable.value = [{
+        //   alpha2: partnerResponse.city.country.alpha2,
+        //   alpha3: partnerResponse.city.country.alpha3,
+        //   dialcode: partnerResponse.city.country.dialcode,
+        //   fr: partnerResponse.city.country.fr,
+        //   en: partnerResponse.city.country.en
+        // }]
       }
     });
 
