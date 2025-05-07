@@ -18,9 +18,9 @@
 
       <!-- Main Content Area -->
       <div class="flex-grow flex">
-        <main class="flex-grow bg-neutral-100 lg:pl-32 lg:px-16 lg:py-12   py-6 w-full space-y-10">
+        <main class="flex-grow bg-neutral-100 lg:pl-32 lg:p-16  py-6 w-full space-y-10">
           <div class="grid  grid-cols-1 items-center px-5 space-y-2">
-            <h1 class="text-2xl font-semibold font-roboto text-black">Gestion des points de vente</h1>
+              <h1 class="text-2xl font-semibold font-roboto text-black uppercase">Gestion des points de vente</h1>
             <h3 class="text-base font-semibold text-gray-500">
               Gérez les membres de votre équipe et leurs autorisations de compte ici.
             </h3>
