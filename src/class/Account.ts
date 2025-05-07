@@ -23,24 +23,26 @@ class Account{
   static async Recharge(manager: number, amount: number, user: number, token: string) {
 
     const SiteUrl = "http://13.38.59.232";
-    console.log(token)
+    console.log(manager, amount, user);
 
     try {
       const response = await axios.put(`${SiteUrl}/account/add`, {
-        balance: amount,
-        user: user,
-        manager: manager
+        balance: Number(amount),
+        user: Number(user),
+        manager: Number(manager)
       }, {
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`
         }
       });
-      if (!response.status) return null;
+      if (response.status !== 200 && response.data?.status == false) throw new Error(response.data.message || "Erreur inconnue de l'API");
       return Account.fromJson(response.data);
 
     } catch (error){
-      throw error;
+        const apiMessage = error.response.data.message || "Erreur serveur";
+        console.error("Erreur API :", apiMessage, error.response.data.status);
+        throw new Error(apiMessage);
     }
   }
 }

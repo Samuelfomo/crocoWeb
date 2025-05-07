@@ -4,7 +4,7 @@ import PointSale from "@public/point_sale.vue"
 import PointSaleFormForm from "@public/point_saleForm.vue"
 import Modal from "@public/components/modal.vue";
 // import Table from "@public/table/table.vue"
-// import Transaction from "@public/brouillon/transaction.vue"
+import Transaction from "@public/brouillon/transaction.vue"
 import Partner from "@public/partner.vue"
 import PartnerForm from "@public/partnerForm.vue"
 import FormulaForm from "@public/formulaForm.vue"
@@ -37,11 +37,11 @@ const routes = [
       //   name: 'table',
       //   component: Table
       // },
-      // {
-      //   path: 'transaction',
-      //   name: 'transaction',
-      //   component: Transaction
-      // },
+      {
+        path: 'transaction',
+        name: 'transaction',
+        component: Transaction
+      },
       {
         path: 'formulaForm',
         name: 'formulaForm',
