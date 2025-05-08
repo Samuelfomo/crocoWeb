@@ -49,29 +49,6 @@
                         <line x1="5" y1="12" x2="19" y2="12"></line>
                       </svg>
                     </button>
-                    <button
-                      v-if="selectedLexicons.length > 0"
-                      class="p-2 bg-red-600 text-white rounded hover:bg-red-700 flex items-center"
-                      title="Supprimer Sélectionnée"
-                    >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                      >
-                        <polyline points="3 6 5 6 21 6"></polyline>
-                        <path
-                          d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"
-                        ></path>
-                      </svg>
-                      <span class="ml-1 text-sm">{{ selectedLexicons.length }}</span>
-                    </button>
                   </div>
                 </div>
 
@@ -109,19 +86,24 @@
                     <td
                       class="py-2 px-4 border-b border-gray-300"
                     >
-                          <span
-                            class="inline-block w-2.5 h-2.5 rounded-full bg-green-600 mr-2 absolute"
-                          ></span>
-                      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                      {{ lexicon.reference }}
+                      <div class="flex justify-start items-center gap-x-2">
+                        <span
+                          class="inline-block w-2.5 h-2.5 rounded-full bg-lime-500"
+                        >
+                          </span>
+                        {{ lexicon.reference }}
+                      </div>
+
                     </td>
                     <td
                       class="py-2 px-4 border-b border-gray-300"
                     >
+                      {{lexicon.french}}
                     </td>
                     <td
                       class="py-2 px-4 border-b border-gray-300"
                     >
+                      {{lexicon.english}}
                     </td>
                     <td class="py-2 px-4 border-b border-gray-300">
                       <div class="relative">
@@ -154,11 +136,6 @@
                               class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full text-left"
                             >
                               Copier
-                            </button>
-                            <button
-                              class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 w-full text-left"
-                            >
-                              Supprimer
                             </button>
                           </div>
                         </div>
@@ -206,7 +183,7 @@
                 class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50"
               >
                 <div class="bg-white p-6 rounded-lg shadow-md max-w-2xl w-full">
-                  <h3 class="text-xl font-semibold text-gray-700 mb-4">
+                  <h3 class="text-2xl font-semibold text-gray-700 mb-4">
                     {{ guid ? 'Modifier le Lexique' : 'Ajouter un Nouveau Lexique' }}
                   </h3>
 
@@ -270,35 +247,6 @@
                   </div>
                 </div>
               </div>
-
-              <!-- Modal de Confirmation de Suppression -->
-              <div
-                v-if="showDeleteModal"
-                class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center z-50"
-              >
-                <div class="bg-white p-6 rounded-lg shadow-md max-w-sm w-full">
-                  <h3 class="text-xl font-semibold text-gray-700 mb-4">
-                    Confirmer la Suppression
-                  </h3>
-                  <p class="text-gray-600 mb-6">
-                    Êtes-vous sûr de vouloir supprimer
-                    {{ guidToDelete.length > 1 ? 'ces lexiques' : 'ce lexique' }} ?
-                  </p>
-                  <div class="flex justify-end space-x-4">
-                    <button
-                      @click="closeModal"
-                      class="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400"
-                    >
-                      Annuler
-                    </button>
-                    <button
-                      class="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700"
-                    >
-                      Confirmer
-                    </button>
-                  </div>
-                </div>
-              </div>
             </div>
 
         </main>
@@ -312,6 +260,7 @@ import {ref, onMounted, nextTick} from "vue";
 import Header from "@public/components/header.vue";
 import Dashboard from "@public/components/dashboard.vue";
 import Footer from "@public/components/footer.vue";
+import Lexicon from "@/class/Lexicon";
 const isLoading = ref(false);
 
 const lexicons = ref([])
@@ -320,15 +269,10 @@ const portable = ref(false)
 const french = ref('')
 const english = ref('')
 const reference = ref('')
-const showDeleteModal = ref(false)
-const guidToDelete = ref(null)
-const selectedLexicons = ref([])
+
 const showFormModal = ref(false)
 const activeMenu = ref(null)
 
-const closeModal = () => {
-  showDeleteModal.value = false
-}
 
 /**
  * open modal lexicon
@@ -361,15 +305,75 @@ const closeFormModalSave = () => {
   showFormModal.value = false
   location.reload()
 }
-onMounted(() => {
+onMounted(async () => {
   isLoading.value = true;
   setTimeout( () =>{
     isLoading.value = false;
-  }, 5000);
+  }, 2000);
+  try {
+    const lexiconData = await Lexicon.getAll();
+    if(!lexiconData){
+      console.error('error during Lexicon search');
+      return;
+    }
+    console.log(lexiconData);
+    if (Array.isArray(lexiconData)) {
+      lexicons.value = lexiconData.map((lexicon) => ({
+        guid: lexicon.guid,
+        reference: lexicon.reference,
+        french: lexicon.french,
+        english: lexicon.english,
+        portable: lexicon.portable,
+      }));
 
+    } else {
+      lexicons.value = [{
+        guid: lexiconData.guid,
+        reference: lexiconData.reference,
+        french: lexiconData.french,
+        english: lexiconData.english,
+        portable: lexiconData.portable
+      }];
+    }
+  } catch (error){
+    console.log(error);
+  }finally{
+  }
+  /*
+   try {
+    const formulaData = await Formula.getFormula(token.value);
+    if(!formulaData) {
+      console.error('formula search error');
+      return;
+    }
+    if (Array.isArray(lexiconData)) {
+      Formulas.value = lexiconData.map((lexicon) => ({
+        guid: lexicon.guid,
+        name: lexicon.name,
+        code: lexicon.code,
+        amount: lexicon.amount,
+      }));
+
+    } else {
+      Formulas.value = [{
+        guid: lexiconData.guid,
+        name: lexiconData.name,
+        code: lexiconData.code,
+        amount: lexiconData.amount
+      }];
+    }
+    await new Promise(resolve => setTimeout(resolve, 1000));
+  } catch (error) {
+    console.log(error.message);
+  }
+  finally {
+    isLoading1.value = false;
+    isLoading.value = false;
+  }
+  gsap.fromTo(box.value, {y: 500, opacity: 0}, {y: 1, opacity: 9, duration: 1});
+});
+   */
 })
-
-
 </script>
 
 <style scoped>
