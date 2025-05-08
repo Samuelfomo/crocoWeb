@@ -34,6 +34,7 @@ class Formula {
       if (response.status !== 200) {
         return null;
       }
+      // console.log('response.data.response', response.data.response);
       return Formulas.fromJson(response.data.response);
     } catch (error){
       throw error;
@@ -55,7 +56,7 @@ class Formula {
       if (!response.status) {
         return null;
       }
-      console.log(Formulas.fromJson(response.data.response));
+      // console.log(Formulas.fromJson(response.data.response));
       return Formulas.fromJson(response.data.response);
       // return response.data;
     } catch (error)

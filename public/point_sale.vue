@@ -18,80 +18,69 @@
 
       <!-- Main Content Area -->
       <div class="flex-grow flex">
-        <main class="flex-grow bg-neutral-100 lg:pl-32 lg:p-16  py-6 w-full space-y-10">
-          <div class="grid  grid-cols-1 items-center px-5 space-y-2">
-              <h1 class="text-2xl font-semibold font-roboto text-black uppercase">Gestion des points de vente</h1>
-            <h3 class="text-base font-semibold text-gray-500">
-              Gérez les membres de votre équipe et leurs autorisations de compte ici.
-            </h3>
-          </div>
-          <div class="grid grid-cols-2 px-5">
-            <div class="flex justify-start items-center space-x-2">
-              <u class="underline">
-                <h1 class="text-2xl font-semibold text-gray-800">Mes points de vente</h1>
-              </u>
-              <span class="text-2xl font-black text-lime-600">
-                <span class="text-gray-400 font-black">(</span>{{filteredPoints.length }}<span class="text-gray-400 font-black">)</span>
-              </span>
-            </div>
-            <div class="flex justify-between items-center gap-4">
-              <div class="flex justify-start items-center space-x-2">
-                <div class="relative col-span-1">
-                  <div class="flex items-center border border-gray-300 rounded-lg px-4 py-3 focus-within:ring-1 focus-within:ring-[#87D04C]
-                   bg-white shadow-sm transition duration-300 space-x-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
+        <main class="flex-grow bg-neutral-100 lg:pl-32 lg:p-16 py-6 w-full space-y-6">
+          <!-- En-tête élégant et minimaliste -->
+          <div class="px-5">
+            <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between p-6 bg-white shadow-md shadow-green-100 border">
+                <div class="flex flex-col space-y-3">
+                  <h1 class="text-2xl font-bold text-gray-800">GESTION DES POINTS DE VENTE</h1>
+                  <p class="text-gray-400 text-base font-semibold">Gérez les membres de votre équipe et leurs autorisations de compte ici.</p>
+                </div>
+                <!--              <div class="flex items-center justify-center ml-3 bg-lime-500 bg-opacity-10 px-3 py-1 rounded-full">-->
+                <!--                <span class="text-lime-600 font-bold">{{filteredPoints.length}}</span>-->
+                <!--              </div>-->
+
+              <div class="flex items-center mt-4 lg:mt-0 space-x-3">
+                <!-- Barre de recherche -->
+                <div class="relative flex-grow max-w-md">
+                  <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-400">
+                      <path d="M10 10m-7 0a7 7 0 1 0 14 0a7 7 0 1 0 -14 0" />
                       <path d="M21 21l-6 -6" />
                     </svg>
-                    <input
-                      type="text"
-                      v-model="search"
-                      placeholder="Rechercher ..."
-                      class="w-full bg-transparent focus:outline-none font-bold uppercase text-green-600
-                  placeholder:capitalize placeholder:text-gray-400 placeholder:font-semibold placeholder:text-base
-                   lg:placeholder:text-lg"
-                    />
                   </div>
+                  <input type="text" v-model="search" placeholder="Rechercher ..."
+                         class="block w-full pl-10 pr-4 py-2 border border-gray-200
+                        focus:outline-none focus:ring-1 focus:ring-green-300 focus:border-green-600 text-base font-bold uppercase placeholder:capitalize"
+                  />
                 </div>
+
+                <!-- Menu Filtres -->
                 <div class="relative">
-                  <!-- Dropdown pour les filtres -->
-                  <div class="relative">
-                    <button @click="toggleFilterMenu" class="flex items-center justify-between w-full px-4 py-3 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-green-300">
+                  <button @click="toggleFilterMenu"
+                          class="inline-flex items-center px-1 py-2 border border-gray-200 bg-white text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-green-600">
                   <span>{{ currentFilter === 'all' ? 'Tous les filtres' :
                     currentFilter === 'city' ? 'Filtrer par ville' :
                       currentFilter === 'solde' ? 'Filtrer par solde' : 'Filtrer par CA' }}</span>
-                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M6 9l6 6 6-6"/>
-                      </svg>
-                    </button>
-                    <div v-if="isFilterMenuOpen" ref="filterMenu" class="absolute left-0 right-0 z-10 w-full mt-2 origin-top-right bg-white border border-gray-300 rounded-md shadow-lg">
-                      <div class="py-1">
-                        <a @click="applyFilter('all')" class="block px-4 py-2 text-gray-700 hover:bg-green-50 cursor-pointer">Tous les filtres</a>
-                        <a @click="applyFilter('city')" class="block px-4 py-2 text-gray-700 hover:bg-green-50 cursor-pointer">Filtrer par ville</a>
-                        <a @click="applyFilter('solde')" class="block px-4 py-2 text-gray-700 hover:bg-green-50 cursor-pointer">Filtrer par solde</a>
-                        <a @click="applyFilter('ca')" class="block px-4 py-2 text-gray-700 hover:bg-green-50 cursor-pointer">Filtrer par CA</a>
-                      </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-2">
+                      <path d="M6 9l6 6 6-6"/>
+                    </svg>
+                  </button>
+                  <div v-if="isFilterMenuOpen" ref="filterMenu"
+                       class="absolute right-0 z-10 mt-2 w-48 bg-white border border-gray-200 rounded-lg shadow-lg">
+                    <div class="py-1">
+                      <a @click="applyFilter('all')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-100 cursor-pointer">Tous les filtres</a>
+                      <a @click="applyFilter('city')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-100 cursor-pointer">Filtrer par ville</a>
+                      <a @click="applyFilter('solde')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-100 cursor-pointer">Filtrer par solde</a>
+                      <a @click="applyFilter('ca')" class="block px-4 py-2 text-sm text-gray-700 hover:bg-green-100 cursor-pointer">Filtrer par CA</a>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div>
-                <div class="flex items-center justify-end gap-2 cursor-pointer">
-                  <div
-                    class="relative flex items-center justify-center py-2 px-5 rounded-lg
-                              border bg-black transition-transform duration-700 hover:scale-105 text-white"
-                  >
-                    <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"
-                          stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round" >
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 5l0 14" /><path d="M5 12l14 0" />
-                    </svg>
-                    <span class="text-xl font-black font-roboto">Add</span>
-                  </div>
-                </div>
+
+                <!-- Bouton Add -->
+                <button class="flex items-center space-x-1 px-4 py-2 rounded-lg bg-black text-white hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-600 transition-colors">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                       stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 5l0 14" /><path d="M5 12l14 0" />
+                  </svg>
+                  <span class="font-semibold capitalize">ajouter</span>
+                </button>
               </div>
             </div>
           </div>
+
 
           <div class="flex flex-col w-full" ref="box">
             <!-- Grille de cartes pour points de vente -->

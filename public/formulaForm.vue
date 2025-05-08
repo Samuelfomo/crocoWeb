@@ -121,7 +121,7 @@
                   </div>
 
                   <!-- Type (Formule ou Option) - Booléen stylisé avec labels -->
-                  <div class="mb-6" v-if="!formData.guid">
+                  <div class="mb-6 hidden" v-if="!formData.guid">
                     <span class="block text-lg font-medium font-patrick-hand text-gray-700 mb-2">Est ce une option?</span>
                     <div class="flex items-center space-x-4 py-4" ref="typeToggle">
                       <div class="flex items-center gap-3">
@@ -140,6 +140,64 @@
 <!--                        </span>-->
                       </div>
                     </div>
+                  </div>
+                  <div class="mb-6 flex justify-between">
+                    <div v-if="!formData.guid">
+                      <span class="block text-lg font-medium font-patrick-hand text-gray-700">Cette formule est une option?</span>
+                      <div class="flex items-center space-x-4 py-4">
+                        <label class="inline-flex items-center cursor-pointer">
+                          <input
+                            type="checkbox"
+                            class="sr-only"
+                            v-model="formData.isOption"
+                            @change="updateFormType"
+                          />
+                          <div
+                            class="w-6 h-6 border-2 rounded-sm flex items-center justify-center transition-colors duration-200"
+                            :class="`${formData.isOption? 'border-green-500' : 'border-gray-400'}`"
+                          >
+                            <svg
+                              v-if="formData.isOption"
+                              class="w-10 h-10 text-green-500"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="3"
+                              viewBox="0 0 24 24"
+                            >
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                            </svg>
+                          </div>
+                        </label>
+                      </div>
+                    </div>
+                    <div>
+                      <span class="block text-lg font-medium font-patrick-hand text-gray-700">La taxe d'accise est-elle appliquée à la formule?{{formData.accise}} </span>
+                      <div class="flex items-center space-x-4 py-4">
+                        <label class="inline-flex items-center cursor-pointer">
+                          <input
+                            type="checkbox"
+                            class="sr-only"
+                            v-model="formData.accise"
+                          />
+                          <div
+                            class="w-6 h-6 border-2 rounded-sm flex items-center justify-center transition-colors duration-200"
+                            :class="`${formData.accise? 'border-green-500' : 'border-gray-400'}`"
+                          >
+                            <svg
+                              v-if="formData.accise"
+                              class="w-10 h-10 text-green-500"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="3"
+                              viewBox="0 0 24 24"
+                            >
+                              <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+                            </svg>
+                          </div>
+                        </label>
+                      </div>
+                    </div>
+
                   </div>
 
                   <!-- Options includes - Visible seulement si c'est une formule (pas une option) -->
@@ -226,7 +284,6 @@
 
                   <!-- Espace vide pour aligner les boutons à droite sur la deuxième colonne -->
                   <div class="mb-6"></div>
-                  <div class="mb-6" v-if="formData.guid"></div>
 
                   <!-- Boutons -->
                   <div class="flex justify-end space-x-4 mt-8">
@@ -321,8 +378,8 @@ const selectedExtendOption = ref('');
 
 // Récupérer le nom d'une option par son code
 const getOptionName = (code) => {
-  console.log("Recherche du nom pour le code:", code);
-  console.log("Options disponibles:", availableOptions.value);
+  // console.log("Recherche du nom pour le code:", code);
+  // console.log("Options disponibles:", availableOptions.value);
 
   const option = availableOptions.value.find(option => option.code === code);
   return option ? option.name : code;
@@ -348,12 +405,13 @@ const updateFormType = () => {
 
 // Données du formulaire avec support pour les options multiples
 const formData = reactive({
-  guid: 0,
+  guid: Number(''),
   name: '',
   code: '',
-  price: 0,
+  price: Number(''),
   include: [] || '', // Tableau pour stocker plusieurs options
   isOption: false,
+  accise: false,
   extend: [] || '' // Tableau pour stocker plusieurs options
 });
 // Gestion des erreurs
@@ -363,6 +421,7 @@ const errors = ref({
   price: '',
   include: '',
   isOption: '',
+  accise: '',
   extend: ''
 });
 
@@ -379,6 +438,7 @@ const validateForm = () => {
     price: '',
     include: '',
     isOption: '',
+    accise: '',
     extend: ''
   };
 
@@ -508,6 +568,7 @@ const submitForm = async () => {
       formData.name,
       Number(formData.price),
       formData.isOption,
+      formData.accise,
       formData.include,
       formData.extend,
       null,
@@ -603,6 +664,7 @@ const resetForm = () => {
     price: null,
     include: [],
     isOption: false,
+    accise: Number(false),
     extend: []
   });
 
@@ -669,12 +731,15 @@ try {
      console.error('formulaData not found');
      return;
    }
+   console.log('formulaData received', formulaData.accise);
     formData.guid = formulaData.guid;
     formData.name = formulaData.name;
     formData.code = formulaData.code;
     formData.price = formulaData.amount;
     formData.include = formulaData.includes.map(entry => entry.code) || [];
     formData.isOption = formulaData.isOption;
+    formData.accise = formulaData.accise;
+    // formData.accise = !!formulaData.accise;
     formData.extend = formulaData.extendes.map(entry => entry.code) || [];
   }
 // if (guidFromQuery) {

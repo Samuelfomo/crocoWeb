@@ -6,6 +6,7 @@ class Formula {
   public name: string;
   public amount: number;
   public isOption: boolean;
+  public accise : boolean;
   public includes: Formula[];
   public extendes: Formula[];
   public description: string;
@@ -17,6 +18,7 @@ class Formula {
     name: string,
     amount: number,
     is_option: boolean,
+    accise: boolean,
     includes: Formula[] = [],
     extendes: Formula[] = [],
     description: string,
@@ -27,6 +29,7 @@ class Formula {
     this.name = name;
     this.amount = amount;
     this.isOption = is_option;
+    this.accise = accise;
     this.includes = includes;
     this.extendes = extendes;
     this.description = description;
@@ -40,6 +43,7 @@ class Formula {
       json.name,
       json.amount,
       json.isOption,
+      json.accise,
       Array.isArray(json.includes) ? json.includes.map((f: any) => Formula.fromJson(f)) : [],
       Array.isArray(json.extendes) ? json.extendes.map((f: any) => Formula.fromJson(f)) : [],
       // json.includes ?? [],
@@ -58,7 +62,8 @@ class Formula {
         code: this.code,
         name: this.name,
         amount: this.amount,
-        isOption: this.isOption,
+        is_option: this.isOption,
+        excise: this.accise,
         includes: this.includes,
         extendes: this.extendes,
         description: this.description,
@@ -71,7 +76,6 @@ class Formula {
       });
 
       if (response.status === 200 && response.data?.status !== false) {
-        console.log("success", response.data.response);
         return Formula.fromJson(response.data.response);
       } else {
         // L'API a retourné un message d'erreur explicite

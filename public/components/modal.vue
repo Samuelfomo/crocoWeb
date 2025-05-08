@@ -199,9 +199,10 @@ const formData = reactive({
   guid: Number(''),
   name: '',
   code: '',
-  price: 0,
+  price: Number(''),
   include: [] || '', // Tableau pour stocker plusieurs options
   isOption: false,
+  accise: false,
   extend: [] || '' // Tableau pour stocker plusieurs options
 });
 
@@ -254,7 +255,7 @@ const props = defineProps({
 const UpdateFormula = async () =>{
   try {
     isLoading.value = true;
-    const newFormula = new Formulas(formData.guid, formData.code, formData.name, formData.price, formData.isOption, formData.include, formData.extend, null, null);
+    const newFormula = new Formulas(formData.guid, formData.code, formData.name, formData.price, formData.isOption, formData.accise, formData.include, formData.extend, null, null);
     const result = await newFormula.save(token.value);
     if (!result) {
       messageType.value = 'error';
@@ -344,6 +345,7 @@ onMounted(async () => {
       formData.price = formulaData.amount;
       formData.include = formulaData.includes.map(entry => entry.code) || [];
       formData.isOption = formulaData.isOption;
+      formData.accise = formulaData.accise;
       formData.extend = formulaData.extendes.map(entry => entry.code) || [];
     }
     await new Promise(resolve => setTimeout(resolve, 1000));
